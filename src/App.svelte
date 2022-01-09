@@ -13,18 +13,21 @@
             link: "https://github.com/Rafale25/Slime_simulation",
             img: "https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true",
             description: "Blob simulation in Python with ModernGL",
+            tags: ["Python", "ModernGL"],
         },
         {
             name: "Boids",
             link: "https://github.com/Rafale25/Boids-Pyglet-Moderngl", 
             img:"./img/boids.png",
             description: "Flocking simulation in Python with ModernGL",
+            tags: ["Python", "ModernGL"],
         },
         {
             name: "ScrapMechanic injection interface",
             link: "https://github.com/Rafale25/python_injection_interface_SM", 
             img: "./img/boids.png",
             description: "Modular interface for sending custom inputs to ScrapMechanic through Injection Mod",
+            tags: ["Python", "ModernGL"],
         },
     ];
 
@@ -32,8 +35,8 @@
 <Styles/>
 
 <main>
-    <Navbar color="light" light expand="xxl">
-        <!-- <img src="img/logo.jpg" alt="ProfilePicture" class="logo"/>
+    <Navbar color="light" light expand="md">
+        <img src="img/logo.jpg" alt="ProfilePicture" class="logo"/>
         <p style="text-align: center">
             <span style="color:white;">Rafale25</span><span style="color:gray">#0025</span>
         </p>
@@ -44,7 +47,7 @@
                     <img src="img/github-icon.svg" alt="githubIcon" style="width: 3em; padding: 3px"/>
                 </NavLink>
             </NavItem>
-        </Nav> -->
+        </Nav>
     </Navbar>
 
     <Container class="mt-5" style="padding-left: 10%; padding-right: 10%;">
@@ -65,8 +68,8 @@
                         <CardBody>
                             <CardText>{p.description}</CardText>
                         </CardBody>
-                        <CardFooter style="">
-                            <span>Python - ModernGL</span>
+                        <CardFooter>
+                            <CardText>{p.tags}</CardText>
                         </CardFooter>
                     </Card>
                 </Row>
@@ -74,29 +77,6 @@
         {/each}
     </Container>
     
-    <!-- 
-    <div class="row">
-
-        <div class="column">
-            <h2 style="color:grey">Projects</h2>
-            
-            <div class="container">
-                {#each projects as p}
-                    {#if p.img != ""}
-                        <a href={p.link}>
-                            <img alt={p.name} src={p.img} class="projectPicture">
-                        </a>
-                    {:else}
-                        <a href={p.link}>
-                            <img alt={p.name} src="https://i.imgflip.com/430zkq.png" class="projectPicture">
-                        </a>
-                    {/if}
-                {/each}
-            </div>
-        </div>
-    </div>
-    -->
-        
 </main>
 
 
@@ -116,18 +96,20 @@
     main {
         text-align: center;
     }	
+
+    .logo {
+        float: left;
+        width: 50px;
+        border-radius: 50%;
+        border-style: solid;
+        border-width: 2px;
+        border-color: white;
+    }
     
 </style>
 
 <!-- 
-.logo {
-    float: left;
-    width: 50px;
-    border-radius: 50%;
-    border-style: solid;
-    border-width: 2px;
-    border-color: white;
-}
+
 
 .projectPicture {
     width: 200px;
