@@ -9,7 +9,7 @@
 
     let projects = [
         {
-            name: "Slimes",
+            name: "Slime",
             link: "https://github.com/Rafale25/Slime_simulation",
             img: "https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true",
             description: "Blob simulation in Python with ModernGL",
@@ -18,7 +18,7 @@
             name: "Boids",
             link: "https://github.com/Rafale25/Boids-Pyglet-Moderngl", 
             img:"./img/boids.png",
-            description: "Flock simulation in Python with ModernGL",
+            description: "Flocking simulation in Python with ModernGL",
         },
         {
             name: "ScrapMechanic injection interface",
@@ -32,8 +32,8 @@
 <Styles/>
 
 <main>
-    <Navbar color="light" light expand="md">
-        <img src="img/logo.jpg" alt="ProfilePicture" class="logo"/>
+    <Navbar color="light" light expand="xxl">
+        <!-- <img src="img/logo.jpg" alt="ProfilePicture" class="logo"/>
         <p style="text-align: center">
             <span style="color:white;">Rafale25</span><span style="color:gray">#0025</span>
         </p>
@@ -44,52 +44,36 @@
                     <img src="img/github-icon.svg" alt="githubIcon" style="width: 3em; padding: 3px"/>
                 </NavLink>
             </NavItem>
-        </Nav>
+        </Nav> -->
     </Navbar>
 
-    <Container style="padding: 5em;">
+    <Container class="mt-5" style="padding-left: 10%; padding-right: 10%;">
+        <h2 style="color:grey;">Projects</h2>
+
         {#each projects as p}
-            <div class="card mb-3" style="max-height: 200px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src={p.img} class="img-fluid rounded-start" alt={p.name}>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{p.name}</h5>
-                            <p class="card-text">{p.description}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <Card class="mb-3">
-                <CardHeader>
-                    <CardTitle>{p.name}</CardTitle>
-                </CardHeader>
-                <CardBody>
-                    <CardText>{p.description}</CardText>
-                </CardBody>
+            <Card class="m-3">
+                <Row class="g-0">
+                    <Col md="4" style="max-height: 200px;">
+                        <a href={p.link}>
+                            <img src={p.img} alt={p.name} class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                        </a>
+                    </Col>
+                    <Card class="col-md-8">
+                        <CardHeader>
+                            <CardTitle>{p.name}</CardTitle>
+                        </CardHeader>
+                        <CardBody>
+                            <CardText>{p.description}</CardText>
+                        </CardBody>
+                        <CardFooter style="">
+                            <span>Python - ModernGL</span>
+                        </CardFooter>
+                    </Card>
+                </Row>
             </Card>
-            -->
-
-            <!-- {#if p.img != ""} -->
-            <!-- <Row cols={3}>
-                <Col></Col>
-                <Col style="background-color: white;">
-                    <p class="text-white">{p.name}</p>
-                    <p class="text-muted">{p.description}</p>
-                </Col>
-                <Col>
-                    <a href={p.link}>
-                        <img alt={p.name} src={p.img} class="projectPicture">
-                    </a>
-                </Col>
-            </Row> -->
-            <!-- {/if} -->
         {/each}
     </Container>
-
+    
     <!-- 
     <div class="row">
 
@@ -132,47 +116,27 @@
     main {
         text-align: center;
     }	
-
-    .logo {
-        float: left;
-        width: 50px;
-        border-radius: 50%;
-        border-style: solid;
-        border-width: 2px;
-        border-color: white;
-    }
-
-    .projectPicture {
-        width: 200px;
-        height: 200px;
-        object-fit: cover; /* crop the img if to large*/
-        border-radius: 5px;
-        margin: 5px;
-        /* border-style: solid; */
-        /* border-color: black; */
-        /* border-width: 2px; */
-    }
     
-
-    .row {
-        display: flex;
-    }
-
-    .column {
-        flex: 100%;
-    }
-
 </style>
 
-<!--
-.container {
-    width: 100%;
-    /* height: 500px; */
-    background-color:#ccc;
+<!-- 
+.logo {
+    float: left;
+    width: 50px;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+}
 
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: center;
+.projectPicture {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* crop the img if to large*/
+    border-radius: 5px;
+    margin: 5px;
+    /* border-style: solid; */
+    /* border-color: black; */
+    /* border-width: 2px; */
 }
 -->
