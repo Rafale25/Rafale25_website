@@ -1,4 +1,4 @@
-<script lang="ts">	
+<script lang="ts">
     import { Styles, Button, Icon } from 'sveltestrap';
     import {
         Container,
@@ -17,17 +17,17 @@
         },
         {
             name: "Boids",
-            link: "https://github.com/Rafale25/Boids-Pyglet-Moderngl", 
+            link: "https://github.com/Rafale25/Boids-Pyglet-Moderngl",
             img:"./img/boids.png",
             description: "Flocking simulation in Python with ModernGL",
             tags: ["Python", "ModernGL"],
         },
         {
             name: "ScrapMechanic injection interface",
-            link: "https://github.com/Rafale25/python_injection_interface_SM", 
-            img: "./img/boids.png",
-            description: "Modular interface for sending custom inputs to ScrapMechanic through Injection Mod",
-            tags: ["Python", "ModernGL"],
+            link: "https://github.com/Rafale25/python_injection_interface_SM",
+            img: "",
+            description: "Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod",
+            tags: ["ScrapMechanic", "Python", "Pygame"],
         },
     ];
 
@@ -36,47 +36,49 @@
 
 <main>
     <Navbar color="light" light expand="md">
-        <img src="img/logo.jpg" alt="ProfilePicture" class="logo"/>
-        <p style="text-align: center">
-            <span style="color:white;">Rafale25</span><span style="color:gray">#0025</span>
-        </p>
+        <img  class="logo mx-1" src="img/logo.jpg" alt="ProfilePicture"/>
+        <span class="mx-3" style="color:white;">Rafale25</span>
 
         <Nav class="ms-auto" navbar>
             <NavItem>
-                <NavLink class="m-0 p-0" href="https://github.com/Rafale25">
+                <NavLink class="mx-1 p-0" href="https://github.com/Rafale25">
                     <img src="img/github-icon.svg" alt="githubIcon" style="width: 3em; padding: 3px"/>
                 </NavLink>
             </NavItem>
         </Nav>
     </Navbar>
 
-    <Container class="mt-5" style="padding-left: 10%; padding-right: 10%;">
-        <h2 style="color:grey;">Projects</h2>
+    <Container class="containerProject mt-5 mb-5 pt-3 pb-3">
+        <h3 class="text-secondary">Projects</h3>
 
         {#each projects as p}
-            <Card class="m-3">
-                <Row class="g-0">
-                    <Col md="4" style="max-height: 200px;">
-                        <a href={p.link}>
-                            <img src={p.img} alt={p.name} class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
-                        </a>
-                    </Col>
-                    <Card class="col-md-8">
-                        <CardHeader>
-                            <CardTitle>{p.name}</CardTitle>
-                        </CardHeader>
-                        <CardBody>
-                            <CardText>{p.description}</CardText>
-                        </CardBody>
-                        <CardFooter>
-                            <CardText>{p.tags}</CardText>
-                        </CardFooter>
-                    </Card>
-                </Row>
-            </Card>
+            <Row class="g-0 m-3">
+                <Col md="4" style="max-height: 200px;">
+                    <a href={p.link}>
+                        <img src={p.img} alt={p.name} class="img-fluid rounded-start w-100 h-100" style="object-fit: cover; background-color: whitesmoke;">
+                    </a>
+                </Col>
+                <Card class="col-md-8 p-0 m-0" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px">
+                    <CardHeader>
+                        <CardTitle>{p.name}</CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                        <CardText>{p.description}</CardText>
+                    </CardBody>
+                    <CardFooter>
+                        <CardText>{p.tags}</CardText>
+                    </CardFooter>
+                </Card>
+            </Row>
         {/each}
     </Container>
-    
+
+    <footer class="bg-light text-lg-start">
+        <div class="p-3" style="background-color: white;">
+            <span class="text-dark">Rafale25</span><span class="text-secondary">#0025</span>
+        </div>
+      </footer>
+
 </main>
 
 
@@ -95,7 +97,14 @@
 
     main {
         text-align: center;
-    }	
+    }
+
+    :global(.containerProject) {
+        border-radius: 8px;
+        background-color:white;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
 
     .logo {
         float: left;
@@ -105,20 +114,6 @@
         border-width: 2px;
         border-color: white;
     }
-    
+
 </style>
 
-<!-- 
-
-
-.projectPicture {
-    width: 200px;
-    height: 200px;
-    object-fit: cover; /* crop the img if to large*/
-    border-radius: 5px;
-    margin: 5px;
-    /* border-style: solid; */
-    /* border-color: black; */
-    /* border-width: 2px; */
-}
--->
