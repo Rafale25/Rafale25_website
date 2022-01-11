@@ -7,7 +7,14 @@
         Card, CardBody, CardFooter, CardHeader, CardSubtitle, CardText, CardTitle
     } from 'sveltestrap';
 
-    let projects = [
+    const tags = {
+        "Python": "https://www.python.org/",
+        "ModernGL": "https://github.com/moderngl/moderngl",
+        "Pygame": "https://github.com/pygame/pygame",
+        "ScrapMechanic": "https://store.steampowered.com/app/387990/Scrap_Mechanic/",
+    }
+
+    const projects = [
         {
             name: "Slime",
             link: "https://github.com/Rafale25/Slime_simulation",
@@ -30,14 +37,13 @@
             tags: ["ScrapMechanic", "Python", "Pygame"],
         },
     ];
-
 </script>
 <Styles/>
 
 <main>
-    <Navbar color="light" light expand="md">
+    <Navbar color="dark" expand="md">
         <img  class="logo mx-1" src="img/logo.jpg" alt="ProfilePicture"/>
-        <span class="mx-3" style="color:white;">Rafale25</span>
+        <h3 class="mx-3" style="color:white;">Rafale25</h3>
 
         <Nav class="ms-auto" navbar>
             <NavItem>
@@ -49,28 +55,43 @@
     </Navbar>
 
     <Container class="containerProject mt-5 mb-5 pt-3 pb-3">
-        <h3 class="text-secondary">Projects</h3>
+        <h3 class="text-white mx-2" style="text-align: left;">Projects</h3>
 
         {#each projects as p}
-            <Row class="g-0 m-3">
+            <Row class="g-0 mx-3 my-3" style="background-color: var(--background-third);">
                 <Col md="4" style="max-height: 200px;">
                     <a href={p.link}>
-                        <img src={p.img} alt={p.name} class="img-fluid rounded-start w-100 h-100" style="object-fit: cover; background-color: whitesmoke;">
+                        <img src={p.img} alt={p.name} class="img-fluid preview-img">
                     </a>
                 </Col>
-                <Card class="col-md-8 p-0 m-0" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px">
+                <div class="card col-md-8">
+                    <div class="card-header">
+                        <!-- <CardTitle></CardTitle> -->
+                        <span>{p.name}</span>
+                    </div>
+                    <div class="card-body">
+                        <CardText>{p.description}</CardText>
+                    </div>
+                    <div class="card-footer" style="display: flex; flex-direction: row;">
+                        {#each p.tags as tag}
+                            <a href={tags[tag]} style="text-decoration: none;">
+                                <span class="tag">{tag}</span>
+                            </a>
+                        {/each}
+
+                    </div>
+                </div>
+                <!-- <Card class="col-md-8" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
                     <CardHeader>
-                        <CardTitle>{p.name}</CardTitle>
                     </CardHeader>
                     <CardBody>
-                        <CardText>{p.description}</CardText>
                     </CardBody>
                     <CardFooter>
-                        <CardText>{p.tags}</CardText>
                     </CardFooter>
-                </Card>
+                </Card> -->
             </Row>
         {/each}
+
     </Container>
 
     <footer class="bg-light text-lg-start">
@@ -81,29 +102,80 @@
 
 </main>
 
-
 <style>
+    :root {
+        --primary: rgb(41, 219, 41);
+        --primary-dark: rgb(0, 146, 0);
+
+        --background-primary: #252830;
+        --background-secondary: #202020;
+        --background-third: #282828;
+        --border: #303030;
+        --shadow: #191919;
+    }
+
     :global(body) {
         padding: 0px;
-        background-color:rgb(5, 0, 19) !important;
-        /* background-color:rgb(50, 50, 50) !important; */
+        background-color:var(--background-primary) !important;
     }
 
     :global(Nav) {
         background-image: url("/img/boids.png");
         background-repeat: no-repeat;
         background-size: cover;
+        background-color: var(--background-secondary);
+        /* filter: blur(5px); */
     }
 
     main {
-        text-align: center;
+        /* text-align: center; */
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: var(--primary-dark);
     }
 
     :global(.containerProject) {
         border-radius: 8px;
-        background-color:white;
-        padding-left: 5%;
-        padding-right: 5%;
+        max-width: 70% !important;
+
+        border: 4px solid #303030;
+        background-color: var(--background-secondary);
+        box-shadow: 5px 5px 10px 0px var(--shadow);
+    }
+
+    .card {
+        background-color: transparent;
+        box-shadow: 5px 5px 10px 0px var(--shadow);
+    }
+    .card-header {
+        background-color: var(--border);
+        border-radius: 0px 10px 0px 0px !important;
+        font-weight: bold;
+        font-size: 1.15em;
+    }
+    .card-body {
+        background-color: var(--background-third);
+        border-radius: 0px 0px 0px 0px !important;
+        color: var(--primary-dark);
+    }
+    .card-footer {
+        background-color: var(--border);
+        border-radius: 0px 0px 10px 0px !important;
+    }
+
+    .preview-img {
+        object-fit: cover;
+        border-radius: 10px 0px 0px 10px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .tag {
+        background-color: var(--primary);
+        color: black;
+        margin: 0px 1px 0px 1px;
+        padding: 0px 6px 0px 6px;
+        border: 1px solid;
+        border-radius: 10px;
     }
 
     .logo {
