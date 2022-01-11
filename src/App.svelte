@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { Styles, Button, Icon } from 'sveltestrap';
+    import { Styles } from 'sveltestrap';
+    import { fade } from 'svelte/transition';
     import {
         Container,
         Col, Row,
@@ -63,7 +64,7 @@
 
         {#each projects as p}
             <Row class="g-0 mx-3 my-3" style="background-color: var(--background-third);">
-                <Col md="4" style="max-height: 200px;">
+                <Col md="4" style="max-height: 200px; overflow: hidden;">
                     <a href={p.link}>
                         <img src={p.img} alt={p.name} class="img-fluid preview-img">
                     </a>
@@ -171,7 +172,19 @@
         border-radius: 10px 0px 0px 10px;
         width: 100%;
         height: 100%;
+        /* height: 200px; */
+        margin: 0px;
+        transition: transform 0.4s;
     }
+
+    /* .card:hover > .preview-img {
+		height : 110%;
+		bottom : 5%;
+	} */
+    .preview-img:hover {
+        transform: scale(1.1);
+    }
+
 
     .tag {
         background-color: var(--primary);
