@@ -54,6 +54,10 @@
         </Nav>
     </Navbar>
 
+    <div class="text-warning text-center m-5">
+        <h5>This website is still under development</h5>
+    </div>
+
     <Container class="containerProject mt-5 mb-5 pt-3 pb-3">
         <h3 class="text-white mx-2" style="text-align: left;">Projects</h3>
 
