@@ -175,6 +175,8 @@
         /* height: 200px; */
         margin: 0px;
         transition: transform 0.4s;
+        backface-visibility: hidden;
+        transform: translateZ(0);
     }
 
     /* .card:hover > .preview-img {
