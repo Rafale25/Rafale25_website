@@ -1,70 +1,56 @@
 <script lang="ts">
-    import { Styles } from 'sveltestrap';
-    import { fade } from 'svelte/transition';
-    import {
-        Container,
-        Col, Row,
-        Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-        Card, CardBody, CardFooter, CardHeader, CardSubtitle, CardText, CardTitle
-    } from 'sveltestrap';
-
     const tags = {
-        "Python": "https://www.python.org/",
-        "ModernGL": "https://github.com/moderngl/moderngl",
-        "Pygame": "https://github.com/pygame/pygame",
-        "ScrapMechanic": "https://store.steampowered.com/app/387990/Scrap_Mechanic/",
+        'Python': 'https://www.python.org/',
+        'ModernGL': 'https://github.com/moderngl/moderngl',
+        'Pygame': 'https://github.com/pygame/pygame',
+        'ScrapMechanic': 'https://store.steampowered.com/app/387990/Scrap_Mechanic/',
     }
 
     const projects = [
         {
-            name: "Slime",
-            link: "https://github.com/Rafale25/Slime_simulation",
-            img: "https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true",
-            description: "Blob simulation in Python with ModernGL",
-            tags: ["Python", "ModernGL"],
+            name: 'Slime',
+            link: 'https://github.com/Rafale25/Slime_simulation',
+            img: 'https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true',
+            description: 'Blob simulation in Python with ModernGL',
+            tags: ['Python', 'ModernGL'],
         },
         {
-            name: "Boids",
-            link: "https://github.com/Rafale25/Boids-Pyglet-Moderngl",
-            img:"./img/boids.png",
-            description: "Flocking simulation in Python with ModernGL",
-            tags: ["Python", "ModernGL"],
+            name: 'Boids',
+            link: 'https://github.com/Rafale25/Boids-Pyglet-Moderngl',
+            img:'./img/boids.png',
+            description: 'Flocking simulation in Python with ModernGL',
+            tags: ['Python', 'ModernGL'],
         },
         {
-            name: "ScrapMechanic injection interface",
-            link: "https://github.com/Rafale25/python_injection_interface_SM",
-            img: "",
-            description: "Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod",
-            tags: ["ScrapMechanic", "Python", "Pygame"],
+            name: 'ScrapMechanic injection interface',
+            link: 'https://github.com/Rafale25/python_injection_interface_SM',
+            img: '',
+            description: 'Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod',
+            tags: ['ScrapMechanic', 'Python', 'Pygame'],
         },
     ];
 </script>
-<Styles/>
 
 <main>
-    <Navbar color="dark" expand="md">
-        <img  class="logo mx-1" src="img/logo.jpg" alt="ProfilePicture"/>
-        <h3 class="mx-3" style="color:white;">Rafale25</h3>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-        <Nav class="ms-auto" navbar>
-            <NavItem>
-                <NavLink class="mx-1 p-0" href="https://github.com/Rafale25">
-                    <img src="img/github-icon.svg" alt="githubIcon" style="width: 3em; padding: 3px"/>
-                </NavLink>
-            </NavItem>
-        </Nav>
-    </Navbar>
+    <div class="navbar bg-dark">
+        <div class="mx-3">
+            <img  class="logo mx-1" src="img/logo.jpg" alt="ProfilePicture"/>
+        </div>
+        <div class="mx-4">
+            <span class="text-white">Rafale25</span><span class="text-secondary">#0025</span>
+        </div>
+    </div>
 
     <div class="text-warning text-center m-5">
         <h5>This website is still under development</h5>
     </div>
 
-    <Container class="containerProject mt-5 mb-5 pt-3 pb-3">
+    <div class="container containerProject mt-5 mb-5 pt-3 pb-3">
         <h3 class="text-white mx-2" style="text-align: left;">Projects</h3>
 
         {#each projects as p}
-
-            <!-- TODO: put the whole row in an <a></a> -->
             <a href={p.link} style="text-decoration: inherit; color: inherit;">
                 <div class="row g-0 mx-3 my-3" style="background-color: var(--background-third);">
                     <div class="col" style="max-height: 200px; overflow: hidden;">
@@ -75,13 +61,13 @@
                             <span>{p.name}</span>
                         </div>
                         <div class="card-body">
-                            <CardText>{p.description}</CardText>
+                            <p>{p.description}</p>
                         </div>
                         <div class="card-footer" style="display: flex; flex-direction: row;">
                             {#each p.tags as tag}
-                            <a href={tags[tag]} style="text-decoration: none;">
-                                <span class="tag">{tag}</span>
-                            </a>
+                                <a href={tags[tag]} style="text-decoration: none;">
+                                    <span class="tag">{tag}</span>
+                                </a>
                             {/each}
 
                         </div>
@@ -89,14 +75,13 @@
                 </div>
             </a>
         {/each}
+    </div>
 
-    </Container>
-
-    <footer class="bg-light text-lg-start">
-        <div class="p-3" style="background-color: white;">
-            <span class="text-dark">Rafale25</span><span class="text-secondary">#0025</span>
-        </div>
-      </footer>
+    <footer style="text-align: center; padding: 20px; 0px; 40px 0px; background-color: var(--background-secondary);">
+            <a href="https://github.com/Rafale25">
+                <img src="img/github-icon.svg" alt="githubIcon" style="width: 3em; padding: 3px"/>
+            </a>
+    </footer>
 
 </main>
 
@@ -132,24 +117,26 @@
     }
 
     /* large screen */
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 800px) {
         :global(.containerProject) {
             max-width: 70% !important;
             border-radius: 8px;
             border: 4px solid #303030;
             background-color: var(--background-secondary);
             box-shadow: 5px 5px 10px 0px var(--shadow);
+            transition: max-width 0.3s, width 0.3s;
         }
     }
 
     /* small screen */
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 800px) {
         :global(.containerProject) {
             max-width: 100% !important;
             border-radius: 8px;
             border: 4px solid #303030;
             background-color: var(--background-secondary);
             box-shadow: 5px 5px 10px 0px var(--shadow);
+            transition: max-width 0.3s, width 0.3s;
         }
     }
 
@@ -214,17 +201,3 @@
     }
 
 </style>
-
-<!-- <Row class="g-0 mx-3 my-3" style="background-color: var(--background-third);"> -->
-    <!-- <Col md="4" style="max-height: 200px; overflow: hidden;"> -->
-    <!-- </Col> -->
-<!-- <CardTitle></CardTitle> -->
-    <!-- <Card class="col-md-8" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
-        <CardHeader>
-        </CardHeader>
-        <CardBody>
-        </CardBody>
-        <CardFooter>
-        </CardFooter>
-    </Card> -->
-    <!-- </Row> -->
