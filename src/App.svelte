@@ -63,38 +63,31 @@
         <h3 class="text-white mx-2" style="text-align: left;">Projects</h3>
 
         {#each projects as p}
-            <Row class="g-0 mx-3 my-3" style="background-color: var(--background-third);">
-                <Col md="4" style="max-height: 200px; overflow: hidden;">
-                    <a href={p.link}>
+
+            <!-- TODO: put the whole row in an <a></a> -->
+            <a href={p.link} style="text-decoration: inherit; color: inherit;">
+                <div class="row g-0 mx-3 my-3" style="background-color: var(--background-third);">
+                    <div class="col" style="max-height: 200px; overflow: hidden;">
                         <img src={p.img} alt={p.name} class="img-fluid preview-img">
-                    </a>
-                </Col>
-                <div class="card col-md-8">
-                    <div class="card-header">
-                        <!-- <CardTitle></CardTitle> -->
-                        <span>{p.name}</span>
                     </div>
-                    <div class="card-body">
-                        <CardText>{p.description}</CardText>
-                    </div>
-                    <div class="card-footer" style="display: flex; flex-direction: row;">
-                        {#each p.tags as tag}
+                    <div class="card col-md-8">
+                        <div class="card-header">
+                            <span>{p.name}</span>
+                        </div>
+                        <div class="card-body">
+                            <CardText>{p.description}</CardText>
+                        </div>
+                        <div class="card-footer" style="display: flex; flex-direction: row;">
+                            {#each p.tags as tag}
                             <a href={tags[tag]} style="text-decoration: none;">
                                 <span class="tag">{tag}</span>
                             </a>
-                        {/each}
+                            {/each}
 
+                        </div>
                     </div>
                 </div>
-                <!-- <Card class="col-md-8" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
-                    <CardHeader>
-                    </CardHeader>
-                    <CardBody>
-                    </CardBody>
-                    <CardFooter>
-                    </CardFooter>
-                </Card> -->
-            </Row>
+            </a>
         {/each}
 
     </Container>
@@ -109,7 +102,7 @@
 
 <style>
     :root {
-        --primary: rgb(41, 219, 41);
+        --primary-light: rgb(41, 219, 41);
         --primary-dark: rgb(0, 146, 0);
 
         --background-primary: #252830;
@@ -138,13 +131,26 @@
         color: var(--primary-dark);
     }
 
-    :global(.containerProject) {
-        border-radius: 8px;
-        max-width: 70% !important;
+    /* large screen */
+    @media screen and (min-width: 600px) {
+        :global(.containerProject) {
+            max-width: 70% !important;
+            border-radius: 8px;
+            border: 4px solid #303030;
+            background-color: var(--background-secondary);
+            box-shadow: 5px 5px 10px 0px var(--shadow);
+        }
+    }
 
-        border: 4px solid #303030;
-        background-color: var(--background-secondary);
-        box-shadow: 5px 5px 10px 0px var(--shadow);
+    /* small screen */
+    @media screen and (max-width: 600px) {
+        :global(.containerProject) {
+            max-width: 100% !important;
+            border-radius: 8px;
+            border: 4px solid #303030;
+            background-color: var(--background-secondary);
+            box-shadow: 5px 5px 10px 0px var(--shadow);
+        }
     }
 
     .card {
@@ -165,6 +171,7 @@
     .card-footer {
         background-color: var(--border);
         border-radius: 0px 0px 10px 0px !important;
+        flex-wrap: wrap !important;
     }
 
     .preview-img {
@@ -172,29 +179,29 @@
         border-radius: 10px 0px 0px 10px;
         width: 100%;
         height: 100%;
-        /* height: 200px; */
-        margin: 0px;
         transition: transform 0.4s;
         backface-visibility: hidden;
         transform: translateZ(0);
     }
 
-    /* .card:hover > .preview-img {
-		height : 110%;
-		bottom : 5%;
-	} */
-    .preview-img:hover {
+    .row:hover > .col > .preview-img {
         transform: scale(1.1);
+	}
+
+    .row:hover > .card > .card-header {
+        color: var(--primary-light);
     }
 
-
     .tag {
-        background-color: var(--primary);
+        background-color: var(--primary-light);
         color: black;
         margin: 0px 1px 0px 1px;
         padding: 0px 6px 0px 6px;
         border: 1px solid;
         border-radius: 10px;
+    }
+    .tag:hover {
+        filter: saturate(200%);
     }
 
     .logo {
@@ -208,3 +215,16 @@
 
 </style>
 
+<!-- <Row class="g-0 mx-3 my-3" style="background-color: var(--background-third);"> -->
+    <!-- <Col md="4" style="max-height: 200px; overflow: hidden;"> -->
+    <!-- </Col> -->
+<!-- <CardTitle></CardTitle> -->
+    <!-- <Card class="col-md-8" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+        <CardHeader>
+        </CardHeader>
+        <CardBody>
+        </CardBody>
+        <CardFooter>
+        </CardFooter>
+    </Card> -->
+    <!-- </Row> -->
