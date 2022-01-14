@@ -48,12 +48,19 @@
     }
 </script>
 
+<!--
+    - add bio
+    - gif when hovering projects
+    - page for each project
+ -->
+
 <main>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <div class="r-navbar">
-        <div style="display: flex; justify-content: center; width: 100%; height: 100%; backdrop-filter: blur(5px);">
+        <div class="r-navbar-container">
             <div style="width: 100%; text-align: center; padding: 1rem;">
+
                 <img  class="logo mx-2" src="img/logo.jpg" alt="ProfilePicture"/>
 
                 <Hoverable let:hovering={active}>
@@ -64,6 +71,7 @@
                         {/if}
                     </div>
                 </Hoverable>
+
             </div>
         </div>
     </div>
@@ -75,7 +83,6 @@
     <!-- <a href="resume.html">Resume</a> -->
 
     <div class="container containerProject mt-5 mb-5 pt-3 pb-3">
-        <!-- <h3 class="text-white mx-2" style="text-align: left;">Projects</h3> -->
 
         {#each projects as p}
             <a href={p.link} style="text-decoration: inherit; color: inherit;">
@@ -144,6 +151,13 @@
         background-size: cover;
         background-position: center;
         background-size: 100%;
+    }
+    .r-navbar-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(5px);
     }
 
     main {
