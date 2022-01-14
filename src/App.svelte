@@ -158,6 +158,7 @@
         width: 100%;
         height: 100%;
         backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
     }
 
     main {
