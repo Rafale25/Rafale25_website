@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { fade } from 'svelte/transition';
+    import Hoverable from './Hoverable.svelte';
+
     const tags = {
         'Python': 'https://www.python.org/',
         'ModernGL': 'https://github.com/moderngl/moderngl',
@@ -8,17 +11,24 @@
 
     const projects = [
         {
+            name: 'Vine mesh generation',
+            link: 'https://github.com/Rafale25/Vine_mesh_generation',
+            img: '',
+            description: 'Vine mesh generation using geometry shader',
+            tags: ['Python', 'ModernGL'],
+        },
+        {
             name: 'Slime',
             link: 'https://github.com/Rafale25/Slime_simulation',
             img: 'https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true',
-            description: 'Blob simulation in Python with ModernGL',
+            description: 'Blob simulation',
             tags: ['Python', 'ModernGL'],
         },
         {
             name: 'Boids',
             link: 'https://github.com/Rafale25/Boids-Pyglet-Moderngl',
             img:'./img/boids.png',
-            description: 'Flocking simulation in Python with ModernGL',
+            description: 'Large flocking simulation with compute shaders',
             tags: ['Python', 'ModernGL'],
         },
         {
@@ -29,30 +39,47 @@
             tags: ['ScrapMechanic', 'Python', 'Pygame'],
         },
     ];
+
+    const discord_name = "Rafale25#0025";
+
+    function clipboard(e) {
+        navigator.clipboard.writeText(discord_name);
+        // alert("Discord copied inside the clipboard: " + discord_name);
+    }
 </script>
 
 <main>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <div class="navbar bg-dark">
-        <div class="mx-3">
-            <img  class="logo mx-1" src="img/logo.jpg" alt="ProfilePicture"/>
-        </div>
-        <div class="mx-4">
-            <span class="text-white">Rafale25</span><span class="text-secondary">#0025</span>
+    <div class="r-navbar">
+        <div style="display: flex; justify-content: center; width: 100%; height: 100%; backdrop-filter: blur(5px);">
+            <div style="width: 100%; text-align: center; padding: 1rem;">
+                <img  class="logo mx-2" src="img/logo.jpg" alt="ProfilePicture"/>
+
+                <Hoverable let:hovering={active}>
+                    <div style="font-size: 20px;" on:click={clipboard}>
+                        <span style="text-decoration: none; color: white;">Rafale25</span>
+                        {#if active}
+                        <span transition:fade={{duration: 150}} style="position: absolute; color: rgba(255,255,255,0.3);">#0025</span>
+                        {/if}
+                    </div>
+                </Hoverable>
+            </div>
         </div>
     </div>
 
-    <div class="text-warning text-center m-5">
+    <!-- <div class="text-warning text-center m-5">
         <h5>This website is still under development</h5>
-    </div>
+    </div> -->
+
+    <!-- <a href="resume.html">Resume</a> -->
 
     <div class="container containerProject mt-5 mb-5 pt-3 pb-3">
-        <h3 class="text-white mx-2" style="text-align: left;">Projects</h3>
+        <!-- <h3 class="text-white mx-2" style="text-align: left;">Projects</h3> -->
 
         {#each projects as p}
             <a href={p.link} style="text-decoration: inherit; color: inherit;">
-                <div class="row g-0 mx-3 my-3" style="background-color: var(--background-third);">
+                <div class="row g-0 mx-3 my-3" style="background-color: transparent;">
                     <div class="col" style="max-height: 200px; overflow: hidden;">
                         <img src={p.img} alt={p.name} class="img-fluid preview-img">
                     </div>
@@ -78,9 +105,15 @@
     </div>
 
     <footer style="text-align: center; padding: 20px; 0px; 40px 0px; background-color: var(--background-secondary);">
-            <a href="https://github.com/Rafale25">
-                <img src="img/github-icon.svg" alt="githubIcon" style="width: 3em; padding: 3px"/>
-            </a>
+        <a href="https://github.com/Rafale25">
+            <img src="img/github-icon.svg" alt="Github Icon" style="width: 3em; padding: 3px"/>
+        </a>
+        <a href="https://www.youtube.com/channel/UCjJYtSy8dMGJkMVrBnwaWSA">
+            <img src="img/youtube2.svg" alt="Youtube Icon" style="width: 3em; padding: 3px"/>
+        </a>
+        <a href="" on:click={clipboard}>
+            <img src="img/discord-icon.svg" alt="Discord Icon" style="width: 3em; padding: 3px"/>
+        </a>
     </footer>
 
 </main>
@@ -102,22 +135,25 @@
         background-color:var(--background-primary) !important;
     }
 
-    :global(Nav) {
+    .r-navbar {
+        display: flex;
+        background-color: var(--background-secondary);
+
         background-image: url("/img/boids.png");
         background-repeat: no-repeat;
         background-size: cover;
-        background-color: var(--background-secondary);
-        /* filter: blur(5px); */
+        background-position: center;
+        background-size: 100%;
     }
 
     main {
-        /* text-align: center; */
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+        font-family: monospace;
         color: var(--primary-dark);
     }
 
     /* large screen */
-    @media screen and (min-width: 800px) {
+    @media screen and (min-width: 700px) {
         :global(.containerProject) {
             max-width: 70% !important;
             border-radius: 8px;
@@ -129,7 +165,7 @@
     }
 
     /* small screen */
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 700px) {
         :global(.containerProject) {
             max-width: 100% !important;
             border-radius: 8px;
@@ -192,12 +228,11 @@
     }
 
     .logo {
-        float: left;
-        width: 50px;
+        width: 75px;
         border-radius: 50%;
         border-style: solid;
         border-width: 2px;
-        border-color: white;
+        border-color: var(--background-third);
     }
 
 </style>
