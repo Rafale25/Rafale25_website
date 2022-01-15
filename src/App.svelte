@@ -13,7 +13,7 @@
         {
             name: 'Vine mesh generation',
             link: 'https://github.com/Rafale25/Vine_mesh_generation',
-            img: '',
+            img: './img/vine.png',
             description: 'Vine mesh generation using geometry shader',
             tags: ['Python', 'ModernGL'],
         },
@@ -34,9 +34,9 @@
         {
             name: 'ScrapMechanic injection interface',
             link: 'https://github.com/Rafale25/python_injection_interface_SM',
-            img: '',
+            img: './img/sm_interface.png',
             description: 'Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod',
-            tags: ['ScrapMechanic', 'Python', 'Pygame'],
+            tags: ['ScrapMechanic', 'Python', 'DearPygui', 'Pygame'],
         },
     ];
 
@@ -44,14 +44,21 @@
 
     function clipboard(e) {
         navigator.clipboard.writeText(discord_name);
-        // alert("Discord copied inside the clipboard: " + discord_name);
+        alert("Discord tag copied in the clipboard: " + discord_name);
     }
 </script>
 
 <!--
+primary:
+    - replace card with normal css
+        (because i can't get card to resize with its preview-image,
+        card's right column not taking full width on right sider with large screen)
+
+secondary:
     - add bio
     - gif when hovering projects
     - page for each project
+    - project sortable by date/name/stars?
  -->
 
 <main>
@@ -59,7 +66,7 @@
 
     <div class="r-navbar">
         <div class="r-navbar-container">
-            <div style="width: 100%; text-align: center; padding: 1rem;">
+            <div style="text-align: center; padding: 1rem;">
 
                 <img  class="logo mx-2" src="img/logo.jpg" alt="ProfilePicture"/>
 
@@ -82,15 +89,16 @@
 
     <!-- <a href="resume.html">Resume</a> -->
 
-    <div class="container containerProject mt-5 mb-5 pt-3 pb-3">
+    <div class="container containerProject">
 
         {#each projects as p}
             <a href={p.link} style="text-decoration: inherit; color: inherit;">
                 <div class="row g-0 mx-3 my-3" style="background-color: transparent;">
-                    <div class="col" style="max-height: 200px; overflow: hidden;">
+                    <!-- <div class="col" style="overflow: hidden;"> -->
+                    <div class="col" style="width:20vw; height:20vw; max-width: 200px; max-height: 200px; overflow: hidden;">
                         <img src={p.img} alt={p.name} class="img-fluid preview-img">
                     </div>
-                    <div class="card col-md-8">
+                    <div class="col-md-8 card">
                         <div class="card-header">
                             <span>{p.name}</span>
                         </div>
@@ -111,7 +119,7 @@
         {/each}
     </div>
 
-    <footer style="text-align: center; padding: 20px; 0px; 40px 0px; background-color: var(--background-secondary);">
+    <footer class="r-footer">
         <a href="https://github.com/Rafale25">
             <img src="img/github-icon.svg" alt="Github Icon" style="width: 3em; padding: 3px"/>
         </a>
@@ -161,15 +169,27 @@
         -webkit-backdrop-filter: blur(5px);
     }
 
+    .r-footer {
+        margin-top: 3rem;
+        padding: 2rem;
+        text-align: center;
+        background-color: var(--background-secondary);
+    }
+
     main {
         /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
         font-family: monospace;
         color: var(--primary-dark);
+        background-image: url("/img/tri.png");
+        background-repeat: repeat;
     }
 
     /* large screen */
     @media screen and (min-width: 700px) {
         :global(.containerProject) {
+            margin-top: 3rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
             max-width: 70% !important;
             border-radius: 8px;
             border: 4px solid #303030;
@@ -182,6 +202,7 @@
     /* small screen */
     @media screen and (max-width: 700px) {
         :global(.containerProject) {
+            margin-top: 3rem;
             max-width: 100% !important;
             border-radius: 8px;
             border: 4px solid #303030;
@@ -194,6 +215,10 @@
     .card {
         background-color: transparent;
         box-shadow: 5px 5px 10px 0px var(--shadow);
+
+        /* width: 100%; */
+        /* padding-bottom: 50%; */
+
     }
     .card-header {
         background-color: var(--border);
