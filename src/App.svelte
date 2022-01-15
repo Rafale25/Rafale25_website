@@ -95,7 +95,8 @@ secondary:
             <a href={p.link} style="text-decoration: inherit; color: inherit;">
                 <div class="row g-0 mx-3 my-3" style="background-color: transparent;">
                     <!-- <div class="col" style="overflow: hidden;"> -->
-                    <div class="col" style="width:20vw; height:20vw; max-width: 200px; max-height: 200px; overflow: hidden;">
+                    <!-- <div class="col" style="width:20vw; height:20vw; max-width: 200px; max-height: 200px; overflow: hidden;"> -->
+                    <div class="col" style="width:20vw; height:20vw; max-height: 200px; overflow: hidden;">
                         <img src={p.img} alt={p.name} class="img-fluid preview-img">
                     </div>
                     <div class="col-md-8 card">
@@ -215,10 +216,6 @@ secondary:
     .card {
         background-color: transparent;
         box-shadow: 5px 5px 10px 0px var(--shadow);
-
-        /* width: 100%; */
-        /* padding-bottom: 50%; */
-
     }
     .card-header {
         background-color: var(--border);
