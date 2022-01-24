@@ -127,7 +127,7 @@ secondary:
             <img src="img/github-icon.svg" alt="Github Icon" style="width: 3em; padding: 3px"/>
         </a>
         <a href="https://www.youtube.com/channel/UCjJYtSy8dMGJkMVrBnwaWSA">
-            <img src="img/youtube2.svg" alt="Youtube Icon" style="width: 3em; padding: 3px"/>
+            <img src="img/youtube-icon.svg" alt="Youtube Icon" style="width: 3em; padding: 3px"/>
         </a>
         <a href="" on:click={clipboard}>
             <img src="img/discord-icon.svg" alt="Discord Icon" style="width: 3em; padding: 3px"/>
