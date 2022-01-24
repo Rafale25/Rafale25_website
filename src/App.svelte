@@ -139,7 +139,7 @@ secondary:
 <style>
     :root {
         --primary-light: rgb(41, 219, 41);
-        --primary-dark: rgb(0, 146, 0);
+        --primary-dark: rgb(0, 175, 0);
 
         --background-primary: #252830;
         --background-secondary: #202020;
@@ -227,7 +227,8 @@ secondary:
     .card-body {
         background-color: var(--background-third);
         border-radius: 0px 0px 0px 0px !important;
-        color: var(--primary-dark);
+        color: #dddddd;
+        /* color: var(--primary-dark); */
     }
     .card-footer {
         background-color: var(--border);
