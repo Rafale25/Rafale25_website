@@ -157,19 +157,18 @@ secondary:
         display: flex;
         background-color: var(--background-secondary);
 
-        background-image: url("/img/boids.png");
+        background-image: url("/img/boids-blurred.png");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        background-size: 100%;
     }
     .r-navbar-container {
         display: flex;
         justify-content: center;
         width: 100%;
         height: 100%;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
+        /* backdrop-filter: blur(4px); */
+        /* -webkit-backdrop-filter: blur(5px); */
     }
 
     .r-footer {
