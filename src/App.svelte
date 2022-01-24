@@ -45,7 +45,7 @@
     const discord_name = "Rafale25#0025";
 
     function clipboard(e) {
-        window.navigator.clipboard.writeText(discord_name);
+        navigator.clipboard.writeText(discord_name);
         alert("Discord tag copied in the clipboard: " + discord_name);
     }
 </script>
@@ -73,7 +73,7 @@ secondary:
                 <img  class="logo" src="img/logo.jpg" alt="ProfilePicture"/>
 
                 <Hoverable let:hovering={active}>
-                    <div style="font-size: 20px;" on:click={clipboard}>
+                    <div type="button" style="font-size: 20px;" on:click={clipboard}>
                         <span style="text-decoration: none; color: white;">Rafale25</span>
                         {#if active}
                             <span transition:fade={{duration: 150}} style="position: absolute; color: rgba(255,255,255,0.3);">#0025</span>
