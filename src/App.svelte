@@ -23,14 +23,14 @@
             name: 'Slime',
             link: 'https://github.com/Rafale25/Slime_simulation',
             img: 'https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true',
-            description: 'Blob simulation',
+            description: 'Blob simulation using compute shaders',
             tags: ['Python', 'ModernGL', 'Compute Shaders'],
         },
         {
             name: 'Boids',
             link: 'https://github.com/Rafale25/Boids-Pyglet-Moderngl',
             img:'./img/boids.png',
-            description: 'Large flocking simulation with compute shaders',
+            description: 'Large flocking simulation using compute shaders',
             tags: ['Python', 'ModernGL', 'Compute Shaders'],
         },
         {
@@ -45,7 +45,7 @@
     const discord_name = "Rafale25#0025";
 
     function clipboard(e) {
-        navigator.clipboard.writeText(discord_name);
+        window.navigator.clipboard.writeText(discord_name);
         alert("Discord tag copied in the clipboard: " + discord_name);
     }
 </script>
@@ -70,13 +70,13 @@ secondary:
         <div class="r-navbar-container">
             <div style="text-align: center; padding: 1rem;">
 
-                <img  class="logo mx-2" src="img/logo.jpg" alt="ProfilePicture"/>
+                <img  class="logo" src="img/logo.jpg" alt="ProfilePicture"/>
 
                 <Hoverable let:hovering={active}>
                     <div style="font-size: 20px;" on:click={clipboard}>
                         <span style="text-decoration: none; color: white;">Rafale25</span>
                         {#if active}
-                        <span transition:fade={{duration: 150}} style="position: absolute; color: rgba(255,255,255,0.3);">#0025</span>
+                            <span transition:fade={{duration: 150}} style="position: absolute; color: rgba(255,255,255,0.3);">#0025</span>
                         {/if}
                     </div>
                 </Hoverable>
@@ -88,8 +88,6 @@ secondary:
     <!-- <div class="text-warning text-center m-5">
         <h5>This website is still under development</h5>
     </div> -->
-
-    <!-- <a href="resume.html">Resume</a> -->
 
     <div class="container containerProject">
 
