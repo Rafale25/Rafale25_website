@@ -7,6 +7,8 @@
         'ModernGL': 'https://github.com/moderngl/moderngl',
         'Pygame': 'https://github.com/pygame/pygame',
         'ScrapMechanic': 'https://store.steampowered.com/app/387990/Scrap_Mechanic/',
+        'Compute Shaders': 'https://www.khronos.org/opengl/wiki/Compute_Shader',
+        'Geometry Shaders': 'https://www.khronos.org/opengl/wiki/Geometry_Shader',
     }
 
     const projects = [
@@ -15,21 +17,21 @@
             link: 'https://github.com/Rafale25/Vine_mesh_generation',
             img: './img/vine.png',
             description: 'Vine mesh generation using geometry shader',
-            tags: ['Python', 'ModernGL'],
+            tags: ['Python', 'ModernGL', 'Geometry Shaders'],
         },
         {
             name: 'Slime',
             link: 'https://github.com/Rafale25/Slime_simulation',
             img: 'https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true',
             description: 'Blob simulation',
-            tags: ['Python', 'ModernGL'],
+            tags: ['Python', 'ModernGL', 'Compute Shaders'],
         },
         {
             name: 'Boids',
             link: 'https://github.com/Rafale25/Boids-Pyglet-Moderngl',
             img:'./img/boids.png',
             description: 'Large flocking simulation with compute shaders',
-            tags: ['Python', 'ModernGL'],
+            tags: ['Python', 'ModernGL', 'Compute Shaders'],
         },
         {
             name: 'ScrapMechanic injection interface',
