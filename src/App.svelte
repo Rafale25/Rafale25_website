@@ -87,7 +87,7 @@
             <a href={p.link} style="text-decoration: inherit; color: inherit;">
                 <div class="card">
 
-                    <div class="preview-img-container" style="">
+                    <div class="preview-img-container">
                         <img src={p.img} alt={p.name} class="preview-img">
                     </div>
 
@@ -200,6 +200,7 @@
         background-color: transparent;
         box-shadow: 5px 5px 10px 0px var(--shadow);
         border-radius: 0px 10px 10px 0px;
+        overflow: hidden;
     }
 
     .card-content {
@@ -209,19 +210,21 @@
         min-height: 100%;
         width: 100%;
     }
+
     .card-header {
         background-color: var(--border);
-        border-radius: 0px 10px 0px 0px;
         font-weight: bold;
         font-size: 1.15em;
         padding: 0.5rem 1rem;
+    }
+    .card:hover > .card-content > .card-header {
+        color: var(--primary-light);
     }
 
     .card-body {
         height: 100%;
         padding: 1rem;
         background-color: var(--background-third);
-        border-radius: 0px 0px 0px 0px;
         color: var(--r-text);
     }
 
@@ -231,11 +234,10 @@
         flex-wrap: wrap;
         padding: 0.5rem 0.75rem;
         background-color: var(--border);
-        border-radius: 0px 0px 10px 0px;
     }
 
     .preview-img-container {
-        min-height:200px;
+        min-height: 200px;
         max-height: 200px;
         max-width: 35%;
         border-radius: 10px 0px 0px 10px;
@@ -243,20 +245,15 @@
     }
 
     .preview-img {
-        object-fit: cover;
         width: 100%;
         height: 100%;
+        object-fit: cover;
         transition: transform 0.4s;
         backface-visibility: hidden;
         transform: translateZ(0);
     }
-
     .card:hover > .preview-img-container > .preview-img {
         transform: scale(1.1);
-    }
-
-    .card:hover > .card-content > .card-header {
-        color: var(--primary-light);
     }
 
     .tag {
@@ -267,7 +264,6 @@
         border: 1px solid;
         border-radius: 10px;
     }
-
     .tag:hover {
         filter: saturate(200%);
     }
@@ -299,14 +295,20 @@
 
         .card {
             flex-direction: column;
+            border-radius: 0px 0px 10px 10px;
         }
 
         .preview-img-container {
+            height: 200px; /* WTF */
             max-width: 100%;
-            border-radius: 10px 10px 0px 0px !important;
+            border-radius: 10px 10px 0px 0px;
         }
 
         .preview-img {
+            /* width: 100%; */
+            /* width: auto; */
+            max-height: 100%;
+            min-height: 100%;
         }
 
     }
