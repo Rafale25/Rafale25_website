@@ -51,12 +51,6 @@
 </script>
 
 <!--
-primary:
-    - replace card with normal css
-        (because i can't get card to resize with its preview-image,
-        card's right column not taking full width on right sider with large screen)
-
-secondary:
     - add bio
     - gif when hovering projects
     - page for each project
@@ -64,16 +58,14 @@ secondary:
  -->
 
 <main>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
     <div class="r-navbar">
         <div class="r-navbar-container">
             <div style="text-align: center; padding: 1rem;">
 
-                <img  class="logo" src="img/logo.jpg" alt="ProfilePicture"/>
+                <img class="logo" src="img/logo.jpg" alt="ProfilePicture"/>
 
                 <Hoverable let:hovering={active}>
-                    <div type="button" style="font-size: 20px;" on:click={clipboard}>
+                    <div type="" style="font-size: 20px;" on:click={clipboard}>
                         <span style="text-decoration: none; color: white;">Rafale25</span>
                         {#if active}
                             <span transition:fade={{duration: 150}} style="position: absolute; color: rgba(255,255,255,0.3);">#0025</span>
@@ -85,38 +77,43 @@ secondary:
         </div>
     </div>
 
-    <!-- <div class="text-warning text-center m-5">
-        <h5>This website is still under development</h5>
-    </div> -->
+    <div style="font-weight: 500; color:#ffc107; text-align: center; margin: 3rem;">
+        <h3>This website is still under development</h3>
+    </div>
 
-    <div class="container containerProject">
+    <div class="containerProject">
 
         {#each projects as p}
             <a href={p.link} style="text-decoration: inherit; color: inherit;">
-                <div class="row g-0 mx-3 my-3" style="background-color: transparent;">
-                    <!-- <div class="col" style="overflow: hidden;"> -->
-                    <!-- <div class="col" style="width:20vw; height:20vw; max-width: 200px; max-height: 200px; overflow: hidden;"> -->
-                    <div class="col" style="width:20vw; height:20vw; max-height: 200px; overflow: hidden;">
-                        <img src={p.img} alt={p.name} class="img-fluid preview-img">
+                <div class="card">
+
+                    <div class="preview-img-container" style="">
+                        <img src={p.img} alt={p.name} class="preview-img">
                     </div>
-                    <div class="col-md-8 card">
+
+                    <div class="card-content">
+
                         <div class="card-header">
                             <span>{p.name}</span>
                         </div>
+
                         <div class="card-body">
-                            <p>{p.description}</p>
+                            <span>{p.description}</span>
                         </div>
-                        <div class="card-footer" style="display: flex; flex-direction: row;">
+
+                        <div class="card-footer">
                             {#each p.tags as tag}
                                 <a href={tags[tag]} style="text-decoration: none;">
                                     <span class="tag">{tag}</span>
                                 </a>
                             {/each}
-
                         </div>
+
                     </div>
+
                 </div>
             </a>
+
         {/each}
     </div>
 
@@ -144,11 +141,21 @@ secondary:
         --background-third: #282828;
         --border: #303030;
         --shadow: #191919;
+
+        --r-text: #dddddd;
+    }
+
+    main {
+        font-family: monospace;
+        color: var(--primary-dark);
+        background-image: url("/img/tri.png");
+        background-repeat: repeat;
     }
 
     :global(body) {
         padding: 0px;
         background-color:var(--background-primary) !important;
+        font-size: 1rem;
     }
 
     .r-navbar {
@@ -160,13 +167,12 @@ secondary:
         background-size: cover;
         background-position: center;
     }
+
     .r-navbar-container {
         display: flex;
         justify-content: center;
         width: 100%;
         height: 100%;
-        /* backdrop-filter: blur(4px); */
-        /* -webkit-backdrop-filter: blur(5px); */
     }
 
     .r-footer {
@@ -176,67 +182,68 @@ secondary:
         background-color: var(--background-secondary);
     }
 
-    main {
-        /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
-        font-family: monospace;
-        color: var(--primary-dark);
-        background-image: url("/img/tri.png");
-        background-repeat: repeat;
-    }
+    :global(.containerProject) {
+        margin: 3rem auto 0px auto;
+        padding: 0.75rem;
 
-    /* large screen */
-    @media screen and (min-width: 700px) {
-        :global(.containerProject) {
-            margin-top: 3rem;
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-            max-width: 70% !important;
-            border-radius: 8px;
-            border: 4px solid #303030;
-            background-color: var(--background-secondary);
-            box-shadow: 5px 5px 10px 0px var(--shadow);
-            transition: max-width 0.3s, width 0.3s;
-        }
-    }
-
-    /* small screen */
-    @media screen and (max-width: 700px) {
-        :global(.containerProject) {
-            margin-top: 3rem;
-            max-width: 100% !important;
-            border-radius: 8px;
-            border: 4px solid #303030;
-            background-color: var(--background-secondary);
-            box-shadow: 5px 5px 10px 0px var(--shadow);
-            transition: max-width 0.3s, width 0.3s;
-        }
+        max-width: 70%;
+        border-radius: 8px;
+        border: 4px solid #303030;
+        background-color: var(--background-secondary);
+        box-shadow: 5px 5px 10px 0px var(--shadow);
+        transition: max-width 0.3s, width 0.3s;
     }
 
     .card {
+        display: flex;
+        margin: 1rem;
         background-color: transparent;
         box-shadow: 5px 5px 10px 0px var(--shadow);
+        border-radius: 0px 10px 10px 0px;
+    }
+
+    .card-content {
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        width: 100%;
     }
     .card-header {
         background-color: var(--border);
-        border-radius: 0px 10px 0px 0px !important;
+        border-radius: 0px 10px 0px 0px;
         font-weight: bold;
         font-size: 1.15em;
+        padding: 0.5rem 1rem;
     }
+
     .card-body {
+        height: 100%;
+        padding: 1rem;
         background-color: var(--background-third);
-        border-radius: 0px 0px 0px 0px !important;
-        color: #dddddd;
-        /* color: var(--primary-dark); */
+        border-radius: 0px 0px 0px 0px;
+        color: var(--r-text);
     }
+
     .card-footer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0.5rem 0.75rem;
         background-color: var(--border);
-        border-radius: 0px 0px 10px 0px !important;
-        flex-wrap: wrap !important;
+        border-radius: 0px 0px 10px 0px;
+    }
+
+    .preview-img-container {
+        min-height:200px;
+        max-height: 200px;
+        max-width: 35%;
+        border-radius: 10px 0px 0px 10px;
+        overflow: hidden;
     }
 
     .preview-img {
         object-fit: cover;
-        border-radius: 10px 0px 0px 10px;
         width: 100%;
         height: 100%;
         transition: transform 0.4s;
@@ -244,11 +251,11 @@ secondary:
         transform: translateZ(0);
     }
 
-    .row:hover > .col > .preview-img {
+    .card:hover > .preview-img-container > .preview-img {
         transform: scale(1.1);
-	}
+    }
 
-    .row:hover > .card > .card-header {
+    .card:hover > .card-content > .card-header {
         color: var(--primary-light);
     }
 
@@ -260,16 +267,48 @@ secondary:
         border: 1px solid;
         border-radius: 10px;
     }
+
     .tag:hover {
         filter: saturate(200%);
     }
 
     .logo {
-        width: 75px;
+        width: 70px;
         border-radius: 50%;
         border-style: solid;
         border-width: 2px;
         border-color: var(--background-third);
+    }
+
+    /* large screen */
+    @media screen and (min-width: 700px) {
+        :global(.containerProject) {
+            max-width: 70%;
+        }
+
+        .card {
+            flex-direction: row;
+        }
+    }
+
+    /* small screen */
+    @media screen and (max-width: 700px) {
+        :global(.containerProject) {
+            max-width: 100%;
+        }
+
+        .card {
+            flex-direction: column;
+        }
+
+        .preview-img-container {
+            max-width: 100%;
+            border-radius: 10px 10px 0px 0px !important;
+        }
+
+        .preview-img {
+        }
+
     }
 
 </style>
