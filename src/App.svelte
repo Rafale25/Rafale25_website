@@ -51,6 +51,8 @@
 </script>
 
 <!--
+    - page for gamejams (add game "light is death")
+
     - add bio
     - gif when hovering projects
     - page for each project
@@ -239,7 +241,8 @@
     .preview-img-container {
         min-height: 200px;
         max-height: 200px;
-        max-width: 35%;
+        min-width: 200px;
+        max-width: 30%;
         border-radius: 10px 0px 0px 10px;
         overflow: hidden;
     }
@@ -279,7 +282,7 @@
     /* large screen */
     @media screen and (min-width: 700px) {
         :global(.containerProject) {
-            max-width: 70%;
+            max-width: 60%;
         }
 
         .card {
