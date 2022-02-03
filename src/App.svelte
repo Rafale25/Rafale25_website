@@ -113,8 +113,8 @@
 
                 </div>
             </a>
-
         {/each}
+
     </div>
 
     <footer class="r-footer">
@@ -310,7 +310,6 @@
             max-height: 100%;
             min-height: 100%;
         }
-
     }
 
 </style>
