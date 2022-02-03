@@ -22,7 +22,7 @@
         {
             name: 'Slime',
             link: 'https://github.com/Rafale25/Slime_simulation',
-            img: 'https://github.com/Rafale25/Slime_simulation/raw/master/screenshots/screenshot1.png?raw=true',
+            img: './img/slime.png',
             description: 'Blob simulation using compute shaders',
             tags: ['Python', 'ModernGL', 'Compute Shaders'],
         },
@@ -51,13 +51,16 @@
 </script>
 
 <!--
+    primary:
     - page for gamejams (add game "light is death")
-
     - add bio
     - gif when hovering projects
     - page for each project
+    - cleanup slime.png (remove imgui from screenshot)
+
+    secondary:
     - project sortable by date/name/stars?
- -->
+-->
 
 <main>
     <div class="r-navbar">
@@ -83,6 +86,14 @@
         <h3>This website is still under development</h3>
     </div>
 
+
+    <!-- <div style="text-align: center; color: whitesmoke;"> -->
+        <!-- <h4>I'm a student at a computer science university</h4> -->
+        <!-- <p>Hey ! I'm Rafale25, I like computer graphics and simulation</p> -->
+        <!-- <p>This page highlights several of my personal software projects</p> -->
+    <!-- </div> -->
+
+
     <div class="containerProject">
 
         {#each projects as p}
@@ -94,7 +105,6 @@
                     </div>
 
                     <div class="card-content">
-
                         <div class="card-header">
                             <span>{p.name}</span>
                         </div>
@@ -110,7 +120,6 @@
                                 </a>
                             {/each}
                         </div>
-
                     </div>
 
                 </div>
@@ -184,7 +193,7 @@
         background-color: var(--background-secondary);
     }
 
-    :global(.containerProject) {
+    .containerProject {
         margin: 3rem auto 0px auto;
         padding: 0.75rem;
 
@@ -281,7 +290,7 @@
 
     /* large screen */
     @media screen and (min-width: 700px) {
-        :global(.containerProject) {
+        .containerProject {
             max-width: 60%;
         }
 
@@ -292,7 +301,7 @@
 
     /* small screen */
     @media screen and (max-width: 700px) {
-        :global(.containerProject) {
+        .containerProject {
             max-width: 100%;
         }
 
