@@ -3,15 +3,24 @@
     import Hoverable from './Hoverable.svelte';
 
     const tags = {
-        'Python': 'https://www.python.org/',
+        'Python': 'https://www.python.org',
         'ModernGL': 'https://github.com/moderngl/moderngl',
         'Pygame': 'https://github.com/pygame/pygame',
-        'ScrapMechanic': 'https://store.steampowered.com/app/387990/Scrap_Mechanic/',
+        'ScrapMechanic': 'https://store.steampowered.com/app/387990/Scrap_Mechanic',
         'Compute Shaders': 'https://www.khronos.org/opengl/wiki/Compute_Shader',
         'Geometry Shaders': 'https://www.khronos.org/opengl/wiki/Geometry_Shader',
+        'Arcade': 'https://github.com/pythonarcade/arcade',
+        'GlobalGameJam': 'https://globalgamejam.org',
     }
 
     const projects = [
+        {
+            name: 'Light Is Death',
+            link: 'https://narchalpaulyahoofr.itch.io/light-is-death',
+            img: './img/light-is-death.png',
+            description: 'Game I made for the Global Game Jam 2022',
+            tags: ['Python', 'Arcade', 'GlobalGameJam'],
+        },
         {
             name: 'Vine mesh generation',
             link: 'https://github.com/Rafale25/Vine_mesh_generation',
@@ -85,6 +94,10 @@
     <div style="font-weight: 500; color:#ffc107; text-align: center; margin: 3rem;">
         <h3>This website is still under development</h3>
     </div>
+
+    <!-- <div style="text-align: center;">
+        <a href="resume">link</a>
+    </div> -->
 
 
     <!-- <div style="text-align: center; color: whitesmoke;"> -->
