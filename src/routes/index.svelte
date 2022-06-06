@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 
     import { fade } from 'svelte/transition';
     import Hoverable from './Hoverable.svelte';
@@ -72,7 +72,7 @@
 
 <main>
     <div class="r-navbar">
-        <div class="r-navbar-container">
+        <div class="flex w-full justify-center items-center">
             <div style="text-align: center; padding: 1rem;">
 
                 <img class="logo" src="logo.jpg" alt="ProfilePicture"/>
@@ -93,10 +93,6 @@
     <div style="font-weight: 500; color:#ffc107; text-align: center; margin: 3rem;">
         <h3>This website is still under development</h3>
     </div>
-
-    <!-- <div style="text-align: center;">
-        <a href="resume">link</a>
-    </div> -->
 
 
     <!-- <div style="text-align: center; color: whitesmoke;"> -->
@@ -140,15 +136,15 @@
 
     </div>
 
-    <footer class="r-footer">
+    <footer class="flex justify-center items-center gap-x-6 mt-10 p-8 bg-[color:var(--background-secondary)]">
         <a href="https://github.com/Rafale25">
-            <img src="github-icon.svg" alt="Github Icon" style="width: 3em; padding: 3px"/>
+            <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
         </a>
         <a href="https://www.youtube.com/channel/UCjJYtSy8dMGJkMVrBnwaWSA">
-            <img src="youtube-icon.svg" alt="Youtube Icon" style="width: 3em; padding: 3px"/>
+            <img src="youtube-icon.svg" alt="Youtube Icon" class="w-12"/>
         </a>
         <a href="" on:click={clipboard}>
-            <img src="discord-icon.svg" alt="Discord Icon" style="width: 3em; padding: 3px"/>
+            <img src="discord-icon.svg" alt="Discord Icon" class="w-12"/>
         </a>
     </footer>
 
@@ -184,18 +180,7 @@
         background-size: cover;
         background-position: center;
     }
-    .r-navbar-container {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
-    .r-footer {
-        margin-top: 3rem;
-        padding: 2rem;
-        text-align: center;
-        background-color: var(--background-secondary);
-    }
+
     .containerProject {
         margin: 3rem auto 0px auto;
         padding: 0.75rem;
