@@ -96,12 +96,12 @@
         <!-- <p>This page highlights several of my personal software projects</p> -->
     <!-- </div> -->
 
-    <div class="flex flex-col items-center w-full p-5 gap-6">
+    <div class="flex flex-col items-center w-full p-5 gap-7">
 
         {#each projects as p}
-            <a class="group flex w-full h-full rounded-2xl overflow-hidden w-4/5" href={p.link}>
+            <a class="group flex w-full h-64 rounded-2xl overflow-hidden w-4/5" href={p.link}>
 
-                <div class="h-64 w-[36rem] overflow-hidden ">
+                <div class="min-w-[12rem] w-2/4 overflow-hidden">
                     <img src={p.img} alt={p.name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110  ">
                 </div>
 
@@ -128,8 +128,7 @@
 
     </div>
 
-    <footer class="flex justify-center items-center gap-x-6 mt-10 p-8 bg-[color:var(--background-secondary)]">
-    <!-- <footer class="flex justify-center items-center gap-x-6 mt-10 p-8 bg-neutral-800"> -->
+    <footer class="flex justify-center items-center gap-x-6 mt-10 p-10  bg-[color:var(--background-secondary)]">
         <a href="https://github.com/Rafale25">
             <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
         </a>
