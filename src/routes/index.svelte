@@ -17,35 +17,35 @@
         {
             name: 'Light Is Death',
             link: 'https://narchalpaulyahoofr.itch.io/light-is-death',
-            img: './img/light-is-death.png',
+            img: './light-is-death.png',
             description: 'Game I made for the Global Game Jam 2022',
             tags: ['Python', 'Arcade', 'GlobalGameJam'],
         },
         {
             name: 'Vine mesh generation',
             link: 'https://github.com/Rafale25/Vine_mesh_generation',
-            img: './img/vine.png',
+            img: './vine.png',
             description: 'Vine mesh generation using geometry shader',
             tags: ['Python', 'ModernGL', 'Geometry Shaders'],
         },
         {
             name: 'Slime',
             link: 'https://github.com/Rafale25/Slime_simulation',
-            img: './img/slime.png',
+            img: './slime.png',
             description: 'Blob simulation using compute shaders',
             tags: ['Python', 'ModernGL', 'Compute Shaders'],
         },
         {
             name: 'Boids',
             link: 'https://github.com/Rafale25/Boids-Pyglet-Moderngl',
-            img:'./img/boids.png',
+            img:'./boids.png',
             description: 'Large flocking simulation using compute shaders',
             tags: ['Python', 'ModernGL', 'Compute Shaders'],
         },
         {
             name: 'ScrapMechanic injection interface',
             link: 'https://github.com/Rafale25/python_injection_interface_SM',
-            img: './img/sm_interface.png',
+            img: './sm_interface.png',
             description: 'Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod',
             tags: ['ScrapMechanic', 'Python', 'DearPygui', 'Pygame'],
         },
@@ -142,14 +142,14 @@
 
     <footer class="r-footer">
         <a href="https://github.com/Rafale25">
-            <img src="img/github-icon.svg" alt="Github Icon" style="width: 3em; padding: 3px"/>
+            <img src="github-icon.svg" alt="Github Icon" style="width: 3em; padding: 3px"/>
         </a>
         <a href="https://www.youtube.com/channel/UCjJYtSy8dMGJkMVrBnwaWSA">
-            <img src="img/youtube-icon.svg" alt="Youtube Icon" style="width: 3em; padding: 3px"/>
+            <img src="youtube-icon.svg" alt="Youtube Icon" style="width: 3em; padding: 3px"/>
         </a>
-        <!-- <a href="" on:click={clipboard}>
-            <img src="img/discord-icon.svg" alt="Discord Icon" style="width: 3em; padding: 3px"/>
-        </a> -->
+        <a href="" on:click={clipboard}>
+            <img src="discord-icon.svg" alt="Discord Icon" style="width: 3em; padding: 3px"/>
+        </a>
     </footer>
 
 </main>
