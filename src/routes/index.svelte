@@ -75,7 +75,7 @@
         <div class="r-navbar-container">
             <div style="text-align: center; padding: 1rem;">
 
-                <img class="logo" src="img/logo.jpg" alt="ProfilePicture"/>
+                <img class="logo" src="logo.jpg" alt="ProfilePicture"/>
 
                 <Hoverable let:hovering={active}>
                     <div type="" style="font-size: 20px;" on:click={clipboard}>
@@ -168,7 +168,7 @@
     main {
         font-family: monospace;
         color: var(--primary-dark);
-        background-image: url("/img/tri.png");
+        background-image: url("/tri.png");
         background-repeat: repeat;
     }
     :global(body) {
@@ -179,7 +179,7 @@
     .r-navbar {
         display: flex;
         background-color: var(--background-secondary);
-        background-image: url("/img/boids-blurred.png");
+        background-image: url("/boids-blurred.png");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
