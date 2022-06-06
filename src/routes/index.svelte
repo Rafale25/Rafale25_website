@@ -71,27 +71,22 @@
 -->
 
 <main>
-    <div class="r-navbar">
+    <div class="flex bg-no-repeat bg-cover bg-center bg-[color:var(--background-secondary)] bg-[url('/boids-blurred.png')]">
         <div class="flex w-full justify-center items-center">
-            <div style="text-align: center; padding: 1rem;">
+            <div class="flex flex-col items-center p-2 gap-1">
 
-                <img class="logo" src="logo.jpg" alt="ProfilePicture"/>
+                <img class="w-20 rounded-full" src="logo.jpg" alt="ProfilePicture"/>
 
-                <Hoverable let:hovering={active}>
-                    <div type="" style="font-size: 20px;" on:click={clipboard}>
+                    <div class="group text-xl" on:click={clipboard}>
                         <span style="text-decoration: none; color: white;">Rafale25</span>
-                        {#if active}
-                            <span transition:fade={{duration: 150}} style="position: absolute; color: rgba(255,255,255,0.3);">#0025</span>
-                        {/if}
+                        <span class="absolute text-transparent group-hover:text-[rgba(255,255,255,0.6)] duration-300">#0025</span>
                     </div>
-                </Hoverable>
-
             </div>
         </div>
     </div>
 
-    <div style="font-weight: 500; color:#ffc107; text-align: center; margin: 3rem;">
-        <h3>This website is still under development</h3>
+    <div class="m-10 font-bold text-yellow-400 text-center text-lg">
+        <p>This website is still under development</p>
     </div>
 
 
@@ -101,42 +96,40 @@
         <!-- <p>This page highlights several of my personal software projects</p> -->
     <!-- </div> -->
 
-
-    <div class="containerProject">
+    <div class="flex flex-col items-center w-full p-5 gap-6">
 
         {#each projects as p}
-            <a href={p.link} style="text-decoration: inherit; color: inherit;">
-                <div class="card">
+            <a class="group flex w-full h-full rounded-2xl overflow-hidden w-4/5" href={p.link}>
 
-                    <div class="preview-img-container">
-                        <img src={p.img} alt={p.name} class="preview-img">
-                    </div>
-
-                    <div class="card-content">
-                        <div class="card-header">
-                            <span>{p.name}</span>
-                        </div>
-
-                        <div class="card-body">
-                            <span>{p.description}</span>
-                        </div>
-
-                        <div class="card-footer">
-                            {#each p.tags as tag}
-                                <a href={tags[tag]} style="text-decoration: none;">
-                                    <span class="tag">{tag}</span>
-                                </a>
-                            {/each}
-                        </div>
-                    </div>
-
+                <div class="h-64 w-[36rem] overflow-hidden ">
+                    <img src={p.img} alt={p.name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110  ">
                 </div>
+
+                <div class="flex flex-col w-full min-h-full text-base">
+                    <div class="font-bold text-xl px-4 py-2 bg-[color:var(--border)] group-hover:saturate-200">
+                        <span>{p.name}</span>
+                    </div>
+
+                    <div class="h-full p-4 text-gray-100 bg-neutral-800">
+                        <span>{p.description}</span>
+                    </div>
+
+                    <div class="flex flex-wrap gap-x-1 px-4 py-1 bg-[color:var(--border)]">
+                        {#each p.tags as tag}
+                            <a href={tags[tag]}>
+                                <span class="px-2 rounded-xl bg-raflou-green-light text-black">{tag}</span>
+                            </a>
+                        {/each}
+                    </div>
+                </div>
+
             </a>
         {/each}
 
     </div>
 
     <footer class="flex justify-center items-center gap-x-6 mt-10 p-8 bg-[color:var(--background-secondary)]">
+    <!-- <footer class="flex justify-center items-center gap-x-6 mt-10 p-8 bg-neutral-800"> -->
         <a href="https://github.com/Rafale25">
             <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
         </a>
@@ -156,10 +149,8 @@
         --primary-dark: rgb(0, 175, 0);
         --background-primary: #252830;
         --background-secondary: #202020;
-        --background-third: #282828;
         --border: #303030;
         --shadow: #191919;
-        --r-text: #dddddd;
     }
     main {
         font-family: monospace;
@@ -167,132 +158,5 @@
         background-image: url("/tri.png");
         background-repeat: repeat;
     }
-    :global(body) {
-        padding: 0px;
-        background-color:var(--background-primary) !important;
-        font-size: 1rem;
-    }
-    .r-navbar {
-        display: flex;
-        background-color: var(--background-secondary);
-        background-image: url("/boids-blurred.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-    }
 
-    .containerProject {
-        margin: 3rem auto 0px auto;
-        padding: 0.75rem;
-        max-width: 70%;
-        border-radius: 8px;
-        border: 4px solid #303030;
-        background-color: var(--background-secondary);
-        box-shadow: 5px 5px 10px 0px var(--shadow);
-        transition: max-width 0.3s, width 0.3s;
-    }
-    .card {
-        display: flex;
-        margin: 1rem;
-        background-color: transparent;
-        box-shadow: 5px 5px 10px 0px var(--shadow);
-        border-radius: 0px 10px 10px 0px;
-        overflow: hidden;
-    }
-    .card-content {
-        background-color: transparent;
-        display: flex;
-        flex-direction: column;
-        min-height: 100%;
-        width: 100%;
-    }
-    .card-header {
-        background-color: var(--border);
-        font-weight: bold;
-        font-size: 1.15em;
-        padding: 0.5rem 1rem;
-    }
-    .card:hover > .card-content > .card-header {
-        color: var(--primary-light);
-    }
-    .card-body {
-        height: 100%;
-        padding: 1rem;
-        background-color: var(--background-third);
-        color: var(--r-text);
-    }
-    .card-footer {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 0.5rem 0.75rem;
-        background-color: var(--border);
-    }
-    .preview-img-container {
-        min-height: 200px;
-        max-height: 200px;
-        min-width: 200px;
-        max-width: 30%;
-        border-radius: 10px 0px 0px 10px;
-        overflow: hidden;
-    }
-    .preview-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s;
-        backface-visibility: hidden;
-        transform: translateZ(0);
-    }
-    .card:hover > .preview-img-container > .preview-img {
-        transform: scale(1.1);
-    }
-    .tag {
-        background-color: var(--primary-light);
-        color: black;
-        margin: 0px 1px 0px 1px;
-        padding: 0px 6px 0px 6px;
-        border: 1px solid;
-        border-radius: 10px;
-    }
-    .tag:hover {
-        filter: saturate(200%);
-    }
-    .logo {
-        width: 70px;
-        border-radius: 50%;
-        border-style: solid;
-        border-width: 2px;
-        border-color: var(--background-third);
-    }
-    /* large screen */
-    @media screen and (min-width: 700px) {
-        .containerProject {
-            max-width: 60%;
-        }
-        .card {
-            flex-direction: row;
-        }
-    }
-    /* small screen */
-    @media screen and (max-width: 700px) {
-        .containerProject {
-            max-width: 100%;
-        }
-        .card {
-            flex-direction: column;
-            border-radius: 0px 0px 10px 10px;
-        }
-        .preview-img-container {
-            height: 200px; /* WTF */
-            max-width: 100%;
-            border-radius: 10px 10px 0px 0px;
-        }
-        .preview-img {
-            /* width: 100%; */
-            /* width: auto; */
-            max-height: 100%;
-            min-height: 100%;
-        }
-    }
 </style>
