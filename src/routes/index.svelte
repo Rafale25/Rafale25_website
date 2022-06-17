@@ -1,60 +1,18 @@
 <script>
-
-    import { fade } from 'svelte/transition';
-    import Hoverable from './Hoverable.svelte';
-
-    const tags = {
-        'Python': 'https://www.python.org',
-        'ModernGL': 'https://github.com/moderngl/moderngl',
-        'Pygame': 'https://github.com/pygame/pygame',
-        'ScrapMechanic': 'https://store.steampowered.com/app/387990/Scrap_Mechanic',
-        'Compute Shaders': 'https://www.khronos.org/opengl/wiki/Compute_Shader',
-        'Geometry Shaders': 'https://www.khronos.org/opengl/wiki/Geometry_Shader',
-        'Arcade': 'https://github.com/pythonarcade/arcade',
-        'GlobalGameJam': 'https://globalgamejam.org',
-    }
-    const projects = [
-        {
-            name: 'Light Is Death',
-            link: 'https://narchalpaulyahoofr.itch.io/light-is-death',
-            img: './light-is-death.png',
-            description: 'Game I made for the Global Game Jam 2022',
-            tags: ['Python', 'Arcade', 'GlobalGameJam'],
-        },
-        {
-            name: 'Vine mesh generation',
-            link: 'https://github.com/Rafale25/Vine_mesh_generation',
-            img: './vine.png',
-            description: 'Vine mesh generation using geometry shader',
-            tags: ['Python', 'ModernGL', 'Geometry Shaders'],
-        },
-        {
-            name: 'Slime',
-            link: 'https://github.com/Rafale25/Slime_simulation',
-            img: './slime.png',
-            description: 'Blob simulation using compute shaders',
-            tags: ['Python', 'ModernGL', 'Compute Shaders'],
-        },
-        {
-            name: 'Boids',
-            link: 'https://github.com/Rafale25/Boids-Pyglet-Moderngl',
-            img:'./boids.png',
-            description: 'Large flocking simulation using compute shaders',
-            tags: ['Python', 'ModernGL', 'Compute Shaders'],
-        },
-        {
-            name: 'ScrapMechanic injection interface',
-            link: 'https://github.com/Rafale25/python_injection_interface_SM',
-            img: './sm_interface.png',
-            description: 'Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod',
-            tags: ['ScrapMechanic', 'Python', 'DearPygui', 'Pygame'],
-        },
-    ];
-
-    const discord_name = "Rafale25#0025";
+    import Project from "../components/project.svelte";
+    import Swal from 'sweetalert2'
+    import 'sweetalert2/dist/sweetalert2.min.css'
 
     function clipboard() {
+        const discord_name = "Rafale25#0025";
         navigator.clipboard.writeText(discord_name);
+
+        // Swal.fire({
+        //     title: 'Error!',
+        //     text: 'Do you want to continue',
+        //     icon: 'error',
+        //     confirmButtonText: 'Cool'
+        // })
         alert("Discord tag copied in the clipboard: " + discord_name);
     }
 </script>
@@ -98,33 +56,41 @@
 
     <div class="flex flex-col items-center w-full p-5 gap-7">
 
-        {#each projects as p}
-            <a class="group flex w-full h-64 rounded-2xl overflow-hidden w-4/5" href={p.link}>
-
-                <div class="min-w-[12rem] w-2/4 overflow-hidden">
-                    <img src={p.img} alt={p.name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110  ">
-                </div>
-
-                <div class="flex flex-col w-full min-h-full text-base">
-                    <div class="font-bold text-xl px-4 py-2 bg-[color:var(--border)] group-hover:saturate-200">
-                        <span>{p.name}</span>
-                    </div>
-
-                    <div class="h-full p-4 text-gray-100 bg-neutral-800">
-                        <span>{p.description}</span>
-                    </div>
-
-                    <div class="flex flex-wrap gap-x-1 px-4 py-1 bg-[color:var(--border)]">
-                        {#each p.tags as tag}
-                            <a href={tags[tag]}>
-                                <span class="px-2 rounded-xl bg-raflou-green-light text-black">{tag}</span>
-                            </a>
-                        {/each}
-                    </div>
-                </div>
-
-            </a>
-        {/each}
+        <Project
+            name={'Light Is Death'}
+            link={'https://narchalpaulyahoofr.itch.io/light-is-death'}
+            img={'./light-is-death.png'}
+            description={'Game I made for the Global Game Jam 2022'}
+            tags={['Python', 'Arcade', 'GlobalGameJam']}
+        />
+        <Project
+            name='Vine mesh generation'
+            link='https://github.com/Rafale25/Vine_mesh_generation'
+            img='./vine.png'
+            description='Vine mesh generation using geometry shader'
+            tags={['Python', 'ModernGL', 'Geometry Shaders']}
+        />
+        <Project
+            name='Slime'
+            link='https://github.com/Rafale25/Slime_simulation'
+            img='./slime.png'
+            description='Blob simulation using compute shaders'
+            tags={['Python', 'ModernGL', 'Compute Shaders']}
+        />
+        <Project
+            name='Boids'
+            link='https://github.com/Rafale25/Boids-Pyglet-Moderngl'
+            img='./boids.png'
+            description='Large flocking simulation using compute shaders'
+            tags={['Python', 'ModernGL', 'Compute Shaders']}
+        />
+        <Project
+            name='ScrapMechanic injection interface'
+            link='https://github.com/Rafale25/python_injection_interface_SM'
+            img='./sm_interface.png'
+            description='Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod'
+            tags={['ScrapMechanic', 'Python', 'DearPygui', 'Pygame']}
+        />
 
     </div>
 
@@ -135,6 +101,7 @@
         <a href="https://www.youtube.com/channel/UCjJYtSy8dMGJkMVrBnwaWSA">
             <img src="youtube-icon.svg" alt="Youtube Icon" class="w-12"/>
         </a>
+        <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="" on:click={clipboard}>
             <img src="discord-icon.svg" alt="Discord Icon" class="w-12"/>
         </a>
