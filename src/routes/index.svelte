@@ -7,13 +7,10 @@
         const discord_name = "Rafale25#0025";
         navigator.clipboard.writeText(discord_name);
 
-        // Swal.fire({
-        //     title: 'Error!',
-        //     text: 'Do you want to continue',
-        //     icon: 'error',
-        //     confirmButtonText: 'Cool'
-        // })
-        alert("Discord tag copied in the clipboard: " + discord_name);
+        Swal.fire({
+            title: `${discord_name} copied to the clipboard`,
+            confirmButtonText: 'Ok'
+        })
     }
 </script>
 
@@ -118,11 +115,11 @@
         --border: #303030;
         --shadow: #191919;
     }
+
     main {
         font-family: monospace;
         color: var(--primary-dark);
         background-image: url("/tri.png");
         background-repeat: repeat;
     }
-
 </style>
