@@ -7,6 +7,7 @@
 
     const allTags = {
         'Python': 'https://www.python.org',
+        'GLSL': 'https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language',
         'ModernGL': 'https://github.com/moderngl/moderngl',
         'Pygame': 'https://github.com/pygame/pygame',
         'ScrapMechanic': 'https://store.steampowered.com/app/387990/Scrap_Mechanic',

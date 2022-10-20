@@ -65,21 +65,21 @@
             link='https://github.com/Rafale25/Vine_mesh_generation'
             img='./vine.png'
             description='Vine mesh generation using geometry shader'
-            tags={['Python', 'ModernGL', 'Geometry Shaders']}
+            tags={['GLSL', 'ModernGL', 'Geometry Shaders']}
         />
         <Project
             name='Slime'
             link='https://github.com/Rafale25/Slime_simulation'
             img='./slime.png'
             description='Blob simulation using compute shaders'
-            tags={['Python', 'ModernGL', 'Compute Shaders']}
+            tags={['GLSL', 'ModernGL', 'Compute Shaders']}
         />
         <Project
             name='Boids'
             link='https://github.com/Rafale25/Boids-Pyglet-Moderngl'
             img='./boids.png'
             description='Large flocking simulation using compute shaders'
-            tags={['Python', 'ModernGL', 'Compute Shaders']}
+            tags={['GLSL', 'ModernGL', 'Compute Shaders']}
         />
         <Project
             name='ScrapMechanic injection interface'
@@ -88,7 +88,6 @@
             description='Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod'
             tags={['ScrapMechanic', 'Python', 'DearPygui', 'Pygame']}
         />
-
     </div>
 
     <footer class="flex justify-center items-center gap-x-6 mt-10 p-10  bg-[color:var(--background-secondary)]">
