@@ -41,9 +41,8 @@
     </div>
 
     <div class="m-10 font-bold text-yellow-400 text-center text-lg">
-        <p>This website is still under development</p>
+        <!-- <p>This website is still under development</p> -->
     </div>
-
 
     <!-- <div style="text-align: center; color: whitesmoke;"> -->
         <!-- <h4>I'm a student at a computer science university</h4> -->
@@ -53,6 +52,13 @@
 
     <div class="flex flex-col items-center w-full p-5 gap-7">
 
+        <Project
+            name={'Run Hunt Repeat'}
+            link={'https://rafale25.itch.io/run-hunt-repeat'}
+            img={'https://img.itch.zone/aW1hZ2UvMTczMTQ2OC8xMDE5MzU2NC5wbmc=/original/Uwgfw9.png'}
+            description={'Game I made for the Ludum Dare 51'}
+            tags={['Python', 'Arcade', 'Ludum Dare']}
+        />
         <Project
             name={'Light Is Death'}
             link={'https://narchalpaulyahoofr.itch.io/light-is-death'}

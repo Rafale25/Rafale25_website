@@ -15,6 +15,7 @@
         'Geometry Shaders': 'https://www.khronos.org/opengl/wiki/Geometry_Shader',
         'Arcade': 'https://github.com/pythonarcade/arcade',
         'GlobalGameJam': 'https://globalgamejam.org',
+        'Ludum Dare': 'https://ldjam.com/',
     }
 </script>
 
