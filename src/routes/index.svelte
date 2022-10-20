@@ -91,7 +91,7 @@
             name='ScrapMechanic injection interface'
             link='https://github.com/Rafale25/python_injection_interface_SM'
             img='./sm_interface.png'
-            description='Modular interface for sending custom inputs to ScrapMechanic through the Injection Mod'
+            description='Modular interface for sending custom inputs to the game ScrapMechanic through the Injection Mod'
             tags={['ScrapMechanic', 'Python', 'DearPygui', 'Pygame']}
         />
     </div>
