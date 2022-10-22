@@ -16,11 +16,9 @@
 
 <!--
     primary:
-    - page for gamejams (add game "light is death")
     - add bio
     - gif when hovering projects
     - page for each project
-    - cleanup slime.png (remove imgui from screenshot)
     secondary:
     - project sortable by date/name/stars?
 -->

@@ -17,10 +17,11 @@
         'GlobalGameJam': 'https://globalgamejam.org',
         'Ludum Dare': 'https://ldjam.com/',
     }
+
 </script>
 
-<a class="group flex w-full h-64 rounded-2xl overflow-hidden w-4/5" href={link}>
-    <div class="min-w-[12rem] w-2/4 overflow-hidden">
+<a class="sm:flex sm:h-64 group w-full rounded-2xl overflow-hidden w-4/5" href={link}>
+    <div class="sm:min-w-[16rem] min-w-[12rem] sm:w-2/4 overflow-hidden">
         <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110  ">
     </div>
 
@@ -36,7 +37,7 @@
         <div class="flex flex-wrap gap-x-1 px-4 py-1 bg-[color:var(--border)]">
             {#each tags as tag}
                 <a href={allTags[tag]}>
-                    <span class="px-2 rounded-xl bg-raflou-green-light text-black">{tag}</span>
+                    <span class="px-2 italic rounded hover:saturate-150 bg-raflou-green-light text-black">#{tag}</span>
                 </a>
             {/each}
         </div>
