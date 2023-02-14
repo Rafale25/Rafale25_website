@@ -23,6 +23,7 @@
 
 <svelte:head>
     <link rel="icon" type="image/jpg" href="logo.jpg" />
+    <title>Rafale25</title>
 </svelte:head>
 
 <main>
