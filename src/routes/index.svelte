@@ -19,9 +19,11 @@
     - add bio
     - gif when hovering projects
     - page for each project
-    secondary:
-    - project sortable by date/name/stars?
 -->
+
+<svelte:head>
+    <link rel="icon" type="image/jpg" href="logo.jpg" />
+</svelte:head>
 
 <main>
     <div class="flex bg-no-repeat bg-cover bg-center bg-[color:var(--background-secondary)] bg-[url('/boids-blurred.png')]">
