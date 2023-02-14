@@ -3,11 +3,11 @@
     import { onMount } from 'svelte'
 
     let canvas
-    let init, play, stop
+    let init, play, stop, resize_count
     let innerWidth, innerHeight
 
     let Config = {
-        count: 3000,
+        count: 1000,
         radius: 10,
         speed: 2.0,
         viewDistance: 45.0,
@@ -16,6 +16,8 @@
         aligmentWeight: 0.3,
         cohesionWeight: 0.005,
     }
+
+    let old_count = Config.count
 
     onMount(() => {
         function randRange(min, max) { // min and max included
@@ -50,13 +52,11 @@
                 el.textContent=`${(t2 - t1).toFixed(2)} ms`
         }
 
-        // const canvas = document.getElementById("boidCanvas")
         const ctx = canvas.getContext("2d")
 
         let isRunning = true
         const boids = []
         const bucket_boids = []
-
         let count = new Array(Config.count).fill(0)
 
         const boidCanvas = document.createElement('canvas')
@@ -180,7 +180,7 @@
         }
 
         const step = () => {
-            if (!isRunning) return
+            if (!isRunning || Config.count <= 0) return
 
             update_width_height()
 
@@ -242,16 +242,8 @@
         init = () => {
             update_width_height()
 
-            boids.length = Config.count
-            bucket_boids.length = Config.count
-
-            for (let i = 0 ; i < Config.count ; ++i) {
-                boids[i] = new Boid(
-                    randRange(0, canvas.width),
-                    randRange(0, canvas.height),
-                    randRange(0, Math.PI*2)
-                )
-            }
+            old_count = 0
+            resize_count()
         }
 
         play = () => {
@@ -263,6 +255,24 @@
 
         stop = () => {
             isRunning = false
+        }
+
+        resize_count = (e) => {
+            boids.length = Config.count
+            bucket_boids.length = Config.count
+            count = new Array(Config.count).fill(0)
+
+            if (Config.count > old_count) {
+                for (let i = old_count - 1 ; i < Config.count ; ++i) {
+                    boids[i] = new Boid(
+                        randRange(0, canvas.width),
+                        randRange(0, canvas.height),
+                        randRange(0, Math.PI*2)
+                    )
+                }
+            }
+
+            old_count = Config.count
         }
 
         const update_width_height = () => {
@@ -282,55 +292,56 @@
 />
 
 <main>
-    <!-- <body style="margin: 0; height: 100vh; width: 100%;"> -->
-    <body class="">
+    <div class="absolute">
+        <div class="flex flex-col p-4 gap-4 bg-slate-300">
 
-        <div class="absolute">
-            <div class="flex flex-col p-4 gap-4 bg-slate-400">
-
-                <div class="inline-block">
-                    <span>Compute</span> <span id="ComputeTime"></span>
-                </div>
-                <div class="inline-block">
-                    <span>Rendering</span> <span id="RenderingTime"></span>
-                </div>
-
-                <div class="flex justify-center gap-x-4">
-                    <button class="relative px-2 border-2" on:click={init}>reset</button>
-                    <button class="relative px-2 border-2" on:click={play}>play</button>
-                    <button class="relative px-2 border-2" on:click={stop}>stop</button>
-                </div>
-
-                <div class="flex">
-                    <input class="relative" type="range" min="0.0" max="4.0" step="0.001" bind:value={Config.separationWeight}>
-                    <span>Separation</span>
-                </div>
-
-                <div class="flex">
-                    <input class="relative" type="range" min="0.0" max="1.0" step="0.001" bind:value={Config.aligmentWeight}>
-                    <span>Aligment</span>
-                </div>
-
-                <div class="flex">
-                    <input class="relative" type="range" min="0.0" max="0.1" step="0.0001" bind:value={Config.cohesionWeight}>
-                    <span>Cohesion</span>
-                </div>
-
-                <div class="flex">
-                    <input class="relative mx-2" type="range" min="0.0" max="10.0" step="0.0001" bind:value={Config.speed}>
-                    <span>Speed</span>
-                </div>
-
-                <div class="flex">
-                    <input class="relative mx-2" type="range" min="0.0" max="100.0" step="0.0001" bind:value={Config.viewDistance}>
-                    <span>View distance</span>
-                </div>
-
+            <div class="inline-block">
+                <span>Compute</span> <span id="ComputeTime"></span>
             </div>
+            <div class="inline-block">
+                <span>Rendering</span> <span id="RenderingTime"></span>
+            </div>
+
+            <div class="flex justify-center gap-x-4">
+                <button class="relative px-2 border-2" on:click={init}>reset</button>
+                <button class="relative px-2 border-2" on:click={play}>play</button>
+                <button class="relative px-2 border-2" on:click={stop}>stop</button>
+            </div>
+
+            <div class="flex">
+                <!-- !!! PROBLEM: SINCE THE Config.count is bind, it update before the on:change callback !!!!!! -->
+                <input class="relative" type="range" min="1" max="5000" step="1" bind:value={Config.count} on:change={resize_count}>
+                <span>Boid count</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative" type="range" min="0.0" max="4.0" step="0.001" bind:value={Config.separationWeight}>
+                <span>Separation</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative" type="range" min="0.0" max="1.0" step="0.001" bind:value={Config.aligmentWeight}>
+                <span>Aligment</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative" type="range" min="0.0" max="0.1" step="0.0001" bind:value={Config.cohesionWeight}>
+                <span>Cohesion</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative mx-2" type="range" min="0.0" max="10.0" step="0.0001" bind:value={Config.speed}>
+                <span>Speed</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative mx-2" type="range" min="0.0" max="100.0" step="0.0001" bind:value={Config.viewDistance}>
+                <span>View distance</span>
+            </div>
+
         </div>
+    </div>
 
-        <canvas class="bg-slate-400" width={innerWidth} height={innerHeight} bind:this={canvas}></canvas>
-    </body>
-
+    <canvas class="bg-slate-400" width={innerWidth} height={innerHeight} bind:this={canvas}></canvas>
 </main>
 
