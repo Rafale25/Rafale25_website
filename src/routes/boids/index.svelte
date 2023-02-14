@@ -182,8 +182,7 @@
         const step = () => {
             if (!isRunning) return
 
-            canvas.width = innerWidth
-            canvas.height = innerHeight
+            update_width_height()
 
             count.fill(0)
 
@@ -241,7 +240,7 @@
         }
 
         init = () => {
-            // window.onresize()
+            update_width_height()
 
             boids.length = Config.count
             bucket_boids.length = Config.count
@@ -264,6 +263,11 @@
 
         stop = () => {
             isRunning = false
+        }
+
+        const update_width_height = () => {
+            canvas.width = innerWidth
+            canvas.height = innerHeight
         }
 
         init()
@@ -325,7 +329,7 @@
             </div>
         </div>
 
-        <canvas class="bg-slate-400" width="800" height="800" bind:this={canvas}></canvas>
+        <canvas class="bg-slate-400" width={innerWidth} height={innerHeight} bind:this={canvas}></canvas>
     </body>
 
 </main>
