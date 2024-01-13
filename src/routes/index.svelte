@@ -54,6 +54,13 @@
     <div class="flex flex-col items-center w-full p-5 gap-7">
 
         <Project
+            name={'Knossos'}
+            link={'https://primarter.itch.io/knossos'}
+            img={'https://github.com/Primarter/Knossos/raw/dev/img/ScreenshotStartingZone.png'}
+            description={'Game Design master\'s game that was made in duo over a period of 3 months in Unity'}
+            tags={['Unity']}
+        />
+        <Project
             name={'Run Hunt Repeat'}
             link={'https://rafale25.itch.io/run-hunt-repeat'}
             img={'https://img.itch.zone/aW1hZ2UvMTczMTQ2OC8xMDE5MzU2NC5wbmc=/original/Uwgfw9.png'}
@@ -72,21 +79,21 @@
             link='https://github.com/Rafale25/Vine_mesh_generation'
             img='./vine.png'
             description='Vine mesh generation using geometry shader'
-            tags={['GLSL', 'ModernGL', 'Geometry Shaders']}
+            tags={['OpenGL', 'GLSL', 'Geometry Shaders']}
         />
         <Project
             name='Slime'
             link='https://github.com/Rafale25/Slime_simulation'
             img='./slime.png'
             description='Blob simulation using compute shaders'
-            tags={['GLSL', 'ModernGL', 'Compute Shaders']}
+            tags={['OpenGL', 'GLSL', 'Compute Shaders']}
         />
         <Project
             name='Boids'
             link='https://github.com/Rafale25/Boids-Pyglet-Moderngl'
             img='./boids.png'
             description='Large flocking simulation using compute shaders'
-            tags={['GLSL', 'ModernGL', 'Compute Shaders']}
+            tags={['OpenGL', 'GLSL', 'Compute Shaders']}
         />
         <Project
             name='ScrapMechanic injection interface'

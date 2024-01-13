@@ -37,7 +37,7 @@
         <div class="flex flex-wrap gap-x-1 px-4 py-1 bg-[color:var(--border)]">
             {#each tags as tag}
                 <a href={allTags[tag]}>
-                    <span class="px-2 italic rounded hover:saturate-150 bg-raflou-green-light text-black">#{tag}</span>
+                    <span class="px-2 italic rounded hover:saturate-150 bg-raflou-green-light text-black">{tag}</span>
                 </a>
             {/each}
         </div>
