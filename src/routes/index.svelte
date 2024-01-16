@@ -69,7 +69,7 @@
         />
         <Project
             name={'Light Is Death'}
-            link={'https://narchalpaulyahoofr.itch.io/light-is-death'}
+            link={'https://rafale25.itch.io/light-is-death'}
             img={'./light-is-death.png'}
             description={'Game I made for the Global Game Jam 2022'}
             tags={['Python', 'Arcade', 'GlobalGameJam']}
@@ -90,7 +90,7 @@
         />
         <Project
             name='Boids'
-            link='https://github.com/Rafale25/Boids-Pyglet-Moderngl'
+            link='https://github.com/Rafale25/Boids'
             img='./boids.png'
             description='Large flocking simulation using compute shaders'
             tags={['OpenGL', 'GLSL', 'Compute Shaders']}
