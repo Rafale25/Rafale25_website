@@ -3,10 +3,12 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'raflou-green-light': 'rgb(41, 219, 41)',
+                'raflou-green-light': '#178e17',
                 'raflou-green-dark': 'rgb(0, 175, 0)',
                 'raflou-border': '#303030',
-                'raflou-shadow': '#191919'
+                'raflou-shadow': '#191919',
+                'raflou-background-primary': '#252830',
+                'raflou-background-secondary': '#202020'
             }
         },
     },

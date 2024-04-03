@@ -17,7 +17,6 @@
         'GlobalGameJam': 'https://globalgamejam.org',
         'Ludum Dare': 'https://ldjam.com/',
     }
-
 </script>
 
 <a class="sm:flex sm:h-64 sm:w-4/5 group w-full rounded-xl overflow-hidden" href={link}>
@@ -26,18 +25,18 @@
     </div>
 
     <div class="flex flex-col w-full min-h-full text-base">
-        <div class="font-bold text-xl px-4 py-2 bg-[color:var(--border)] group-hover:saturate-200">
-            <span>{name}</span>
+        <div class="font-bold text-xl px-4 py-2 bg-raflou-border group-hover:saturate-200">
+            <span class="text-raflou-green-dark">{name}</span>
         </div>
 
         <div class="h-full p-4 text-gray-100 bg-neutral-800">
             <span>{description}</span>
         </div>
 
-        <div class="flex flex-wrap gap-x-1 px-4 py-1 bg-[color:var(--border)]">
+        <div class="flex flex-wrap gap-x-2 px-4 py-1 bg-raflou-border">
             {#each tags as tag}
                 <a href={allTags[tag]}>
-                    <span class="px-2 italic rounded hover:saturate-150 bg-raflou-green-light text-black">{tag}</span>
+                    <span class="px-2 italic rounded hover:bg-green-500 bg-raflou-green-light text-black font-bold">{tag}</span>
                 </a>
             {/each}
         </div>

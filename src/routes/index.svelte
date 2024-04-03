@@ -1,21 +1,14 @@
 <script>
     import Project from "../components/project.svelte";
-    import Swal from 'sweetalert2'
-    import 'sweetalert2/dist/sweetalert2.min.css'
 
     function clipboard() {
-        const discord_name = "Rafale25#0025";
-        navigator.clipboard.writeText(discord_name);
-
-        Swal.fire({
-            title: `${discord_name} copied to the clipboard`,
-            confirmButtonText: 'Ok'
-        })
+        const discord_username = "rafale25";
+        navigator.clipboard.writeText(discord_username);
+        window.alert(`${discord_username} copied to the clipboard`);
     }
 </script>
 
 <!--
-    primary:
     - add bio
     - gif when hovering projects
     - page for each project
@@ -33,25 +26,27 @@
 
                 <img class="w-20 rounded-full" src="logo.jpg" alt="ProfilePicture"/>
 
-                    <div class="group text-xl" on:click={clipboard}>
+                    <div class="group text-xl">
                         <span style="text-decoration: none; color: white;">Rafale25</span>
-                        <span class="absolute text-transparent group-hover:text-[rgba(255,255,255,0.6)] duration-300">#0025</span>
+                        <!-- <span class="absolute text-transparent group-hover:text-[rgba(255,255,255,0.6)] duration-300">#0025</span> -->
                     </div>
             </div>
         </div>
     </div>
 
-    <div class="m-10 font-bold text-yellow-400 text-center text-lg">
-        <!-- <p>This website is still under development</p> -->
+
+    <div class="flex flex-col m-16 gap-6">
+
+        <div class="font-bold text-center text-xl text-yellow-400">
+            <p>Currently looking for a 6 months internship!</p>
+        </div>
+
+        <div class="font-bold text-lg text-center text-neutral-400">
+            <p>Hey! I'm Rafale25, I like game-design, computer graphics and simulation.</p>
+        </div>
     </div>
 
-    <!-- <div style="text-align: center; color: whitesmoke;"> -->
-        <!-- <h4>I'm a student at a computer science university</h4> -->
-        <!-- <p>Hey ! I'm Rafale25, I like computer graphics and simulation</p> -->
-        <!-- <p>This page highlights several of my personal software projects</p> -->
-    <!-- </div> -->
-
-    <div class="flex flex-col items-center w-full p-5 gap-7">
+    <div class="flex flex-col items-center w-full px-5 gap-8">
 
         <Project
             name={'Knossos'}
@@ -104,34 +99,29 @@
         />
     </div>
 
-    <footer class="flex justify-center items-center gap-x-6 mt-10 p-10  bg-[color:var(--background-secondary)]">
+    <footer class="flex justify-center items-center gap-x-6 mt-16 p-10 bg-raflou-background-secondary">
         <a href="https://github.com/Rafale25">
             <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
         </a>
         <a href="https://www.youtube.com/channel/UCjJYtSy8dMGJkMVrBnwaWSA">
             <img src="youtube-icon.svg" alt="Youtube Icon" class="w-12"/>
         </a>
+
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="" on:click={clipboard}>
             <img src="discord-icon.svg" alt="Discord Icon" class="w-12"/>
+        </a>
+
+        <a href="mailto:rafale25.dev@gmail.com" aria-label="email">
+            <img src="mail.svg" alt="Youtube Icon" class="w-12"/>
         </a>
     </footer>
 
 </main>
 
 <style>
-    :root {
-        --primary-light: rgb(41, 219, 41);
-        --primary-dark: rgb(0, 175, 0);
-        --background-primary: #252830;
-        --background-secondary: #202020;
-        --border: #303030;
-        --shadow: #191919;
-    }
-
     main {
         font-family: monospace;
-        color: var(--primary-dark);
         background-image: url("/tri.png");
         background-repeat: repeat;
     }
