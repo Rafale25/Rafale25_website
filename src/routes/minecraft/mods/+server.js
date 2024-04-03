@@ -1,4 +1,6 @@
-export const get = async () => {
+import { json } from '@sveltejs/kit';
+
+export async function GET(event) {
     const links = [
         'https://cdn.discordapp.com/attachments/1074403508901650512/1074461609994502164/advancednetherite-fabric-1.6.6-1.19.2.jar',
         'https://cdn.discordapp.com/attachments/1074403508901650512/1074461641481146408/adventurez-1.4.17.jar',
@@ -72,12 +74,11 @@ export const get = async () => {
     ]
 
     const file_names = links.map( link => link.split('/').pop() )
-
     const names_links = Object.assign(...file_names.map((k, i) => ({[k]: links[i]})))
 
-	return {
-		body: {
-			'mods': names_links
-		}
-	}
+	return json(
+        {
+            body: { 'mods': names_links }
+        }
+    )
 }
