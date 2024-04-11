@@ -6,7 +6,12 @@ const config = {
 	kit: {
 		adapter: adapter()
 	},
-	preprocess: vitePreprocess()
+	preprocess: vitePreprocess(),
+	// compilerOptions: {
+	// 	types: ["@webgpu/types"],
+	// 	"typeRoots": ["./node_modules/@webgpu/types", "./node_modules/@types"]
+
+	//   }
 };
 
 export default config;

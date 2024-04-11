@@ -1,0 +1,308 @@
+<script>
+    import { onMount } from 'svelte'
+
+    let canvas
+    let init, play, stop, resize_count
+    let innerWidth, innerHeight
+
+    let Config = {
+        count: 1000,
+        radius: 10,
+        speed: 2.0,
+        viewDistance: 45.0,
+
+        frequency: 0.1
+    }
+
+    let old_count = Config.count
+
+    onMount(() => {
+        function mapRange(value, min1, max1, min2, max2) {
+           return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+        }
+
+        function randRange(min, max) { // min and max included
+            return (Math.random() * (max - min) + min)
+        }
+
+        function sqrDist(x1, y1, x2, y2) {
+            const dx = x2 - x1
+            const dy = y2 - y1
+            return (dx*dx + dy*dy)
+        }
+
+        function cellCoord(x, y, size) {
+            return [ Math.floor(x/size), Math.floor(y/size) ]
+        }
+
+        function hashCoords(x, y, count) {
+            // const h = (x * 92837111) ^ (y * 689287499)
+            // return Math.abs(h) % count
+
+            const h = y*675 + x
+            return Math.abs(h) % count
+        }
+
+        function DebugTime(id, func) {
+            const t1 = performance.now()
+            func()
+            const t2 = performance.now()
+
+            const el = document.getElementById(id);
+            if (el)
+                el.textContent=`${(t2 - t1).toFixed(2)} ms`
+        }
+
+        const ctx = canvas.getContext("2d")
+
+        let isRunning = true
+        const particles = []
+        const bucket_particles = []
+        let count = new Array(Config.count).fill(0)
+
+        let phase = 0.0
+
+        class Vector {
+            constructor(x=0, y=0) {
+                this.x = x
+                this.y = y
+            }
+
+            add(other) {
+                return new Vector(this.x + other.x, this.y + other.y)
+            }
+
+            sub(other) {
+                return new Vector(this.x - other.x, this.y - other.y)
+            }
+
+            mul(scalar) {
+                return new Vector(this.x * scalar, this.y * scalar)
+            }
+
+            div(scalar) {
+                return new Vector(this.x / scalar, this.y / scalar)
+            }
+
+            length() {
+                return Math.sqrt(this.x*this.x + this.y*this.y)
+            }
+
+            normalize() {
+                return this.div(this.length())
+            }
+
+            static lerp(A, B, t) {
+                return A.mul(t) + B.mul(1.0 - t)
+            }
+        }
+
+        class Particle {
+            constructor(x=0, y=0, phase_offset=0) {
+                this.pos = new Vector(x, y)
+                this.vel = new Vector(0.0, 0.0)
+                this.phase_offset = phase_offset
+                this.phase = 0.0
+                this.hash = null
+            }
+
+            update() {
+                // this.pos.x += 1
+                this.pos.x += this.vel.x * Config.speed
+                this.pos.y += this.vel.y * Config.speed
+                this.phase = mapRange(Math.sin(phase + this.phase_offset), -Math.PI, Math.PI, -1.0, 1.0)
+            }
+        }
+
+
+        const compute = (me) => {
+            let totalForce = new Vector(0, 0)
+
+            for (let y = -1 ; y <= 1 ; ++y) {
+            for (let x = -1 ; x <= 1 ; ++x) {
+                const cell = cellCoord(me.pos.x, me.pos.y, Config.viewDistance)
+                cell[0] += x
+                cell[1] += y
+
+                const cellHash = hashCoords(cell[0], cell[1], Config.count)
+                const start = count[cellHash]
+                const end = count[cellHash + 1]
+
+                for (let i = start ; i < Config.count && i < end; ++i) {
+                    const other = bucket_particles[i]
+                    if (me == other) continue
+
+                    const distSqr = sqrDist(me.pos.x, me.pos.y, other.pos.x, other.pos.y)
+
+                    if (distSqr < Config.viewDistance * Config.viewDistance) {
+                        const diff = me.pos.sub(other.pos)
+                        const dist = diff.length()
+                        // const force = diff.mul(other.phase / distSqr);// * 1.0 / dist
+                        const force = diff.mul(other.phase / dist)// * 1.0 / dist
+                        // console.log(force)
+
+                        totalForce = totalForce.add(force)
+                    }
+                }
+            }
+            }
+
+           me.vel = me.vel.add(totalForce)// me.vel.normalize()
+           me.vel = me.vel.mul(0.9)
+        }
+
+        const step = () => {
+            if (!isRunning || Config.count <= 0) return
+
+            update_width_height()
+
+            count.fill(0)
+
+            // counting + update hash
+            for (const p of particles) {
+                const cell = cellCoord(p.pos.x, p.pos.y, Config.viewDistance)
+                p.hash = hashCoords(cell[0], cell[1], Config.count)
+
+                count[p.hash] += 1
+            }
+
+            // prefix sum
+            for (let i = 1 ; i < Config.count ; ++i) {
+                count[i] += count[i - 1]
+            }
+
+            // fill in
+            for (const p of particles) {
+                count[p.hash] -= 1
+                bucket_particles[ count[p.hash] ] = p
+            }
+
+            phase += Config.frequency // 1/60
+
+            DebugTime("ComputeTime", () => {
+                for (let p of particles) {
+                    p.update()
+
+                    compute(p)
+
+                    if (p.pos.x < 0 - Config.radius)
+                        p.pos.x = canvas.width + Config.radius
+                    if (p.pos.x > canvas.width + Config.radius)
+                        p.pos.x = 0 - Config.radius
+                    if (p.pos.y < 0 - Config.radius)
+                        p.pos.y = canvas.height + Config.radius
+                    if (p.pos.y > canvas.height + Config.radius)
+                        p.pos.y = 0 - Config.radius
+                }
+            })
+
+            DebugTime('RenderingTime', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                particles.forEach(boid => {
+                    ctx.fillStyle = boid.phase < 0 ? 'green' : 'red'
+
+                    ctx.beginPath()
+                    ctx.arc(boid.pos.x, boid.pos.y, Config.radius, 0, 2 * Math.PI)
+                    ctx.fill()
+                    ctx.stroke()
+                })
+            })
+
+            setTimeout( () => step(), 1000.0/60.0)
+        }
+
+        init = () => {
+            update_width_height()
+
+            old_count = 0
+            resize_count()
+        }
+
+        play = () => {
+            if (!isRunning === true) {
+                isRunning = true
+                step()
+            }
+        }
+
+        stop = () => {
+            isRunning = false
+        }
+
+        resize_count = (e) => {
+            particles.length = Config.count
+            bucket_particles.length = Config.count
+            count = new Array(Config.count).fill(0)
+
+            if (Config.count > old_count) {
+                for (let i = old_count - 1 ; i < Config.count ; ++i) {
+                    particles[i] = new Particle(
+                        randRange(0, canvas.width),
+                        randRange(0, canvas.height),
+                        randRange(0.0, Math.PI * 2.0)
+                    )
+                }
+            }
+
+            old_count = Config.count
+        }
+
+        const update_width_height = () => {
+            canvas.width = innerWidth
+            canvas.height = innerHeight
+        }
+
+        init()
+        step()
+    });
+
+</script>
+
+<svelte:window
+    bind:innerWidth
+    bind:innerHeight
+/>
+
+<main>
+    <div class="absolute">
+        <div class="flex flex-col p-4 gap-4 bg-slate-300">
+
+            <div class="inline-block">
+                <span>Compute</span> <span id="ComputeTime"></span>
+            </div>
+            <div class="inline-block">
+                <span>Rendering</span> <span id="RenderingTime"></span>
+            </div>
+
+            <div class="flex justify-center gap-x-4">
+                <button class="relative px-2 border-2" on:click={init}>reset</button>
+                <button class="relative px-2 border-2" on:click={play}>play</button>
+                <button class="relative px-2 border-2" on:click={stop}>stop</button>
+            </div>
+
+            <div class="flex">
+                <!-- !!! PROBLEM: SINCE THE Config.count is bind, it update before the on:change callback !!!!!! -->
+                <input class="relative" type="range" min="1" max="5000" step="1" bind:value={Config.count} on:change={resize_count}>
+                <span>Particle count</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative mx-2" type="range" min="0.0" max="10.0" step="0.0001" bind:value={Config.speed}>
+                <span>Speed</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative mx-2" type="range" min="0.0" max="100.0" step="0.0001" bind:value={Config.viewDistance}>
+                <span>View distance</span>
+            </div>
+
+            <div class="flex">
+                <input class="relative" type="range" min="0.0" max="1.0" step="0.001" bind:value={Config.frequency}>
+                <span>Oscillation Frequency</span>
+            </div>
+
+        </div>
+    </div>
+
+    <canvas class="bg-slate-400" width={innerWidth} height={innerHeight} bind:this={canvas}></canvas>
+</main>
