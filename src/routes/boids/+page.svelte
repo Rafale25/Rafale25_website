@@ -1,4 +1,4 @@
-<script>
+<script lang='js'>
     // import Boids from "./boids.svelte";
     import { onMount } from 'svelte'
 
@@ -344,4 +344,3 @@
 
     <canvas class="bg-slate-400" width={innerWidth} height={innerHeight} bind:this={canvas}></canvas>
 </main>
-
