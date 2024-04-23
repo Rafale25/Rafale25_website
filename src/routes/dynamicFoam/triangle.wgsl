@@ -1,26 +1,23 @@
+// struct TransformData {
+//     model: mat4x4f,
+//     view: mat4x4f,
+//     projection: mat4x4f,
+// }
+// @binding(0) @group(0) var<uniform> transformUBO: TransformData
+
 struct Fragment {
     @builtin(position) Position : vec4<f32>,
     @location(0) Color : vec4<f32>
 };
 
+// fn vs_main(@builtin(vertex_index) v_id: u32) -> Fragment {
 @vertex
-fn vs_main(@builtin(vertex_index) v_id: u32) -> Fragment {
-
-    var pos = array<vec2f, 3> (
-        vec2(0.0, 0.5),
-        vec2(-0.5, -0.5),
-        vec2(0.5, -0.5)
-    );
-
-    var color = array<vec3f, 3> (
-        vec3(1.0, 0.0, 0.0),
-        vec3(0.0, 1.0, 0.0),
-        vec3(0.0, 0.0, 1.0)
-    );
-
+fn vs_main(@builtin(instance_index) instance_id: u32, @location(0) v_position: vec3f, @location(1) v_color: vec3f) -> Fragment {
     var output : Fragment;
-    output.Position = vec4f(pos[v_id], 0.0, 1.0);
-    output.Color = vec4f(color[v_id], 1.0);
+    output.Position = vec4f(v_position, 1.0);
+    output.Color = vec4f(v_color, 0.0);
+
+    output.Position.x += f32(instance_id) * 0.1;
 
     return output;
 }
