@@ -9,7 +9,6 @@
 </script>
 
 <!--
-    - add bio
     - gif when hovering projects
     - page for each project
 -->
@@ -20,32 +19,36 @@
 </svelte:head>
 
 <main>
-    <nav class="flex flex-row items-center p-4 gap-x-4">
-        <img class="w-12 rounded-lg" src="logo.jpg" alt="ProfilePicture"/>
-        <div class="text-xl">
-            <span style="text-decoration: none; color: white;">Rafale25</span>
-        </div>
+    <div class="flex flex-col w-full h-80 bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
 
-        <div class="flex flex-row w-full justify-end gap-x-6 py-3 px-6 text-lg text-neutral-400">
-            <button class="underline">Screenshots</button>
-        </div>
-    </nav>
+        <nav class="flex w-full justify-between items-center p-4 backdrop-brightness-[10%]">
+            <div class="flex items-center gap-x-4 ">
+                <img class="w-12 rounded-lg" src="logo.jpg" alt="ProfilePicture"/>
+                <div class="text-xl">
+                    <span class="text-white">Rafale25</span>
+                </div>
+            </div>
 
-    <div class="flex justify-center mb-8 w-full h-64">
-        <div class="absolute w-full h-52 bg-no-repeat bg-cover bg-center brightness-50 bg-[url('/boids-blurred.png')]">
-        </div>
-        <div class="relative flex flex-col m-16 gap-6">
+            <div class="flex font-bold gap-x-8 px-8 text-lg text-neutral-300">
+                <button>Projects</button>
+                <button>Screenshots</button>
+            </div>
+        </nav>
+
+        <div class="flex flex-col w-full h-full items-center justify-center px-12 gap-6 backdrop-brightness-[50%]">
             <div class="font-bold text-center text-xl text-yellow-400">
-                <p>Currently looking for a 6 months internship!</p>
+                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Currently looking for a 6 months internship!</span>
             </div>
-
             <div class="font-bold text-lg text-center text-neutral-100">
-                <p>Hey! I'm Rafale25, I like game-design, computer graphics and simulation.</p>
+                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Hey! I'm Rafale25, I like game-design, computer graphics and simulation.</span>
             </div>
         </div>
-    </div>
 
-    <div class="flex flex-col items-center w-full px-5 gap-8">
+    </div >
+
+    <div class="w-full h-2 backdrop-brightness-[60%]"></div>
+
+    <div class="flex flex-col w-full items-center mt-16 px-5 gap-8">
         <Project
             name={'Knossos'}
             link={'https://primarter.itch.io/knossos'}
@@ -120,7 +123,10 @@
 <style>
     main {
         font-family: monospace;
-        background-image: url("/tri.png");
         background-repeat: repeat;
+        background: center no-repeat center;
+        background-image: url("/tri.png");
     }
-</style>
+    </style>
+        <!-- bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]" -->
+        <!-- background-color: #0f1012; -->
