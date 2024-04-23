@@ -20,34 +20,32 @@
 </svelte:head>
 
 <main>
-    <div class="flex bg-no-repeat bg-cover bg-center bg-[color:var(--background-secondary)] bg-[url('/boids-blurred.png')]">
-        <div class="flex w-full justify-center items-center">
-            <div class="flex flex-col items-center p-2 gap-1">
+    <nav class="flex flex-row items-center p-4 gap-x-4">
+        <img class="w-12 rounded-lg" src="logo.jpg" alt="ProfilePicture"/>
+        <div class="text-xl">
+            <span style="text-decoration: none; color: white;">Rafale25</span>
+        </div>
 
-                <img class="w-20 rounded-full" src="logo.jpg" alt="ProfilePicture"/>
+        <div class="flex flex-row w-full justify-end gap-x-6 py-3 px-6 text-lg text-neutral-400">
+            <button class="underline">Screenshots</button>
+        </div>
+    </nav>
 
-                    <div class="group text-xl">
-                        <span style="text-decoration: none; color: white;">Rafale25</span>
-                        <!-- <span class="absolute text-transparent group-hover:text-[rgba(255,255,255,0.6)] duration-300">#0025</span> -->
-                    </div>
+    <div class="flex justify-center mb-8 w-full h-64">
+        <div class="absolute w-full h-52 bg-no-repeat bg-cover bg-center brightness-50 bg-[url('/boids-blurred.png')]">
+        </div>
+        <div class="relative flex flex-col m-16 gap-6">
+            <div class="font-bold text-center text-xl text-yellow-400">
+                <p>Currently looking for a 6 months internship!</p>
+            </div>
+
+            <div class="font-bold text-lg text-center text-neutral-100">
+                <p>Hey! I'm Rafale25, I like game-design, computer graphics and simulation.</p>
             </div>
         </div>
     </div>
 
-
-    <div class="flex flex-col m-16 gap-6">
-
-        <div class="font-bold text-center text-xl text-yellow-400">
-            <p>Currently looking for a 6 months internship!</p>
-        </div>
-
-        <div class="font-bold text-lg text-center text-neutral-400">
-            <p>Hey! I'm Rafale25, I like game-design, computer graphics and simulation.</p>
-        </div>
-    </div>
-
     <div class="flex flex-col items-center w-full px-5 gap-8">
-
         <Project
             name={'Knossos'}
             link={'https://primarter.itch.io/knossos'}
