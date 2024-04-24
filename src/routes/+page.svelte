@@ -18,37 +18,37 @@
     <title>Rafale25</title>
 </svelte:head>
 
-<main>
+<main class="overflow-hidden">
     <div class="flex flex-col w-full h-80 bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
 
-        <nav class="flex w-full justify-between items-center p-4 backdrop-brightness-[10%]">
-            <div class="flex items-center gap-x-4 ">
+        <nav class="flex w-full justify-between items-center py-4 backdrop-brightness-[10%]">
+            <div class="flex items-center gap-x-4  px-6">
                 <img class="w-12 rounded-lg" src="logo.jpg" alt="ProfilePicture"/>
                 <div class="text-xl">
                     <span class="text-white">Rafale25</span>
                 </div>
             </div>
 
-            <div class="flex font-bold gap-x-8 px-8 text-lg text-neutral-300">
-                <button>Projects</button>
-                <button>Screenshots</button>
+            <div class="flex font-bold gap-x-8 px-9 text-lg text-neutral-300">
+                <a class="btn hover:underline" href="/">Projects</a>
+                <a class="btn hover:underline" href="/screenshots">Screenshots</a>
             </div>
         </nav>
 
         <div class="flex flex-col w-full h-full items-center justify-center px-12 gap-6 backdrop-brightness-[50%]">
+            <div class="font-bold text-lg text-center text-neutral-100">
+                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Hey! I'm Rafale25, I like game-design, computer graphics, simulation and optimisation.</span>
+            </div>
             <div class="font-bold text-center text-xl text-yellow-400">
                 <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Currently looking for a 6 months internship!</span>
-            </div>
-            <div class="font-bold text-lg text-center text-neutral-100">
-                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Hey! I'm Rafale25, I like game-design, computer graphics and simulation.</span>
             </div>
         </div>
 
     </div >
 
-    <div class="w-full h-2 backdrop-brightness-[60%]"></div>
+    <div class="w-full h-2 backdrop-brightness-[70%]"/>
 
-    <div class="flex flex-col w-full items-center mt-16 px-5 gap-8">
+    <div class="flex flex-col w-full items-center my-16 px-5 gap-8">
         <Project
             name={'Knossos'}
             link={'https://primarter.itch.io/knossos'}
@@ -100,7 +100,7 @@
         />
     </div>
 
-    <footer class="flex justify-center items-center gap-x-6 mt-16 p-10 bg-raflou-background-secondary">
+    <footer class="flex justify-center items-center gap-x-6 p-10 bg-raflou-background-secondary">
         <a href="https://github.com/Rafale25">
             <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
         </a>
