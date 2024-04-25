@@ -24,7 +24,8 @@
     </div>
 </nav>
 
-<div class="sm:hidden block backdrop-brightness-[10%]">
+<!-- <div class="sm:hidden block backdrop-brightness-[10%]"> -->
+<div class="sm:hidden block backdropfilter-10">
     <Collapsable collapsed={!visible}>
         <div class="flex flex-col w-full items-end gap-y-2 px-9 pb-4 font-bold text-lg text-neutral-300">
             <a class="btn hover:underline" href="/">Projects</a>
@@ -32,3 +33,11 @@
         </div>
     </Collapsable>
 </div>
+
+<style>
+    .backdropfilter-10 {
+        /* -moz-backdrop-filter: brightness(10%); */
+        /* -webkit-backdrop-filter: brightness(10%); */
+        backdrop-filter: brightness(10%);
+    }
+</style>
