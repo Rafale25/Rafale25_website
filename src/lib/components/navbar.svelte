@@ -36,8 +36,8 @@
 
 <style>
     .backdropfilter-10 {
-        /* -moz-backdrop-filter: brightness(10%); */
-        /* -webkit-backdrop-filter: brightness(10%); */
+        -moz-backdrop-filter: brightness(10%);
+        -webkit-backdrop-filter: brightness(10%);
         backdrop-filter: brightness(10%);
     }
 </style>
