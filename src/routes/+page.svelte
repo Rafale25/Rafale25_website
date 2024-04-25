@@ -1,11 +1,7 @@
 <script>
-    import Project from "../components/project.svelte";
-
-    function clipboard() {
-        const discord_username = "rafale25";
-        navigator.clipboard.writeText(discord_username);
-        window.alert(`${discord_username} copied to the clipboard`);
-    }
+    import Navbar from '$lib/components/navbar.svelte'
+    import Project from '$lib/components/project.svelte'
+    import Footer from '$lib/components/footer.svelte'
 </script>
 
 <!--
@@ -13,29 +9,11 @@
     - page for each project
 -->
 
-<svelte:head>
-    <link rel="icon" type="image/jpg" href="logo.jpg" />
-    <title>Rafale25</title>
-</svelte:head>
-
 <main class="overflow-hidden">
-    <div class="flex flex-col w-full h-80 bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
+    <div class="flex flex-col w-full h-auto bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
+        <Navbar/>
 
-        <nav class="flex w-full justify-between items-center py-4 backdrop-brightness-[10%]">
-            <div class="flex items-center gap-x-4  px-6">
-                <img class="w-12 rounded-lg" src="logo.jpg" alt="ProfilePicture"/>
-                <div class="text-xl">
-                    <span class="text-white">Rafale25</span>
-                </div>
-            </div>
-
-            <div class="flex font-bold gap-x-8 px-9 text-lg text-neutral-300">
-                <a class="btn hover:underline" href="/">Projects</a>
-                <a class="btn hover:underline" href="/screenshots">Screenshots</a>
-            </div>
-        </nav>
-
-        <div class="flex flex-col w-full h-full items-center justify-center px-12 gap-6 backdrop-brightness-[50%]">
+        <div class="flex flex-col w-full h-full items-center justify-center p-12 gap-6 backdrop-brightness-[50%]">
             <div class="font-bold text-lg text-center text-neutral-100">
                 <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Hey! I'm Rafale25, I like game-design, computer graphics, simulation and optimisation.</span>
             </div>
@@ -43,7 +21,6 @@
                 <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Currently looking for a 6 months internship!</span>
             </div>
         </div>
-
     </div >
 
     <div class="w-full h-2 backdrop-brightness-[70%]"/>
@@ -100,24 +77,7 @@
         />
     </div>
 
-    <footer class="flex justify-center items-center gap-x-6 p-10 bg-raflou-background-secondary">
-        <a href="https://github.com/Rafale25">
-            <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
-        </a>
-        <a href="https://www.youtube.com/channel/UCjJYtSy8dMGJkMVrBnwaWSA">
-            <img src="youtube-icon.svg" alt="Youtube Icon" class="w-12"/>
-        </a>
-
-        <!-- svelte-ignore a11y-invalid-attribute -->
-        <a href="" on:click={clipboard}>
-            <img src="discord-icon.svg" alt="Discord Icon" class="w-12"/>
-        </a>
-
-        <a href="mailto:rafale25.dev@gmail.com" aria-label="email">
-            <img src="mail.svg" alt="Youtube Icon" class="w-12"/>
-        </a>
-    </footer>
-
+    <Footer/>
 </main>
 
 <style>
@@ -127,6 +87,4 @@
         background: center no-repeat center;
         background-image: url("/tri.png");
     }
-    </style>
-        <!-- bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]" -->
-        <!-- background-color: #0f1012; -->
+</style>
