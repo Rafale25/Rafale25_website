@@ -24,6 +24,7 @@
     </div>
 </nav>
 
+<!-- p-0.5 because backdrop filter don't work on mobile when the object start with a size of 0 -->
 <div class="sm:hidden block backdrop-brightness-[10%] p-0.5">
     <Collapsable collapsed={!visible}>
         <div class="flex flex-col w-full items-end gap-y-2 px-9 pb-4 font-bold text-lg text-neutral-300">
