@@ -39,5 +39,13 @@
         -moz-backdrop-filter: brightness(10%);
         -webkit-backdrop-filter: brightness(10%);
         backdrop-filter: brightness(10%);
+        filter: brightness(100%);
+        filter: blur(0);
+
+        -webkit-filter: brightness(100%);
+        -webkit-filter: blur(0);
+
+        -moz-filter: brightness(100%);
+        -moz-filter: blur(0);
     }
 </style>
