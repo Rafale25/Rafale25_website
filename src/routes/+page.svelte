@@ -2,6 +2,8 @@
     import Navbar from '$lib/components/navbar.svelte'
     import Project from '$lib/components/project.svelte'
     import Footer from '$lib/components/footer.svelte'
+
+
 </script>
 
 <!--
