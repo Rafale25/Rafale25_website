@@ -3,32 +3,14 @@ import { createClient } from '@supabase/supabase-js'
 
 const USE_DIRECTLY_FROM_STORAGE = true
 
-async function getScreenshotsFromDatabase()
+async function getScreenshotsFromDatabase(supabaseClient, bucketPublicUrl)
 {
-    const supabase = createClient(env.PRIVATE_SUPABASE_URL, env.PRIVATE_SUPABASE_SERVICE_KEY)
+    const { data: imagesDescriptions, error } = await supabaseClient
+        .from('Screenshots')
+        .select()
+    // console.log(data, error)
 
-    let bucketPublicUrl = null
-    let images_descriptions = null
-
-    {
-        const { data, error } = await supabase
-            .from('Screenshots')
-            .select()
-
-        // console.log(data, error)
-        images_descriptions = data
-    }
-
-    {
-        const { data, error } = await supabase
-            .storage
-            .from('public_storage')
-            .getPublicUrl('')
-
-        bucketPublicUrl = data.publicUrl
-    }
-
-    const screenshots = images_descriptions.map(image => ({
+    const screenshots = imagesDescriptions.map(image => ({
         url: (bucketPublicUrl + image.name),
         description: image.description
     }))
@@ -36,31 +18,12 @@ async function getScreenshotsFromDatabase()
     return screenshots
 }
 
-async function getScreenshotsFromStorage()
+async function getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
 {
-    const supabase = createClient(env.PRIVATE_SUPABASE_URL, env.PRIVATE_SUPABASE_SERVICE_KEY)
-
-    let bucketPublicUrl = null
-    let images = null
-
-    {
-        const { data, error } = await supabase
-            .storage
-            .from('public_storage')
-            .getPublicUrl('')
-
-        bucketPublicUrl = data.publicUrl
-    }
-
-    {
-        const { data, error } = await supabase
-            .storage
-            .from('public_storage')
-            .list()
-
-        console.log(data)
-        images = data
-    }
+    const { data: images, error } = await supabaseClient
+        .storage
+        .from('public_storage')
+        .list()
 
     const screenshots = images.map(image => ({
         url: (bucketPublicUrl + image.name),
@@ -70,15 +33,19 @@ async function getScreenshotsFromStorage()
     return screenshots
 }
 
-export const load = async ({ cookies, url }) => {
+export const load = async () => {
 
     let result = null
+    const supabaseClient = createClient(env.PRIVATE_SUPABASE_URL, env.PRIVATE_SUPABASE_SERVICE_KEY)
 
-    if (USE_DIRECTLY_FROM_STORAGE) {
-        result = await getScreenshotsFromStorage()
-    } else {
-        result = await getScreenshotsFromDatabase()
-    }
+    const { data: { publicUrl: bucketPublicUrl }, error } = supabaseClient
+        .storage
+        .from('public_storage')
+        .getPublicUrl('')
+
+    result = USE_DIRECTLY_FROM_STORAGE ?
+        await getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
+        : await getScreenshotsFromDatabase(supabaseClient, bucketPublicUrl)
 
     return { screenshots: result }
 }
