@@ -6,14 +6,12 @@
     export let data;
 
     let imageContainer, imageViewer, imageViewerImage
-
     // let current_index = 0
 
     afterUpdate(() => {
     })
 
     function setImage(e) {
-        if (e == null) return
         imageViewer.classList.remove('hidden')
         imageViewerImage.src = e.target.src
     }
@@ -29,28 +27,32 @@
 
     <div class="min-h-screen text-white overflow-hidden">
 
-        <div bind:this={imageContainer} class="flex w-full p-12 justify-evenly items-center flex-wrap gap-4">
+        <div bind:this={imageContainer} class="w-full columns-5 gap-3 space-y-3 p-12">
 
+            {#each [...Array(1).keys()] as i}
             {#each data.screenshots as screenshot}
 
-                <div class="max-w-80 h-auto sm:hover:scale-125 transition duration-150">
-                    <button on:click={setImage} class="cursor-default">
+                <div class="flex w-full h-auto sm:hover:scale-110 transition duration-150 rounded-md overflow-hidden">
+
+                    <button on:click={setImage} class="cursor-default w-full h-auto">
                         {#if screenshot.url.slice(-4) === '.mp4'}
-                            <!-- <video width="320" height="240" preload="metadata">
+                            <video class="w-full h-auto object-cover" width="320" height="240" preload="metadata">
                                 <source src="{screenshot.url}" type=video/mp4/>
-                            </video> -->
+                            </video>
                         {:else}
-                            <img class="object-cover" src="{screenshot.url}" alt="Hello"/>
+                            <img class="w-full h-auto object-cover" src="{screenshot.url}" alt="Hello"/>
                         {/if}
 
                     </button>
                 </div>
             {/each}
+            {/each}
+
 
             <!-- Invisible divs to make last item stick to the left when using justify-evenly -->
-            {#each [...Array(5).keys()] as i}
-                <div class="w-64 h-0 invisible"/>
-            {/each}
+            <!-- {#each [...Array(5).keys()] as i}
+                <div class="w-auto h-0 invisible"/>
+            {/each} -->
 
             <!-- <video width="320" height="240" controls preload="metadata"> -->
             <!-- <video width="320" height="240" preload="metadata">
@@ -79,4 +81,5 @@
         background: center no-repeat center;
         background-image: url("/tri.png");
     }
-</style>
+
+    </style>
