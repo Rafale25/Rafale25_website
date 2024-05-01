@@ -1,4 +1,4 @@
-import { env } from '$env/static/private'
+import { PRIVATE_SUPABASE_URL, PRIVATE_SUPABASE_SERVICE_KEY } from '$env/static/private'
 import { createClient } from '@supabase/supabase-js'
 
 const USE_DIRECTLY_FROM_STORAGE = true
