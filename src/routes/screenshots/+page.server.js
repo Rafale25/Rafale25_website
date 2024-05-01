@@ -36,7 +36,7 @@ async function getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
 export const load = async () => {
     const supabaseClient = createClient(PRIVATE_SUPABASE_URL, PRIVATE_SUPABASE_SERVICE_KEY)
 
-    const { data: { publicUrl: bucketPublicUrl }, errorClient } = supabaseClient
+    const { data: { publicUrl: bucketPublicUrl }, error: errorClient } = supabaseClient
         .storage
         .from('public_storage')
         .getPublicUrl('')
