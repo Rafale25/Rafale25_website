@@ -34,7 +34,6 @@ async function getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
 }
 
 export const load = async () => {
-    let result = null
     const supabaseClient = createClient(env.PRIVATE_SUPABASE_URL, env.PRIVATE_SUPABASE_SERVICE_KEY)
 
     const { data: { publicUrl: bucketPublicUrl }, error } = supabaseClient
@@ -42,7 +41,15 @@ export const load = async () => {
         .from('public_storage')
         .getPublicUrl('')
 
-    result = USE_DIRECTLY_FROM_STORAGE ?
+    if (error != null)
+    {
+        return {
+            screenshots: result,
+            error
+        }
+    }
+
+    const result = USE_DIRECTLY_FROM_STORAGE ?
         await getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
         : await getScreenshotsFromDatabase(supabaseClient, bucketPublicUrl)
 
