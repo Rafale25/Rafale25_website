@@ -1,7 +1,6 @@
 <script>
 	import Navbar from '$lib/components/navbar.svelte'
     import Footer from '$lib/components/footer.svelte'
-    import { onMount } from 'svelte';
     import { browser } from '$app/environment'
 
     export let data;
