@@ -10,6 +10,7 @@
     let videoSrc
     // --
 
+    let videoDurations = []
     let videoDurationElement = []
     // let current_index = 0
 
@@ -19,8 +20,8 @@
         let minutes = Math.floor((sec_num - (hours * 3600)) / 60)
         let seconds = sec_num - (hours * 3600) - (minutes * 60)
 
-        if (hours   < 10) {hours   = "0"+hours}
-        if (minutes < 10) {minutes = "0"+minutes}
+        // if (hours   < 10) {hours   = "0"+hours}
+        // if (minutes < 10) {minutes = "0"+minutes}
         if (seconds < 10) {seconds = "0"+seconds}
 
         let result = ''
@@ -53,7 +54,8 @@
     function setVideoLength(element, index)
     {
         const duration = element.target.duration
-        videoDurationElement[index] = toHHMMSS(duration)
+        videoDurations[index] = toHHMMSS(duration)
+        videoDurationElement[index].classList.remove('hidden')
     }
 </script>
 
@@ -74,15 +76,15 @@
                             <div class="absolute flex w-full h-full justify-center items-center">
                                 <img src="play-button.svg" alt="Play Icon" class="w-14 opacity-50"/>
                             </div>
-                            <div class="absolute flex w-full h-full justify-end items-end">
-                                <span class="m-1 px-1 rounded-sm backdrop-brightness-50">{videoDurationElement[i]}</span>
+                            <div bind:this={videoDurationElement[i]} class="hidden absolute flex w-full h-full justify-end items-end">
+                                <span class="m-2 px-1 rounded-sm text-sm backdrop-brightness-50">{videoDurations[i]}</span>
                             </div>
                             {#if browser}
                                 <video on:loadedmetadata={e => setVideoLength(e, i)} class="w-full h-auto" width="320" height="240" preload="metadata">
                                     <source src="{screenshot.url}" type=video/mp4/>
                                 </video>
                             {:else}
-                                    <div class="w-full h-36 bg-black"/>
+                                <div class="w-full h-36 bg-black"/>
                             {/if}
                         </button>
                     {:else}
