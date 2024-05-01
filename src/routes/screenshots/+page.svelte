@@ -97,10 +97,11 @@
         </div>
     </div>
 
-    <button bind:this={viewer} on:click={closeImageViewer} class="hidden fixed flex w-full h-full justify-center items-center p-16 top-0 left-0 backdrop-brightness-[20%] cursor-default">
-            <!-- <div class="absolute right-0 px-8 py-6 ">
-                <button on:click={closeImageViewer} class="bg-white rounded px-4 py-2 font-bold text-lg">x</button>
-            </div> -->
+    <button bind:this={viewer} on:click={closeImageViewer} class="hidden fixed flex w-full h-full justify-center items-center p-16 top-0 left-0 cursor-default">
+        <!-- <div class="absolute right-0 top-0 px-8 py-6 ">
+            <button on:click={closeImageViewer} class="bg-white rounded px-4 py-2 font-bold text-lg">x</button>
+        </div> -->
+            <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black opacity-80"/>
 
             <div class="flex max-w-auto max-h-full justify-center items-center">
                 <img bind:this={viewerImage} class="hidden w-3/4 object-contain" src="" alt="" on:click|stopPropagation>
