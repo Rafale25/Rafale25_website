@@ -57,10 +57,10 @@
         videoDurationElement[index] = toHHMMSS(duration)
     }
 
-    console.log('error:', data.error)
+    console.log(data)
 
     onMount(() => {
-        console.log('error:', data.error)
+        console.log(data)
     })
 
 </script>
