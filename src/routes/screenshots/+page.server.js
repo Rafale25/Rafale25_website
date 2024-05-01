@@ -1,4 +1,4 @@
-import { env } from '$env/dynamic/private'
+import { env } from '$env/static/private'
 import { createClient } from '@supabase/supabase-js'
 
 const USE_DIRECTLY_FROM_STORAGE = true
