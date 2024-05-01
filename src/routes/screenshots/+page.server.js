@@ -49,7 +49,6 @@ export const load = async () => {
         screenshots,
         errorClient,
         error,
-        PRIVATE_SUPABASE_URL,
-        PRIVATE_SUPABASE_SERVICE_KEY
+        USE_DIRECTLY_FROM_STORAGE
     }
 }
