@@ -2,7 +2,6 @@
 	import Navbar from '$lib/components/navbar.svelte'
     import Footer from '$lib/components/footer.svelte'
     import { browser } from '$app/environment'
-    import { onMount } from 'svelte';
 
     export let data;
 
@@ -56,13 +55,6 @@
         const duration = element.target.duration
         videoDurationElement[index] = toHHMMSS(duration)
     }
-
-    console.log(data)
-
-    onMount(() => {
-        console.log(data)
-    })
-
 </script>
 
 <main>

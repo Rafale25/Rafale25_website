@@ -1,5 +1,4 @@
 import { PRIVATE_SUPABASE_URL, PRIVATE_SUPABASE_SERVICE_KEY } from '$env/static/private'
-// import { env } from '$env/dynamic/private'
 import { createClient } from '@supabase/supabase-js'
 
 const USE_DIRECTLY_FROM_STORAGE = true
@@ -47,8 +46,5 @@ export const load = async () => {
 
     return {
         screenshots,
-        errorClient,
-        error,
-        USE_DIRECTLY_FROM_STORAGE
     }
 }
