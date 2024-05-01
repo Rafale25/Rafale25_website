@@ -8,14 +8,13 @@ async function getScreenshotsFromDatabase(supabaseClient, bucketPublicUrl)
     const { data: imagesDescriptions, error } = await supabaseClient
         .from('Screenshots')
         .select()
-    // console.log(data, error)
 
     const screenshots = imagesDescriptions.map(image => ({
         url: (bucketPublicUrl + image.name),
         description: image.description
     }))
 
-    return screenshots
+    return {screenshots, error}
 }
 
 async function getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
@@ -30,28 +29,23 @@ async function getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
         description: image.id
     }))
 
-    return screenshots
+    return {screenshots, error}
 }
 
 export const load = async () => {
     const supabaseClient = createClient(env.PRIVATE_SUPABASE_URL, env.PRIVATE_SUPABASE_SERVICE_KEY)
 
-    const { data: { publicUrl: bucketPublicUrl }, error } = supabaseClient
+    const { data: { publicUrl: bucketPublicUrl } } = supabaseClient
         .storage
         .from('public_storage')
         .getPublicUrl('')
 
-    if (error != null)
-    {
-        return {
-            screenshots: result,
-            error
-        }
-    }
-
-    const result = USE_DIRECTLY_FROM_STORAGE ?
+    const {screenshots, error} = USE_DIRECTLY_FROM_STORAGE ?
         await getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
         : await getScreenshotsFromDatabase(supabaseClient, bucketPublicUrl)
 
-    return { screenshots: result }
+    return {
+        screenshots,
+        error
+    }
 }
