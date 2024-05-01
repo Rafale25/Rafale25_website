@@ -34,63 +34,6 @@ async function getScreenshotsFromStorage(supabaseClient, bucketPublicUrl)
 }
 
 export const load = async () => {
-    return {
-        screenshots: [
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-            {
-                url: 'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image1.png',
-                description: 'empty description'
-            },
-        ]
-    }
-
     let result = null
     const supabaseClient = createClient(env.PRIVATE_SUPABASE_URL, env.PRIVATE_SUPABASE_SERVICE_KEY)
 
