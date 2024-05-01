@@ -48,6 +48,7 @@ export const load = async () => {
     return {
         screenshots,
         errorClient,
-        error
+        error,
+        supabaseClient
     }
 }
