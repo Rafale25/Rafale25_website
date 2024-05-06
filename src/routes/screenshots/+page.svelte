@@ -103,16 +103,16 @@
         <!-- <div class="absolute right-0 top-0 px-8 py-6 ">
             <button on:click={closeImageViewer} class="bg-white rounded px-4 py-2 font-bold text-lg">x</button>
         </div> -->
-            <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black opacity-80"/>
+        <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black opacity-80"/>
 
-            <div class="flex max-w-auto max-h-full justify-center items-center">
-                <img bind:this={viewerImage} class="hidden w-3/4 object-contain" src="" alt="" on:click|stopPropagation>
+        <div class="flex w-auto h-full justify-center items-center">
+            <img bind:this={viewerImage} class="hidden flex w-full h-full object-contain" src="" alt="">
 
-                <video bind:this={viewerVideo} class="hidden w-full h-auto" width="320" height="240" controls preload="metadata" on:click|stopPropagation>
-                    <source src={videoSrc} type=video/mp4/>
-                </video>
-            </div>
-        </button>
+            <video bind:this={viewerVideo} class="hidden w-full h-auto" width="320" height="240" controls preload="metadata" on:click|stopPropagation>
+                <source src={videoSrc} type=video/mp4/>
+            </video>
+        </div>
+    </button>
 
     <Footer/>
 </main>
@@ -124,5 +124,4 @@
         background: center no-repeat center;
         background-image: url("/tri.png");
     }
-
 </style>
