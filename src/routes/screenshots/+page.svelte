@@ -6,8 +6,8 @@
     export let data;
 
     // binded
-    let imageContainer, viewer, viewerImage, viewerVideo
-    let videoSrc
+    let viewer, viewerVideo, viewerVideoContainer, viewerImageContainer
+    let videoSrc, imageSrc
     // --
 
     let videoDurations = []
@@ -32,14 +32,14 @@
     }
 
     function setImage(e) {
+        viewerImageContainer.classList.remove('hidden')
         viewer.classList.remove('hidden')
-        viewerImage.classList.remove('hidden')
-        viewerImage.src = e.target.src
+        imageSrc = e.target.src
     }
 
     function setVideo(url) {
+        viewerVideoContainer.classList.remove('hidden')
         viewer.classList.remove('hidden')
-        viewerVideo.classList.remove('hidden')
 
         videoSrc = url
         viewerVideo.load()
@@ -47,8 +47,8 @@
 
     function closeImageViewer() {
         viewer.classList.add('hidden')
-        viewerVideo.classList.add('hidden')
-        viewerImage.classList.add('hidden')
+        viewerVideoContainer.classList.add('hidden')
+        viewerImageContainer.classList.add('hidden')
     }
 
     function setVideoLength(element, index)
@@ -64,7 +64,7 @@
 
     <div class="min-h-screen text-white overflow-hidden">
 
-        <div bind:this={imageContainer} class="w-full gap-3 space-y-3 p-6 sm:p-12
+        <div class="w-full gap-3 space-y-3 p-6 sm:p-12
             sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 2xl:columns-6">
 
             <!-- {#each [...Array(1).keys()] as _} -->
@@ -105,10 +105,12 @@
         </div> -->
         <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black opacity-80"/>
 
-        <div class="flex w-auto h-full justify-center items-center">
-            <img bind:this={viewerImage} class="hidden flex w-full h-full object-contain" src="" alt="">
+        <div bind:this={viewerImageContainer} class="hidden flex w-auto h-full justify-center items-center">
+            <img class="flex w-full h-full object-contain" src={imageSrc} alt="">
+        </div>
 
-            <video bind:this={viewerVideo} class="hidden w-full h-auto" width="320" height="240" controls preload="metadata" on:click|stopPropagation>
+        <div bind:this={viewerVideoContainer} class="hidden flex w-full h-full justify-center items-center">
+            <video bind:this={viewerVideo} width="100%" height="auto" controls preload="metadata" on:click|stopPropagation>
                 <source src={videoSrc} type=video/mp4/>
             </video>
         </div>
