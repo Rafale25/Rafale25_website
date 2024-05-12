@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <button bind:this={viewer} on:click={closeImageViewer} class="hidden fixed flex w-full h-full justify-center items-center p-16 top-0 left-0 cursor-default">
+    <button bind:this={viewer} on:click={closeImageViewer} class="hidden fixed flex w-full h-full justify-center items-center sm:p-16 top-0 left-0 cursor-default">
         <!-- <div class="absolute right-0 top-0 px-8 py-6 ">
             <button on:click={closeImageViewer} class="bg-white rounded px-4 py-2 font-bold text-lg">x</button>
         </div> -->
@@ -110,7 +110,7 @@
         </div>
 
         <div bind:this={viewerVideoContainer} class="hidden flex w-full h-full justify-center items-center">
-            <video bind:this={viewerVideo} width="100%" height="auto" controls preload="metadata" on:click|stopPropagation>
+            <video bind:this={viewerVideo} class="flex w-full h-auto max-h-full" controls preload="metadata" on:click|stopPropagation>
                 <source src={videoSrc} type=video/mp4/>
             </video>
         </div>

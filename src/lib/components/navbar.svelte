@@ -14,7 +14,7 @@
 
     <ul class="sm:flex hidden font-bold gap-x-8 px-9 text-lg text-neutral-300">
         <li><a class="btn hover:underline" href="/">Projects</a></li>
-        <li><a class="btn hover:underline" href="/screenshots">Screenshots</a></li>
+        <li><a class="btn hover:underline" href="/gallery">Gallery</a></li>
     </ul>
 
     <div class="sm:hidden flex px-6">
@@ -29,7 +29,7 @@
     <Collapsable collapsed={!visible}>
         <div class="flex flex-col w-full items-end gap-y-2 px-9 pb-4 font-bold text-lg text-neutral-300">
             <a class="btn hover:underline" href="/">Projects</a>
-            <a class="btn hover:underline" href="/screenshots">Screenshots</a>
+            <a class="btn hover:underline" href="/gallery">Gallery</a>
         </div>
     </Collapsable>
 </div>
