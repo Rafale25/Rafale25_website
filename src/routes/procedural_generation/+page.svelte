@@ -10,6 +10,11 @@
 
     let program, vao
     let resolutionUniformLocation
+    let vertexCount = 0
+    let voxelWidth = 32
+    let voxelHeight = 16
+
+    let centerX = 0, centerY = 0, centerZ = 0
 
     const vertexShaderSource = `#version 300 es
         in vec2 a_position;
@@ -33,10 +38,10 @@
         out vec4 outColor;
 
         vec3 materials[] = vec3[](
-            vec3(1.0, 0.0, 0.0),
-            vec3(0.0, 1.0, 0.0),
-            vec3(0.0, 0.0, 1.0),
-            vec3(0.0, 1.0, 1.0)
+            vec3(0.0, 0.0, 0.0) / 255.0,  // Air
+            vec3(105, 163, 90) / 255.0,  // Grass
+            vec3(122, 99, 76)   / 255.0,  // Dirt
+            vec3(119, 119, 122) / 255.0   // Stone
         );
 
         void main() {
@@ -77,7 +82,7 @@
         const dx = x*size
         const dy = y*size
 
-        material = getRandomInt(4)
+        material = getRandomInt(3)+1
 
         return [
             dx,      dy,        material,
@@ -90,17 +95,23 @@
         ]
     }
 
-    function createTerrainSlice() {
+    function createTerrainSlice(_x, _y, _z, width, height) {
         const positions = []
 
-        for (let x = 0 ; x < 10 ; ++x) {
-            for (let z = 0 ; z < 10 ; ++z) {
-                positions.push(...square(x, z))
+        for (let x = _x ; x < width ; ++x) {
+            for (let y = _y ; y < height ; ++y) {
+                positions.push(...square(x, y))
             }
         }
         // positions.push(...square(0, 0))
 
         return positions
+    }
+
+    generate = () => {
+        const vertices = createTerrainSlice(0, 0, 0, voxelWidth, voxelHeight)
+        vertexCount = vertices.length / 3
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
     }
 
     function init() {
@@ -111,22 +122,17 @@
 
         resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
 
-        // const positionAttributeLocation = gl.getAttribLocation(program, "a_position")
         const vertexBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
 
-        const vertices = createTerrainSlice()
-
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
+        generate()
 
         vao = gl.createVertexArray()
         gl.bindVertexArray(vao)
         gl.enableVertexAttribArray(0)
-        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 4*3, 0)
         gl.enableVertexAttribArray(1)
+        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 4*3, 0)
         gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 4*3, 8)
-
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
     }
 
     function frame() {
@@ -134,13 +140,24 @@
         gl.clear(gl.COLOR_BUFFER_BIT)
 
         gl.useProgram(program)
-        gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+        gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
 
         gl.bindVertexArray(vao)
-        gl.drawArrays(gl.TRIANGLES, 0, 3*2 * 10*10)
+        gl.drawArrays(gl.TRIANGLES, 0, vertexCount)
 
         frame_count += 1
-        setTimeout( () => frame(gl), 1000.0/60.0)
+
+        requestAnimationFrame(() => frame());
+    }
+
+    function onChangeDimension() {
+        console.log("update")
+    }
+
+    const update_width_height = () => {
+        canvas.width = innerWidth
+        canvas.height = innerHeight
+        gl.viewport(0, 0, canvas.width, canvas.height)
     }
 
     onMount(() => {
@@ -150,8 +167,8 @@
             return
         }
 
-        canvas.width = innerWidth
-        canvas.height = innerHeight
+        window.addEventListener('resize', () => update_width_height())
+        update_width_height()
 
         init()
         frame()
@@ -172,9 +189,18 @@
             <button class="w-fit px-2 border-2 rounded" on:click={generate}>Generate</button>
 
             <div class="flex items-center gap-x-2">
-                X<input class="text-center" type="number" value="0" step="1" min="-256" max="256">
-                Y<input class="text-center" type="number" value="0" step="1" min="-256" max="256">
-                Z<input class="text-center" type="number" value="0" step="1" min="-256" max="256">
+                X<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerX} on:change={onChangeDimension}>
+                Y<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerY} on:change={onChangeDimension}>
+                Z<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerZ} on:change={onChangeDimension}>
+            </div>
+
+            <div class="flex">
+                <input class="relative" type="range" min="8" max="128" step="1" bind:value={voxelWidth}>
+                <span>Width</span>
+            </div>
+            <div class="flex">
+                <input class="relative" type="range" min="8" max="128" step="1" bind:value={voxelHeight}>
+                <span>Height</span>
             </div>
 
         </div>
