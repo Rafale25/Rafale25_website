@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte'
+    import { noise } from '$lib/noise.js'
 
     // Window, webgl2 //
     let gl, canvas
@@ -15,10 +16,9 @@
     let generate
 
     // Config //
-    let scale = 12
+    let scale = 7
     let seed = 0;
-    let voxelWidth = 128
-    let voxelHeight = 128
+    let voxelWidth = 512, voxelHeight = 256
     let centerX = 0, centerY = 0, centerZ = 0
 
     const BLOCK = {
@@ -107,7 +107,11 @@
 
     function getBlock(x, y, z) {
         const baseHeight = 16
-        const height = Math.floor(Math.sin(x * 0.2) * 4) + baseHeight
+        // const height = Math.floor(Math.sin(x * 0.2) * 4) + baseHeight
+        const scale = 0.03
+        const amplification = 100
+
+        const height = (noise.perlin3(x*scale, y*scale, z*scale) * amplification) >> 0
 
         if (y === height) return BLOCK.GRASS
         if (y < height && y > height - 3) return BLOCK.DIRT
@@ -141,6 +145,11 @@
     }
 
     generate = () => {
+        noise.seed(seed)
+        const MAX_SIZE = 2600
+        voxelWidth = Math.min(MAX_SIZE, (canvas.width*2 / scale) >> 0)
+        voxelHeight = Math.min(MAX_SIZE, (canvas.height*2 / scale) >> 0)
+
         const vertices = generateTerrainSlice(
             centerX,
             centerY,
@@ -199,7 +208,7 @@
     }
 
     function onKeyDown(e) {
-        const speed = Math.max(1, 40 / scale)
+        const speed = Math.max(1, 90 / scale)
 
         switch (e.key) {
             case "ArrowRight":
@@ -250,26 +259,23 @@
 
             <span>frames: {frame_count}</span>
 
-            <button class="w-fit px-2 border-2 rounded" on:click={generate}>Generate</button>
-
             <div class="flex items-center gap-x-2">
                 Seed<input class="text-center" type="number" step="1" min="0" max="2147483647" bind:value={seed} on:change={generate}>
             </div>
 
             <div class="flex items-center gap-x-2">
-                X<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerX} on:change={onChangeDimension}>
-                Y<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerY} on:change={onChangeDimension}>
-                Z<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerZ} on:change={onChangeDimension}>
+                X<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerX} on:input={onChangeDimension}>
+                Y<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerY} on:input={onChangeDimension}>
+                Z<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerZ} on:input={onChangeDimension}>
             </div>
 
             <div class="flex items-center gap-x-2">
-                Width<input class="text-center" type="number" step="1" min="8" max="1024" bind:value={voxelWidth} on:change={onChangeDimension}>
-            </div>
-            <div class="flex items-center gap-x-2">
-                Height<input class="text-center" type="number" step="1" min="8" max="1024" bind:value={voxelHeight} on:change={onChangeDimension}>
-            </div>
-            <div class="flex items-center gap-x-2">
                 Scale<input class="text-center" type="number" step="1" min="1" max="100" bind:value={scale} on:change={onChangeDimension}>
+            </div>
+
+            <div class="flex items-center gap-x-2">
+                <span class="text-center">Width {voxelWidth}</span>
+                <span class="text-center">Height {voxelHeight}</span>
             </div>
 
         </div>
