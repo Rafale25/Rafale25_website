@@ -264,9 +264,9 @@
             </div>
 
             <div class="flex items-center gap-x-2">
-                X<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerX} on:input={onChangeDimension}>
-                Y<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerY} on:input={onChangeDimension}>
-                Z<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerZ} on:input={onChangeDimension}>
+                X<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerX} on:input={onChangeDimension}>
+                Y<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerY} on:input={onChangeDimension}>
+                Z<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerZ} on:input={onChangeDimension}>
             </div>
 
             <div class="flex items-center gap-x-2">
