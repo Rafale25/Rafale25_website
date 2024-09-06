@@ -1,20 +1,32 @@
 <script>
     import { onMount } from 'svelte'
 
-    let gl
-    let canvas
-    let generate
+    // Window, webgl2 //
+    let gl, canvas
     let innerWidth, innerHeight
 
+    // Rendering //
     let frame_count = 0
-
     let program, vao
     let resolutionUniformLocation
     let vertexCount = 0
-    let voxelWidth = 32
-    let voxelHeight = 16
 
+    // Buttons //
+    let generate
+
+    // Config //
+    let scale = 12
+    let seed = 0;
+    let voxelWidth = 128
+    let voxelHeight = 128
     let centerX = 0, centerY = 0, centerZ = 0
+
+    const BLOCK = {
+        AIR: 0,
+        GRASS: 1,
+        DIRT: 2,
+        STONE: 3,
+    }
 
     const vertexShaderSource = `#version 300 es
         in vec2 a_position;
@@ -78,11 +90,9 @@
         return Math.floor(Math.random() * max)
     }
 
-    function square(x, y, size=20, material=0) {
+    function square(x, y, size=20, material=1) {
         const dx = x*size
         const dy = y*size
-
-        material = getRandomInt(3)+1
 
         return [
             dx,      dy,        material,
@@ -95,21 +105,48 @@
         ]
     }
 
-    function createTerrainSlice(_x, _y, _z, width, height) {
+    function getBlock(x, y, z) {
+        const baseHeight = 16
+        const height = Math.floor(Math.sin(x * 0.2) * 4) + baseHeight
+
+        if (y === height) return BLOCK.GRASS
+        if (y < height && y > height - 3) return BLOCK.DIRT
+        if (y < height) return BLOCK.STONE
+        return BLOCK.AIR
+    }
+
+    function generateTerrainSlice(_x, _y, _z, width, height) {
         const positions = []
 
-        for (let x = _x ; x < width ; ++x) {
-            for (let y = _y ; y < height ; ++y) {
-                positions.push(...square(x, y))
+        const lowX = _x - (width/2) >> 0 // use to get integer part of value without Math.floor
+        const rightX = _x + (width/2) >> 0
+
+        const lowY = _y - (height/2) >> 0
+        const highY = _y + (height/2) >> 0
+
+        for (let x = lowX ; x < rightX ; ++x) {
+            for (let y = lowY ; y < highY ; ++y) {
+                const block = getBlock(x, y, _z)
+                if (block === BLOCK.AIR) continue
+                positions.push(
+                    ...square(
+                        x - _x,
+                        y - _y,
+                        scale, block)
+                )
             }
         }
-        // positions.push(...square(0, 0))
 
         return positions
     }
 
     generate = () => {
-        const vertices = createTerrainSlice(0, 0, 0, voxelWidth, voxelHeight)
+        const vertices = generateTerrainSlice(
+            centerX,
+            centerY,
+            centerZ,
+            voxelWidth, voxelHeight
+        )
         vertexCount = vertices.length / 3
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
     }
@@ -146,18 +183,44 @@
         gl.drawArrays(gl.TRIANGLES, 0, vertexCount)
 
         frame_count += 1
-
         requestAnimationFrame(() => frame());
     }
 
     function onChangeDimension() {
-        console.log("update")
+        voxelWidth = Math.floor(voxelWidth)
+        voxelHeight = Math.floor(voxelHeight)
+        generate()
     }
 
-    const update_width_height = () => {
+    const updateWidthHeight = () => {
         canvas.width = innerWidth
         canvas.height = innerHeight
         gl.viewport(0, 0, canvas.width, canvas.height)
+    }
+
+    function onKeyDown(e) {
+        const speed = Math.max(1, 40 / scale)
+
+        switch (e.key) {
+            case "ArrowRight":
+                centerX += speed
+                break
+            case "ArrowDown":
+                centerY -= speed
+                break
+            case "ArrowLeft":
+                centerX -= speed
+                break
+            case "ArrowUp":
+                centerY += speed
+                break
+        }
+
+        centerX = Math.round(centerX)
+        centerY = Math.round(centerY)
+        centerZ = Math.round(centerZ)
+
+        generate()
     }
 
     onMount(() => {
@@ -167,8 +230,8 @@
             return
         }
 
-        window.addEventListener('resize', () => update_width_height())
-        update_width_height()
+        window.addEventListener('resize', () => updateWidthHeight())
+        updateWidthHeight()
 
         init()
         frame()
@@ -178,15 +241,20 @@
 <svelte:window
     bind:innerWidth
     bind:innerHeight
+    on:keydown={onKeyDown}
 />
 
 <main>
     <div class="absolute">
-        <div class="flex flex-col p-4 gap-4 bg-gray-300 rounded-md">
+        <div class="flex flex-col p-4 gap-4 bg-gray-300 rounded-md opacity-90">
 
             <span>frames: {frame_count}</span>
 
             <button class="w-fit px-2 border-2 rounded" on:click={generate}>Generate</button>
+
+            <div class="flex items-center gap-x-2">
+                Seed<input class="text-center" type="number" step="1" min="0" max="2147483647" bind:value={seed} on:change={generate}>
+            </div>
 
             <div class="flex items-center gap-x-2">
                 X<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerX} on:change={onChangeDimension}>
@@ -194,13 +262,14 @@
                 Z<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerZ} on:change={onChangeDimension}>
             </div>
 
-            <div class="flex">
-                <input class="relative" type="range" min="8" max="128" step="1" bind:value={voxelWidth}>
-                <span>Width</span>
+            <div class="flex items-center gap-x-2">
+                Width<input class="text-center" type="number" step="1" min="8" max="1024" bind:value={voxelWidth} on:change={onChangeDimension}>
             </div>
-            <div class="flex">
-                <input class="relative" type="range" min="8" max="128" step="1" bind:value={voxelHeight}>
-                <span>Height</span>
+            <div class="flex items-center gap-x-2">
+                Height<input class="text-center" type="number" step="1" min="8" max="1024" bind:value={voxelHeight} on:change={onChangeDimension}>
+            </div>
+            <div class="flex items-center gap-x-2">
+                Scale<input class="text-center" type="number" step="1" min="1" max="100" bind:value={scale} on:change={onChangeDimension}>
             </div>
 
         </div>
