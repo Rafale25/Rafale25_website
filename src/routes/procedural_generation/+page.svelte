@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte'
     import { noise } from '$lib/noise.js'
+    import { BlockType, getBlock } from '$lib/getBlock.js'
 
     // Window, webgl2 //
     let gl, canvas
@@ -16,17 +17,12 @@
     let generate
 
     // Config //
-    let scale = 7
+    let scale = 2
+    let resolution = 1
     let seed = 0;
     let voxelWidth = 512, voxelHeight = 256
     let centerX = 0, centerY = 0, centerZ = 0
 
-    const BLOCK = {
-        AIR: 0,
-        GRASS: 1,
-        DIRT: 2,
-        STONE: 3,
-    }
 
     const vertexShaderSource = `#version 300 es
         in vec2 a_position;
@@ -51,9 +47,12 @@
 
         vec3 materials[] = vec3[](
             vec3(0.0, 0.0, 0.0) / 255.0,  // Air
-            vec3(105, 163, 90) / 255.0,  // Grass
+            vec3(105, 163, 90) / 255.0,   // Grass
             vec3(122, 99, 76)   / 255.0,  // Dirt
-            vec3(119, 119, 122) / 255.0   // Stone
+            vec3(119, 119, 122) / 255.0,  // Stone
+            vec3(0, 0, 0) / 255.0,        // OAK LOG
+            vec3(0, 0, 0) / 255.0,        // OAK LEAF
+            vec3(59, 128, 173) / 255.0    // WATER
         );
 
         void main() {
@@ -90,9 +89,9 @@
         return Math.floor(Math.random() * max)
     }
 
-    function square(x, y, size=20, material=1) {
-        const dx = x*size
-        const dy = y*size
+    function square(x, y, material=1, size=20, offset=20) {
+        const dx = x*offset
+        const dy = y*offset
 
         return [
             dx,      dy,        material,
@@ -105,38 +104,29 @@
         ]
     }
 
-    function getBlock(x, y, z) {
-        const baseHeight = 16
-        // const height = Math.floor(Math.sin(x * 0.2) * 4) + baseHeight
-        const scale = 0.03
-        const amplification = 100
-
-        const height = (noise.perlin3(x*scale, y*scale, z*scale) * amplification) >> 0
-
-        if (y === height) return BLOCK.GRASS
-        if (y < height && y > height - 3) return BLOCK.DIRT
-        if (y < height) return BLOCK.STONE
-        return BLOCK.AIR
-    }
-
-    function generateTerrainSlice(_x, _y, _z, width, height) {
+    function generateTerrainSlice(_x, _y, _z, width, height, resolution=1) {
         const positions = []
 
         const lowX = _x - (width/2) >> 0 // use to get integer part of value without Math.floor
         const rightX = _x + (width/2) >> 0
 
-        const lowY = _y - (height/2) >> 0
-        const highY = _y + (height/2) >> 0
+        let lowY = _y - (height/2) >> 0
+        lowY = Math.max(-256, lowY) // To avoid lag by not generate too low
 
-        for (let x = lowX ; x < rightX ; ++x) {
-            for (let y = lowY ; y < highY ; ++y) {
+        let highY = _y + (height/2) >> 0
+        highY = Math.min(512, highY) // To avoid lag by not generate too high
+
+        for (let x = lowX ; x < rightX ; x+=resolution) {
+            for (let y = lowY ; y < highY ; y+=resolution) {
                 const block = getBlock(x, y, _z)
-                if (block === BLOCK.AIR) continue
+                if (block === BlockType.AIR) continue
                 positions.push(
                     ...square(
                         x - _x,
                         y - _y,
-                        scale, block)
+                        block,
+                        scale*resolution,
+                        scale)
                 )
             }
         }
@@ -154,7 +144,8 @@
             centerX,
             centerY,
             centerZ,
-            voxelWidth, voxelHeight
+            voxelWidth, voxelHeight,
+            resolution
         )
         vertexCount = vertices.length / 3
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
@@ -264,24 +255,26 @@
             </div>
 
             <div class="flex items-center gap-x-2">
-                X<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerX} on:input={onChangeDimension}>
-                Y<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerY} on:input={onChangeDimension}>
-                Z<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerZ} on:input={onChangeDimension}>
+                X<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerX} on:input={onChangeDimension}>
+                Y<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerY} on:input={onChangeDimension}>
+                Z<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerZ} on:input={onChangeDimension}>
             </div>
 
             <div class="flex items-center gap-x-2">
                 Scale<input class="text-center" type="number" step="1" min="1" max="100" bind:value={scale} on:change={onChangeDimension}>
+                Resolution<input class="text-center" type="number" step="1" min="1" max="64" bind:value={resolution} on:change={onChangeDimension}>
             </div>
 
             <div class="flex items-center gap-x-2">
                 <span class="text-center">Width {voxelWidth}</span>
                 <span class="text-center">Height {voxelHeight}</span>
+
             </div>
 
         </div>
     </div>
 
-    <canvas class="bg-neutral-600" width={innerWidth} height={innerHeight} bind:this={canvas}></canvas>
+    <canvas class="bg-neutral-700" width={innerWidth} height={innerHeight} bind:this={canvas}></canvas>
 </main>
 
 <style>
