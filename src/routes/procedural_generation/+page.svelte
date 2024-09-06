@@ -18,7 +18,7 @@
 
     // Config //
     let scale = 2
-    let resolution = 1
+    let resolution = 2
     let seed = 0;
     let voxelWidth = 512, voxelHeight = 256
     let centerX = 0, centerY = 0, centerZ = 0
@@ -111,7 +111,7 @@
         const rightX = _x + (width/2) >> 0
 
         let lowY = _y - (height/2) >> 0
-        lowY = Math.max(-256, lowY) // To avoid lag by not generate too low
+        lowY = Math.max(-512, lowY) // To avoid lag by not generate too low
 
         let highY = _y + (height/2) >> 0
         highY = Math.min(512, highY) // To avoid lag by not generate too high
@@ -136,7 +136,7 @@
 
     generate = () => {
         noise.seed(seed)
-        const MAX_SIZE = 2600
+        const MAX_SIZE = 2<<14
         voxelWidth = Math.min(MAX_SIZE, (canvas.width*2 / scale) >> 0)
         voxelHeight = Math.min(MAX_SIZE, (canvas.height*2 / scale) >> 0)
 
@@ -261,7 +261,7 @@
             </div>
 
             <div class="flex items-center gap-x-2">
-                Scale<input class="text-center" type="number" step="1" min="1" max="100" bind:value={scale} on:change={onChangeDimension}>
+                Scale<input class="text-center" type="number" step="0.1" min="0.1" max="100" bind:value={scale} on:change={onChangeDimension}>
                 Resolution<input class="text-center" type="number" step="1" min="1" max="64" bind:value={resolution} on:change={onChangeDimension}>
             </div>
 

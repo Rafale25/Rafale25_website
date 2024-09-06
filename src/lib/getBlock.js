@@ -103,7 +103,7 @@ export function getBlock(x, y, z) {
     const caveBaseHeight = 128
     const caveFallOf = 0.01
 
-    if ((caveDensity + caveDensity2) * noiseValueCave - Math.abs((y+caveBaseHeight-realheight)*caveFallOf) > 0.0) {
+    if ((caveDensity + caveDensity2) * noiseValueCave - Math.abs((y+caveBaseHeight-realheight + noiseValue*10)*caveFallOf) > 0.0) {
         return BlockType.AIR
     }
 
