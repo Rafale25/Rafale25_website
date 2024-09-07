@@ -140,6 +140,7 @@
         voxelWidth = Math.min(MAX_SIZE, (canvas.width*2 / scale) >> 0)
         voxelHeight = Math.min(MAX_SIZE, (canvas.height*2 / scale) >> 0)
 
+        const startTime = performance.now()
         const vertices = generateTerrainSlice(
             centerX,
             centerY,
@@ -147,6 +148,9 @@
             voxelWidth, voxelHeight,
             resolution
         )
+        const endTime = performance.now()
+        console.log(`generateTerrainSlice: ${(endTime - startTime).toFixed(3)} ms`)
+
         vertexCount = vertices.length / 3
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
     }
@@ -230,7 +234,7 @@
             return
         }
 
-        window.addEventListener('resize', () => updateWidthHeight())
+        window.addEventListener('resize', () => { updateWidthHeight(); onChangeDimension(); })
         updateWidthHeight()
 
         init()

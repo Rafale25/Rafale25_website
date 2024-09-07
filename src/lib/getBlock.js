@@ -114,19 +114,3 @@ export function getBlock(x, y, z) {
     if (y < realheight) return BlockType.DIRT
     return BlockType.AIR
 }
-
-// export function getBlock(x, y, z) {
-//     const baseHeight = 16
-//     // const height = Math.floor(Math.sin(x * 0.2) * 4) + baseHeight
-//     const scale = 0.03
-//     const amplification = 100
-
-//     // const noiseValue = noise.perlin3(x*scale, y*scale, z*scale)
-//     const noiseValue = noise.simplex3(x*scale, y*scale, z*scale)
-//     const height = (noiseValue * amplification) >> 0
-
-//     if (y === height) return BlockType.GRASS
-//     if (y < height && y > height - 3) return BlockType.DIRT
-//     if (y < height) return BlockType.STONE
-//     return BlockType.AIR
-// }
