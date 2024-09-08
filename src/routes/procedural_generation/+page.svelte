@@ -163,8 +163,6 @@
         const vertexBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
 
-        generate()
-
         vao = gl.createVertexArray()
         gl.bindVertexArray(vao)
         gl.enableVertexAttribArray(0)
@@ -235,7 +233,7 @@
         updateWidthHeight()
 
         init()
-        frame()
+        onChangeDimension()
     })
 </script>
 
