@@ -13,12 +13,9 @@
     let resolutionUniformLocation
     let vertexCount = 0
 
-    // Buttons //
-    let generate
-
     // Config //
     let scale = 2
-    let resolution = 2
+    let resolution = 4
     let seed = 0;
     let voxelWidth = 512, voxelHeight = 256
     let centerX = 0, centerY = 0, centerZ = 0
@@ -26,6 +23,8 @@
 
     const vertexShaderSource = `#version 300 es
         in vec2 a_position;
+
+        //in vec2 a_offset;
         in float a_material;
 
         uniform vec2 u_resolution;
@@ -85,10 +84,6 @@
         gl.deleteProgram(program);
     }
 
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * max)
-    }
-
     function square(x, y, material=1, size=20, offset=20) {
         const dx = x*offset
         const dy = y*offset
@@ -134,7 +129,7 @@
         return positions
     }
 
-    generate = () => {
+    function generate() {
         noise.seed(seed)
         const MAX_SIZE = 2<<14
         voxelWidth = Math.min(MAX_SIZE, (canvas.width*2 / scale) >> 0)
@@ -153,6 +148,8 @@
 
         vertexCount = vertices.length / 3
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
+
+        frame()
     }
 
     function init() {
@@ -187,7 +184,7 @@
         gl.drawArrays(gl.TRIANGLES, 0, vertexCount)
 
         frame_count += 1
-        requestAnimationFrame(() => frame());
+        // requestAnimationFrame(() => frame());
     }
 
     function onChangeDimension() {
@@ -259,9 +256,9 @@
             </div>
 
             <div class="flex items-center gap-x-2">
-                X<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerX} on:input={onChangeDimension}>
-                Y<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerY} on:input={onChangeDimension}>
-                Z<input class="text-center" type="number" step="1" min="-256" max="256" bind:value={centerZ} on:input={onChangeDimension}>
+                X<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerX} on:input={onChangeDimension}>
+                Y<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerY} on:input={onChangeDimension}>
+                Z<input class="text-center" type="number" step="1" min="-65536" max="65536" bind:value={centerZ} on:input={onChangeDimension}>
             </div>
 
             <div class="flex items-center gap-x-2">
