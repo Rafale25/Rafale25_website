@@ -95,7 +95,7 @@ export function getBlock(x, y, z) {
 
     const caveNoiseScaleFactor = 1.0 / 150.0
     const caveNoiseScaleFactor2 = 1.0 / 300.0
-    const caveDensity = octaveNoise3D((x+1000) * caveNoiseScaleFactor, y * caveNoiseScaleFactor, z * caveNoiseScaleFactor, 6, 1.17) // 3D [-1, 1]
+    const caveDensity = octaveNoise3D((x+1000) * caveNoiseScaleFactor, y * caveNoiseScaleFactor, z * caveNoiseScaleFactor, 5, 1.1) // 3D [-1, 1]
     const caveDensity2 = octaveNoise3D((x+3650) * caveNoiseScaleFactor2*0.5, y * caveNoiseScaleFactor2, (z+2042) * caveNoiseScaleFactor2*0.5, 2, 1.6) // 3D [-1, 1]
 
     const noiseValueCave = octaveNoise2D((x-7452) * 0.0005, (z+1976) * 0.0005, 1) + 0.5
