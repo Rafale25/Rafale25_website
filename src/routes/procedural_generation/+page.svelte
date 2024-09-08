@@ -10,8 +10,9 @@
     // Rendering //
     let frame_count = 0
     let program, vao
-    let resolutionUniformLocation
-    let vertexCount = 0
+    let resolutionUniformLocation, scaleUniformLocation, voxelResolutionUniformLocation
+    let instanceCount = 0
+    let vertexBuffer, instanceBuffer
 
     // Config //
     let scale = 2
@@ -24,16 +25,18 @@
     const vertexShaderSource = `#version 300 es
         in vec2 a_position;
 
-        //in vec2 a_offset;
-        in float a_material;
+        in vec3 a_offset;
+        // in float a_material;
 
         uniform vec2 u_resolution;
+        uniform float u_scale;
+        uniform float u_voxelResolution;
 
         flat out float f_material;
 
         void main() {
-            f_material = a_material;
-            gl_Position = vec4(a_position / u_resolution, 0.0, 1.0);
+            f_material = a_offset.z;
+            gl_Position = vec4((a_position*u_voxelResolution*u_scale + a_offset.xy*u_scale) / u_resolution, 0.0, 1.0);
         }
     `;
 
@@ -84,23 +87,24 @@
         gl.deleteProgram(program);
     }
 
-    function square(x, y, material=1, size=20, offset=20) {
-        const dx = x*offset
-        const dy = y*offset
-
+    function squareVertices() {
         return [
-            dx,      dy,        material,
-            dx+size, dy,        material,
-            dx,      dy+size,   material,
+            0, 0,
+            1, 0,
+            0, 1,
 
-            dx+size, dy,        material,
-            dx+size, dy+size,   material,
-            dx,      dy+size,   material,
+            1, 0,
+            1, 1,
+            0, 1,
         ]
     }
 
+    function square(x, y, material=1) {
+        return [x, y, material]
+    }
+
     function generateTerrainSlice(_x, _y, _z, width, height, resolution=1) {
-        const positions = []
+        const instances = []
 
         const lowX = _x - (width/2) >> 0 // use to get integer part of value without Math.floor
         const rightX = _x + (width/2) >> 0
@@ -115,18 +119,16 @@
             for (let y = lowY ; y < highY ; y+=resolution) {
                 const block = getBlock(x, y, _z)
                 if (block === BlockType.AIR) continue
-                positions.push(
+                instances.push(
                     ...square(
                         x - _x,
                         y - _y,
-                        block,
-                        scale*resolution,
-                        scale)
+                        block)
                 )
             }
         }
 
-        return positions
+        return instances
     }
 
     function generate() {
@@ -136,7 +138,7 @@
         voxelHeight = Math.min(MAX_SIZE, (canvas.height*2 / scale) >> 0)
 
         const startTime = performance.now()
-        const vertices = generateTerrainSlice(
+        const instances = generateTerrainSlice(
             centerX,
             centerY,
             centerZ,
@@ -146,8 +148,9 @@
         const endTime = performance.now()
         console.log(`generateTerrainSlice: ${(endTime - startTime).toFixed(3)} ms`)
 
-        vertexCount = vertices.length / 3
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
+        instanceCount = instances.length / 3
+        gl.bindBuffer(gl.ARRAY_BUFFER, instanceBuffer)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(instances), gl.STATIC_DRAW)
 
         frame()
     }
@@ -159,16 +162,27 @@
         program = createProgram(gl, vertexShader, fragmentShader)
 
         resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
+        scaleUniformLocation = gl.getUniformLocation(program, "u_scale");
+        voxelResolutionUniformLocation = gl.getUniformLocation(program, "u_voxelResolution");
 
-        const vertexBuffer = gl.createBuffer()
+        const vertices = squareVertices()
+        vertexBuffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
 
         vao = gl.createVertexArray()
         gl.bindVertexArray(vao)
         gl.enableVertexAttribArray(0)
+        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 4*2, 0)
+        //gl.enableVertexAttribArray(1)
+        //gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 4*3, 8)
+
+        instanceBuffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, instanceBuffer)
+
         gl.enableVertexAttribArray(1)
-        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 4*3, 0)
-        gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 4*3, 8)
+        gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 4*3, 0)
+        gl.vertexAttribDivisor(1, 1);
     }
 
     function frame() {
@@ -177,12 +191,13 @@
 
         gl.useProgram(program)
         gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+        gl.uniform1f(scaleUniformLocation, scale);
+        gl.uniform1f(voxelResolutionUniformLocation, resolution);
 
         gl.bindVertexArray(vao)
-        gl.drawArrays(gl.TRIANGLES, 0, vertexCount)
+        gl.drawArraysInstanced(gl.TRIANGLES, 0, 6, instanceCount)
 
         frame_count += 1
-        // requestAnimationFrame(() => frame());
     }
 
     function onChangeDimension() {
