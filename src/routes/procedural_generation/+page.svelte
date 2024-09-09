@@ -25,8 +25,8 @@
     const vertexShaderSource = `#version 300 es
         in vec2 a_position;
 
-        in vec3 a_offset;
-        // in float a_material;
+        in vec2 a_offset;
+        in float a_material;
 
         uniform vec2 u_resolution;
         uniform float u_scale;
@@ -35,8 +35,8 @@
         flat out float f_material;
 
         void main() {
-            f_material = a_offset.z;
-            gl_Position = vec4((a_position*u_voxelResolution*u_scale + a_offset.xy*u_scale) / u_resolution, 0.0, 1.0);
+            f_material = a_material;
+            gl_Position = vec4((a_position*u_voxelResolution*u_scale + a_offset*u_scale) / u_resolution, 0.0, 1.0);
         }
     `;
 
@@ -63,28 +63,28 @@
     `;
 
     function createShader(gl, type, source) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+        const shader = gl.createShader(type)
+        gl.shaderSource(shader, source)
+        gl.compileShader(shader)
+        const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS)
         if (success) {
-            return shader;
+            return shader
         }
-        console.log(gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
+        console.log(gl.getShaderInfoLog(shader))
+        gl.deleteShader(shader)
     }
 
     function createProgram(gl, vertexShader, fragmentShader) {
-        const program = gl.createProgram();
-        gl.attachShader(program, vertexShader);
-        gl.attachShader(program, fragmentShader);
-        gl.linkProgram(program);
-        const success = gl.getProgramParameter(program, gl.LINK_STATUS);
+        const program = gl.createProgram()
+        gl.attachShader(program, vertexShader)
+        gl.attachShader(program, fragmentShader)
+        gl.linkProgram(program)
+        const success = gl.getProgramParameter(program, gl.LINK_STATUS)
         if (success) {
-            return program;
+            return program
         }
-        console.log(gl.getProgramInfoLog(program));
-        gl.deleteProgram(program);
+        console.log(gl.getProgramInfoLog(program))
+        gl.deleteProgram(program)
     }
 
     function squareVertices() {
@@ -181,8 +181,11 @@
         gl.bindBuffer(gl.ARRAY_BUFFER, instanceBuffer)
 
         gl.enableVertexAttribArray(1)
-        gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 4*3, 0)
+        gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 4*3, 0)
+        gl.enableVertexAttribArray(2)
+        gl.vertexAttribPointer(2, 1, gl.FLOAT, false, 4*3, 4*2)
         gl.vertexAttribDivisor(1, 1);
+        gl.vertexAttribDivisor(2, 1);
     }
 
     function frame() {
