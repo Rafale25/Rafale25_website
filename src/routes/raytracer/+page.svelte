@@ -1,7 +1,7 @@
 <script lang='ts'>
     import { onMount, onDestroy } from 'svelte'
     import { mat4 } from "gl-matrix"
-    import * as rf from '$lib/raf-webgpu/'
+    import * as webgpuHelpers from '$lib/webgpuHelpers'
 
     import triangle_shader from './shader.wgsl?raw'
 
@@ -37,8 +37,8 @@
                 -1.0, 1.0, 0.0,
             ]
         )
-        const mesh = new rf.Mesh(device, vertices) // only xyzrgb
-        const pipeline = rf.makePipeline(device, triangle_shader, triangle_shader, [mesh.bufferLayout], "triangle-list")
+        const mesh = new webgpuHelpers.Mesh(device, vertices) // only xyzrgb
+        const pipeline = webgpuHelpers.makePipeline(device, triangle_shader, triangle_shader, [mesh.bufferLayout], "triangle-list")
 
         // Uniform buffer
         const uniformBufferSize = 2 * 4; // 2 vec2 of 4 bytes

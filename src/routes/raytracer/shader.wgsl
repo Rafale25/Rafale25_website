@@ -32,7 +32,7 @@ const PI: f32 = 3.141592653;
 
 const spheres = array(
     Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 0.0, 0.0)),
-    Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0, 0.2, 1.0), 2.0, 0.0)),
+    Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0, 0.2, 1.0), 3.0, 0.0)),
 
     Sphere(vec3f(0.0, 21.0, 5.0), 20.0, RayTracingMaterial(vec3f(0.4, 0.8, 0.9), vec3f(0.0), 0.0, 0.0)),
 
@@ -168,7 +168,7 @@ fn Trace(_ray: Ray, seed: u32) -> vec3f {
             ray.dir = mix(diffuseDir, specularDir, material.smoothness);
 
             var emittedLight: vec3f = material.emissionColor * material.emissionStrength;
-            var lightStrength = dot(hitInfo.normal, ray.dir);
+            // var lightStrength = dot(hitInfo.normal, ray.dir);
             incomingLight += emittedLight * rayColor;
             rayColor *= material.color;// * lightStrength*2.0;
         }
@@ -226,7 +226,7 @@ fn fs_main(
 
     return vec4f(pixelColor, 1.0);
 
-    return vec4f(vec3f(random_uniform(pixelIndex)), 1.0);
+    // return vec4f(vec3f(random_uniform(pixelIndex)), 1.0);
     // return vec4f(vec3f(f32(pixelIndex) / f32(numPixels.x * numPixels.y)), 1.0);
     // return vec4f(uv01, 0.0, 1.0);
     // return vec4f(uv, 0.0, 1.0);
