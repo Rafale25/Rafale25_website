@@ -7,16 +7,28 @@
 
     let canvas: HTMLCanvasElement
     let width: number, height: number;
-
-    const resize = () => {
-        const devicePixelRatio = window.devicePixelRatio
-        canvas.width = canvas.clientWidth * devicePixelRatio
-        canvas.height = canvas.clientHeight * devicePixelRatio
-    }
+    let resizedFinished = setTimeout(()=>{});
 
     onMount(async () => {
+        function resize() {
+            const devicePixelRatio = window.devicePixelRatio
+            canvas.width = canvas.clientWidth * devicePixelRatio
+            canvas.height = canvas.clientHeight * devicePixelRatio
+
+            requestAnimationFrame(frame)
+        }
+
         resize()
-        window.addEventListener('resize', resize)
+        // window.addEventListener('resize', resize)
+
+        // To prevent resize() when still resizing window
+        window.addEventListener('resize', () => {
+            clearTimeout(resizedFinished);
+            resizedFinished = setTimeout(() => {
+                resize();
+                console.log('Resized finished.');
+            }, 100);
+        })
 
         const adapter: GPUAdapter = await navigator.gpu.requestAdapter() as GPUAdapter
         const device: GPUDevice = await adapter.requestDevice() as GPUDevice
@@ -91,7 +103,10 @@
 
             device.queue.submit([commandEncoder.finish()])
 
-            requestAnimationFrame(frame)
+            // setTimeout(() => {
+            //     requestAnimationFrame(frame);
+            // }, 1000 / 1);
+            // requestAnimationFrame(frame)
         }
 
         requestAnimationFrame(frame)
