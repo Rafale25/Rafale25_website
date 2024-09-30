@@ -26,17 +26,15 @@
 			alphaMode: 'opaque'
         })
 
-        const vertices: Float32Array = new Float32Array(
-            [
-                -1.0, -1.0, 0.0,
-                1.0, -1.0, 0.0,
-                -1.0, 1.0, 0.0,
+        const vertices: Float32Array = new Float32Array([
+            -1.0, -1.0, 0.0,
+            1.0, -1.0, 0.0,
+            -1.0, 1.0, 0.0,
 
-                1.0, -1.0, 0.0,
-                1.0, 1.0, 0.0,
-                -1.0, 1.0, 0.0,
-            ]
-        )
+            1.0, -1.0, 0.0,
+            1.0, 1.0, 0.0,
+            -1.0, 1.0, 0.0,
+        ])
         const mesh = new webgpuHelpers.Mesh(device, vertices) // only xyzrgb
         const pipeline = webgpuHelpers.makePipeline(device, triangle_shader, triangle_shader, [mesh.bufferLayout], "triangle-list")
 
@@ -48,10 +46,25 @@
         });
         const uniformValues = new Float32Array(uniformBufferSize / 4);
 
+        const bufferTexture2Dping = device.createTexture({
+            size: [canvas.width, canvas.height],
+            usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
+            format: 'rgba32float',
+        });
+        const bufferTexture2Dpong = device.createTexture({
+            size: [canvas.width, canvas.height],
+            usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
+            format: 'rgba32float',
+        });
+
+        const viewBufferTexture2Dping = bufferTexture2Dping.createView()
+        const viewBufferTexture2Dpong = bufferTexture2Dpong.createView()
+
         const bindGroup = device.createBindGroup({
             layout: pipeline.getBindGroupLayout(0),
             entries: [
                 { binding: 0, resource: { buffer: uniformBuffer }},
+                // { binding: 1, resource: { buffer: uniformBuffer }},
             ],
         });
         // --
@@ -64,6 +77,7 @@
                 colorAttachments: [
                 {
                     view: textureView,
+                    // view: viewBufferTexture2Dping,
                     clearValue: [0, 0, 0, 1],
                     loadOp: 'clear',
                     storeOp: 'store',
