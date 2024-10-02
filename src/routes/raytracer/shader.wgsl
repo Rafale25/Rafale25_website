@@ -31,7 +31,7 @@ struct Sphere {
 const PI: f32 = 3.141592653;
 
 const spheres = array(
-    Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 2.0, 0.0)),
+    Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 4.0, 0.0)),
     Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0, 0.2, 1.0), 3.0, 0.0)),
 
     Sphere(vec3f(0.0, 21.0, 5.0), 20.0, RayTracingMaterial(vec3f(0.4, 0.8, 0.9), vec3f(0.0), 0.0, 0.0)),
@@ -41,8 +41,8 @@ const spheres = array(
 );
 const sphereCount = 5;
 
-const numRaysPerPixel: u32 = 300;
-const maxLightBounce: u32 = 6;
+const numRaysPerPixel: u32 = 10;
+const maxLightBounce: u32 = 16;
 const DivergeStrength: f32 = 1.0;
 
 const USE_SKYBOX: bool = true;
@@ -50,8 +50,8 @@ const SkyColorZenith: vec3f = vec3f(0.0788, 0.364, 0.7264);
 const SkyColorHorizon: vec3f = vec3f(1.0, 1.0, 1.0);
 const GroundColor: vec3f = vec3f(0.35, 0.3, 0.35);
 const SunLightDirection: vec3f = normalize(vec3f(0.5, 0.6, -0.5));
-const SunFocus: f32 = 500.0;
-const SunIntensity: f32 = 0;//200.0;
+const SunFocus: f32 = 300.0;
+const SunIntensity: f32 = 100.0;
 
 fn hash(_x: u32) -> u32 {
     var x = _x;
@@ -180,7 +180,9 @@ fn Trace(_ray: Ray, seed: u32) -> vec3f {
     return incomingLight;
 }
 
-@group(0) @binding(0) var<uniform> u_resolution: vec2f;
+@group(0) @binding(0) var<uniform> u_resolution_frame: vec3f;
+// @group(0) @binding(0) var<uniform> u_frame: u32;
+@group(0) @binding(1) var<storage, read_write> pixel_buffer: array<vec4f>;
 
 @vertex
 fn vs_main(
@@ -196,6 +198,9 @@ fn vs_main(
 fn fs_main(
     @builtin(position) Position : vec4f,
 ) -> @location(0) vec4f {
+    var u_resolution = u_resolution_frame.xy;
+    var u_frame: f32 = u_resolution_frame.z;
+
     var uv01 = Position.xy / u_resolution;
     var uv: vec2f = (2.0 * Position.xy - u_resolution) / u_resolution.y;
 
@@ -205,7 +210,7 @@ fn fs_main(
     var numPixels: vec2u = vec2u(u_resolution);
     var pixelCoord: vec2u = vec2u(uv01 * vec2f(numPixels));
     var pixelIndex: u32 = pixelCoord.y * numPixels.x + pixelCoord.x;
-    var seed: u32 = pixelIndex + pixelCoord.y*467828 + pixelCoord.x*29738;
+    var seed: u32 = (pixelIndex+u32(u_frame*76543)) + pixelCoord.y*467828 + pixelCoord.x*29738;
 
     var totalIncomingLight: vec3f = vec3f(0.0);
 
@@ -220,9 +225,15 @@ fn fs_main(
         totalIncomingLight += incomingLight;
     }
 
-    var pixelColor = totalIncomingLight / f32(numRaysPerPixel);
+    var pixelColor = totalIncomingLight;// / f32(numRaysPerPixel);
 
-    return vec4f(pixelColor, 1.0);
+    pixel_buffer[pixelIndex] += vec4f(pixelColor, 0.0);
+    var pixelBufferColor: vec3f = pixel_buffer[pixelIndex].rgb;
+
+    var finalColor = pixelBufferColor / f32(u32(u_frame)*numRaysPerPixel);
+
+    // return vec4f(pixelColor, 1.0);
+    return vec4f(finalColor, 1.0);
 
     // return vec4f(vec3f(random_uniform(seed)), 1.0);
     // return vec4f(vec3f(f32(pixelIndex) / f32(numPixels.x * numPixels.y)), 1.0);
