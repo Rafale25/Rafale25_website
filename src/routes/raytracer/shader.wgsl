@@ -210,7 +210,7 @@ fn fs_main(
     var numPixels: vec2u = vec2u(u_resolution);
     var pixelCoord: vec2u = vec2u(uv01 * vec2f(numPixels));
     var pixelIndex: u32 = pixelCoord.y * numPixels.x + pixelCoord.x;
-    var seed: u32 = (pixelIndex+u32(u_frame*76543)) + pixelCoord.y*467828 + pixelCoord.x*29738;
+    var seed: u32 = (pixelIndex+u32(u_frame*765465)) + pixelCoord.y*467828 + pixelCoord.x*29738;
 
     var totalIncomingLight: vec3f = vec3f(0.0);
 
