@@ -31,7 +31,7 @@ struct Sphere {
 const PI: f32 = 3.141592653;
 
 const spheres = array(
-    Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 4.0, 0.0)),
+    Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 2.0, 0.0)),
     Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0, 0.2, 1.0), 3.0, 0.0)),
 
     Sphere(vec3f(0.0, 21.0, 5.0), 20.0, RayTracingMaterial(vec3f(0.4, 0.8, 0.9), vec3f(0.0), 0.0, 0.0)),
@@ -210,7 +210,7 @@ fn fs_main(
     var numPixels: vec2u = vec2u(u_resolution);
     var pixelCoord: vec2u = vec2u(uv01 * vec2f(numPixels));
     var pixelIndex: u32 = pixelCoord.y * numPixels.x + pixelCoord.x;
-    var seed: u32 = (pixelIndex+u32(u_frame*765465)) + pixelCoord.y*467828 + pixelCoord.x*29738;
+    var seed: u32 = (pixelIndex+u32(u_frame*2371)) + pixelCoord.y*467828 + pixelCoord.x*29738;
 
     var totalIncomingLight: vec3f = vec3f(0.0);
 
