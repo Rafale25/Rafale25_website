@@ -1,15 +1,40 @@
 <script lang='ts'>
-    import { onMount, onDestroy } from 'svelte'
-    import { mat4 } from "gl-matrix"
-    import * as webgpuHelpers from '$lib/webgpuHelpers'
+    import NumberInput from '$lib/components/numberInput.svelte'
 
+    import { onMount } from 'svelte'
+    import { mat4 } from "gl-matrix"
+    import {
+        makeShaderDataDefinitions,
+        makeStructuredView,
+    } from 'webgpu-utils';
+
+    import * as webgpuHelpers from '$lib/webgpuHelpers'
     import triangle_shader from './shader.wgsl?raw'
-    import { dev } from '$app/environment';
 
     let canvas: HTMLCanvasElement
     let width: number, height: number
     let resizedFinished = setTimeout(()=>{})
     let frameCount = 1
+
+    let render = null; // function
+    let pause = null; // function
+
+    let isPaused = true
+
+    // $bindable(
+    const params = {
+        numRaysPerPixel: 1,
+        maxLightBounce: 16,
+        divergeStrength: 1.5,
+
+        useSkybox: 1,
+        SkyColorZenith: [0.0788, 0.364, 0.7264],
+        SkyColorHorizon: [1.0, 1.0, 1.0],
+        GroundColor: [0.35, 0.3, 0.35],
+        SunLightDirection: [0.53, 0.64, -0.53],
+        SunFocus: 300.0,
+        SunIntensity: 100.0,
+    }
 
     onMount(async () => {
         const adapter: GPUAdapter = await navigator.gpu.requestAdapter() as GPUAdapter
@@ -40,13 +65,13 @@
         const mesh = new webgpuHelpers.Mesh(device, vertices) // only xyzrgb
         const pipeline = webgpuHelpers.makePipeline(device, triangle_shader, triangle_shader, [mesh.bufferLayout], "triangle-list")
 
-        // Uniform buffer
-        const uniformBufferSize = 2 * 4 + 4; // 2 vec2 of 4 bytes
+        const defs = makeShaderDataDefinitions(triangle_shader);
+        const uniformValues = makeStructuredView(defs.uniforms.u_params);
+
         const uniformBuffer: GPUBuffer = device.createBuffer({
-            size: uniformBufferSize,
+            size: uniformValues.arrayBuffer.byteLength,
             usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
         });
-        const uniformValues = new Float32Array(uniformBufferSize / 4);
 
         const pixelBuffer = device.createBuffer({
             label: 'PixelBuffer',
@@ -74,6 +99,16 @@
 
         // --
 
+        render = () => {
+            isPaused = false;
+            requestAnimationFrame(frame)
+        }
+
+        pause = () => {
+            isPaused = true;
+        }
+
+
         function frame() {
             const commandEncoder: GPUCommandEncoder = device.createCommandEncoder()
             const textureView: GPUTextureView = context.getCurrentTexture().createView()
@@ -100,8 +135,15 @@
                 ],
             });
 
-            uniformValues.set([canvas.width, canvas.height, frameCount], 0);
-            device.queue.writeBuffer(uniformBuffer, 0, uniformValues); // copy the values from JavaScript to the GPU
+            uniformValues.set({
+                resolution: [canvas.width, canvas.height],
+                frameCount,
+                ...params
+            })
+
+            console.log(params)
+
+            device.queue.writeBuffer(uniformBuffer, 0, uniformValues.arrayBuffer); // copy the values from JavaScript to the GPU
 
             const renderPass: GPURenderPassEncoder = commandEncoder.beginRenderPass(renderPassDescriptor)
             renderPass.setPipeline(pipeline)
@@ -117,9 +159,10 @@
             // setTimeout(() => {
             //     requestAnimationFrame(frame);
             // }, 1000 / 5);
+            if (isPaused) return;
+
             requestAnimationFrame(frame)
             frameCount += 1
-            console.log(frameCount)
         }
 
         function resize() {
@@ -150,6 +193,38 @@
     <title>Raytracer</title>
     <meta name="description" content="WebGPU Raytracer" />
 </svelte:head>
+
+<main>
+    <div class="fixed z-10">
+        <div class="flex flex-col p-4 gap-4 bg-slate-300 rounded-br">
+
+            <div class="flex justify-center gap-x-4">
+                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={null}>Reset</button>
+                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={render}>Render</button>
+                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={pause}>Pause</button>
+            </div>
+
+
+            <span>frame: {frameCount}</span>
+
+
+            <!-- The bindValue is not working -->
+            <div class="flex gap-2">
+                <NumberInput min=1 max=128 step=1 bindValue={params.numRaysPerPixel}/>
+                <span>Rays per pixel</span>
+            </div>
+            <div class="flex gap-2">
+                <NumberInput min=0 max=128 step=1 bindValue={params.maxLightBounce}/>
+                <span>Max light bounce</span>
+            </div>
+            <div class="flex gap-2">
+                <NumberInput min=0.0 max=200.0 step=0.1 bindValue={params.divergeStrength}/>
+                <span>Diverge strength</span>
+            </div>
+
+        </div>
+    </div>
+</main>
 
 <canvas
     class="w-screen h-screen"

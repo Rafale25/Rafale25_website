@@ -22,6 +22,7 @@
 		"@supabase/supabase-js": "^2.42.7",
 		"@vercel/analytics": "^1.2.2",
 		"@webgpu/types": "^0.1.46",
-		"gl-matrix": "^3.4.3"
+		"gl-matrix": "^3.4.3",
+		"webgpu-utils": "^1.9.3"
 	}
 }

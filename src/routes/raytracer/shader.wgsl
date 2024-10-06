@@ -28,6 +28,23 @@ struct Sphere {
     material: RayTracingMaterial
 };
 
+struct ParamsUniforms {
+    resolution: vec2f,
+    frameCount: u32,
+
+    numRaysPerPixel: u32,
+    maxLightBounce: u32,
+    divergeStrength: f32,
+
+    useSkybox: u32,
+    skyColorZenith: vec3f,
+    skyColorHorizon: vec3f,
+    groundColor: vec3f,
+    sunLightDirection: vec3f,
+    sunFocus: f32,
+    sunIntensity: f32,
+};
+
 const PI: f32 = 3.141592653;
 
 const spheres = array(
@@ -41,9 +58,9 @@ const spheres = array(
 );
 const sphereCount = 5;
 
-const numRaysPerPixel: u32 = 10;
-const maxLightBounce: u32 = 16;
-const DivergeStrength: f32 = 1.0;
+// const numRaysPerPixel: u32 = 10;
+// const maxLightBounce: u32 = 16;
+// const DivergeStrength: f32 = 1.0;
 
 const USE_SKYBOX: bool = true;
 const SkyColorZenith: vec3f = vec3f(0.0788, 0.364, 0.7264);
@@ -75,8 +92,7 @@ fn randomPointInCircle(seed: u32) -> vec2f {
 }
 
 // Random value in normal distribution (with mean=0 and sd=1)
-fn RandomValueNormalDistribution(seed: u32) -> f32
-{
+fn RandomValueNormalDistribution(seed: u32) -> f32 {
     // Thanks to https://stackoverflow.com/a/6178290
     var theta: f32 = 2.0 * PI * random_uniform(seed);
     var rho: f32 = sqrt(-2.0 * log(random_uniform(seed*3)));
@@ -152,7 +168,7 @@ fn Trace(_ray: Ray, seed: u32) -> vec3f {
     var incomingLight: vec3f = vec3f(0.0);
     var rayColor: vec3f = vec3f(1.0);
 
-    for (var i: u32 = 0; i <= maxLightBounce; i++) {
+    for (var i: u32 = 0; i <= u_params.maxLightBounce; i++) {
         var hitInfo = CalculateRayCollision(ray);
         var material: RayTracingMaterial = hitInfo.material;
 
@@ -170,7 +186,7 @@ fn Trace(_ray: Ray, seed: u32) -> vec3f {
         }
         else
         {
-            if (USE_SKYBOX) {
+            if (u_params.useSkybox == 1) {
                 incomingLight += GetEnvironmentLight(ray) * rayColor;
             }
             break;
@@ -180,9 +196,12 @@ fn Trace(_ray: Ray, seed: u32) -> vec3f {
     return incomingLight;
 }
 
-@group(0) @binding(0) var<uniform> u_resolution_frame: vec3f;
+@group(0) @binding(0) var<uniform> u_params: ParamsUniforms;
+// @group(0) @binding(2) var<uniform> u_resolution_frame: vec3f;
+
 // @group(0) @binding(0) var<uniform> u_frame: u32;
 @group(0) @binding(1) var<storage, read_write> pixel_buffer: array<vec4f>;
+
 
 @vertex
 fn vs_main(
@@ -198,26 +217,26 @@ fn vs_main(
 fn fs_main(
     @builtin(position) Position : vec4f,
 ) -> @location(0) vec4f {
-    var u_resolution = u_resolution_frame.xy;
-    var u_frame: f32 = u_resolution_frame.z;
+    // var u_resolution = u_resolution_frame.xy;
+    // var u_frame: f32 = u_resolution_frame.z;
 
-    var uv01 = Position.xy / u_resolution;
-    var uv: vec2f = (2.0 * Position.xy - u_resolution) / u_resolution.y;
+    var uv01 = Position.xy / u_params.resolution;
+    var uv: vec2f = (2.0 * Position.xy - u_params.resolution) / u_params.resolution.y;
 
     var viewPointLocal = vec3f(uv, 1.0); // * viewParams
     var viewPoint = viewPointLocal;
 
-    var numPixels: vec2u = vec2u(u_resolution);
+    var numPixels: vec2u = vec2u(u_params.resolution);
     var pixelCoord: vec2u = vec2u(uv01 * vec2f(numPixels));
     var pixelIndex: u32 = pixelCoord.y * numPixels.x + pixelCoord.x;
-    var seed: u32 = (pixelIndex+u32(u_frame*2371)) + pixelCoord.y*467828 + pixelCoord.x*29738;
+    var seed: u32 = (pixelIndex+u32(f32(u_params.frameCount)*2371)) + pixelCoord.y*467828 + pixelCoord.x*29738;
 
     var totalIncomingLight: vec3f = vec3f(0.0);
 
-    for (var rayIndex: u32 = 0; rayIndex < numRaysPerPixel; rayIndex++) {
+    for (var rayIndex: u32 = 0; rayIndex < u_params.numRaysPerPixel; rayIndex++) {
         var ray: Ray;
         ray.origin = vec3f(0.0);
-        var jitter: vec2f = randomPointInCircle(seed + rayIndex) * DivergeStrength / f32(numPixels.x);
+        var jitter: vec2f = randomPointInCircle(seed + rayIndex) * u_params.divergeStrength / f32(numPixels.x);
         var jitteredViewPoint = viewPoint + vec3f(1.0, 0.0, 0.0) * jitter.x + vec3f(0.0, 1.0, 0.0) * jitter.y;
         ray.dir = normalize(jitteredViewPoint - ray.origin);
 
@@ -230,7 +249,7 @@ fn fs_main(
     pixel_buffer[pixelIndex] += vec4f(pixelColor, 0.0);
     var pixelBufferColor: vec3f = pixel_buffer[pixelIndex].rgb;
 
-    var finalColor = pixelBufferColor / f32(u32(u_frame)*numRaysPerPixel);
+    var finalColor = pixelBufferColor / f32(u32(u_params.frameCount)*u_params.numRaysPerPixel);
 
     // return vec4f(pixelColor, 1.0);
     return vec4f(finalColor, 1.0);
