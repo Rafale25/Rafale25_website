@@ -143,7 +143,7 @@ fn CalculateRayCollision(ray: Ray) -> HitInfo {
 fn GetEnvironmentLight(ray: Ray) -> vec3f {
     var skyGradientT: f32 = pow(smoothstep(0.0, 0.4, -ray.dir.y), 0.35);
     var skyGradient: vec3f = mix(u_params.skyColorHorizon, u_params.skyColorZenith, skyGradientT);
-    var sun: f32 = pow(max(0.0, dot(fract(ray.dir), -u_params.sunLightDirection)), u_params.sunFocus) * u_params.sunIntensity;
+    var sun: f32 = pow(max(0.0, dot(ray.dir, -normalize(u_params.sunLightDirection))), u_params.sunFocus) * u_params.sunIntensity;
 
     var groundToSkyT: f32 = smoothstep(-0.01, 0.0, -ray.dir.y);
     var sunMask: f32 = f32(groundToSkyT >= 1.0);

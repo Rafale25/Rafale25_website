@@ -12,20 +12,6 @@
     import * as webgpuHelpers from '$lib/webgpuHelpers'
     import triangle_shader from './shader.wgsl?raw'
 
-    function hex2rgb(hex) {
-        const r = parseInt(hex.slice(1, 3), 16) / 255.0;
-        const g = parseInt(hex.slice(3, 5), 16) / 255.0;
-        const b = parseInt(hex.slice(5, 7), 16) / 255.0;
-        return [ r, g, b ];
-    }
-
-    function rgbToHex(r, g, b) {
-        return '#' + [r, g, b].map(x => {
-            const hex = x.toString(16)
-            return hex.length === 1 ? '0' + hex : hex
-        }).join('')
-    }
-
     let canvas: HTMLCanvasElement
     let width: number, height: number
     let resizedFinished = setTimeout(()=>{})
@@ -51,8 +37,12 @@
         sunIntensity: 100.0,
     }
 
+    let sunAngle = 0.0
+    let sunPitch = 0.0
+    let sunRoll = 0.0
+
     $: params.useSkybox, params.useSkybox = +params.useSkybox;
-    $: params, reset && reset()
+    // $: params, reset && reset()
 
     onMount(async () => {
         const adapter: GPUAdapter = await navigator.gpu.requestAdapter() as GPUAdapter
@@ -213,15 +203,15 @@
 
             <div class="flex gap-2">
                 <span>Rays per pixel</span>
-                <NumberInput min=1 max=128 step=1 bind:bindValue={params.numRaysPerPixel}/>
+                <NumberInput min={1} max={128} step={1} bind:bindValue={params.numRaysPerPixel}/>
             </div>
             <div class="flex gap-2">
                 <span>Max light bounce</span>
-                <NumberInput min=0 max=128 step=1 bind:bindValue={params.maxLightBounce}/>
+                <NumberInput min={0} max={128} step={1} bind:bindValue={params.maxLightBounce}/>
             </div>
             <div class="flex gap-2">
                 <span>Diverge strength</span>
-                <NumberInput min=0.0 max=200.0 step=0.1 bind:bindValue={params.divergeStrength}/>
+                <NumberInput min={0.0} max={200.0} step={0.1} bind:bindValue={params.divergeStrength}/>
             </div>
             <div class="flex gap-2">
                 <span>Skybox</span>
@@ -241,15 +231,15 @@
             </div>
             <div class="flex gap-2">
                 <span>sunLightDirection</span>
-                <!-- <ColorInput bind:bindValue={params.sunLightDirection}/> -->
+                <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunAngle}/>
             </div>
             <div class="flex gap-2">
                 <span>sunFocus</span>
-                <!-- <NumberInput min=0 max=2000 step=50 bind:bindValue={params.sunFocus}/> -->
+                <NumberInput min={0} max={2000} step={50} bind:bindValue={params.sunFocus}/>
             </div>
             <div class="flex gap-2">
                 <span>sunIntensity</span>
-                <!-- <NumberInput min=0 max=1000 step=50 bind:bindValue={params.sunIntensity}/> -->
+                <NumberInput min={0} max={1000} step={10} bind:bindValue={params.sunIntensity}/>
             </div>
 
 

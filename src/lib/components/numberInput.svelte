@@ -1,31 +1,31 @@
 <script lang='ts'>
     export let bindValue: number
-    export let min: number | string = -16384
-    export let max: number | string = 16384
-    export let step: number | string = 1.0
+    export let min: number = -16384
+    export let max: number = 16384
+    export let step: number = 1.0
 
     function onScroll(e) {
         //NOTE: Just binding the event enables scrolling the value by its step when focused
         console.log("scroll", step)
         e.target.focus()
 
-        // if (typeof Number(step) === 'number') {
-            // e.preventDefault()
-            // bindValue += Number(step)
-            // clamp()
-        // }
-        clamp()
+        if (typeof Number(step) === 'number') {
+            e.preventDefault()
+            bindValue += e.wheelDeltaY > 0 ? step : -step
+            clamp()
+        }
     }
 
     function onChange() {
-        bindValue = Math.max(Math.min(bindValue, Number(max)), Number(min))
         clamp()
     }
 
     function clamp() {
         if (!Number.isInteger(bindValue)) {
-            bindValue = parseFloat(bindValue.toFixed(2));
+            bindValue = parseFloat(bindValue.toFixed(2))
+            // bindValue = Math.round(bindValue * 100.0) / 100.0
         }
+        bindValue = Math.max(Math.min(bindValue, Number(max)), Number(min))
     }
 
 </script>
