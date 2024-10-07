@@ -1,5 +1,6 @@
 <script lang='ts'>
     import NumberInput from '$lib/components/numberInput.svelte'
+    import ColorInput from '$lib/components/colorInput.svelte'
 
     import { onMount } from 'svelte'
     import { mat4 } from "gl-matrix"
@@ -11,6 +12,20 @@
     import * as webgpuHelpers from '$lib/webgpuHelpers'
     import triangle_shader from './shader.wgsl?raw'
 
+    function hex2rgb(hex) {
+        const r = parseInt(hex.slice(1, 3), 16) / 255.0;
+        const g = parseInt(hex.slice(3, 5), 16) / 255.0;
+        const b = parseInt(hex.slice(5, 7), 16) / 255.0;
+        return [ r, g, b ];
+    }
+
+    function rgbToHex(r, g, b) {
+        return '#' + [r, g, b].map(x => {
+            const hex = x.toString(16)
+            return hex.length === 1 ? '0' + hex : hex
+        }).join('')
+    }
+
     let canvas: HTMLCanvasElement
     let width: number, height: number
     let resizedFinished = setTimeout(()=>{})
@@ -18,23 +33,26 @@
 
     let render = null; // function
     let pause = null; // function
+    let reset = null; // function
 
     let isPaused = true
 
-    // $bindable(
     const params = {
         numRaysPerPixel: 1,
         maxLightBounce: 16,
         divergeStrength: 1.5,
 
         useSkybox: 1,
-        SkyColorZenith: [0.0788, 0.364, 0.7264],
-        SkyColorHorizon: [1.0, 1.0, 1.0],
-        GroundColor: [0.35, 0.3, 0.35],
-        SunLightDirection: [0.53, 0.64, -0.53],
-        SunFocus: 300.0,
-        SunIntensity: 100.0,
+        skyColorZenith: [0.0788, 0.364, 0.7264],
+        skyColorHorizon: [1.0, 1.0, 1.0],
+        groundColor: [0.35, 0.3, 0.35],
+        sunLightDirection: [0.53, 0.64, -0.53],
+        sunFocus: 300.0,
+        sunIntensity: 100.0,
     }
+
+    $: params.useSkybox, params.useSkybox = +params.useSkybox;
+    $: params, reset && reset()
 
     onMount(async () => {
         const adapter: GPUAdapter = await navigator.gpu.requestAdapter() as GPUAdapter
@@ -82,21 +100,6 @@
         // const zeroArray = new Float32Array(canvas.width * canvas.height * 4).fill(0);
         // device.queue.writeBuffer(pixelBuffer, 0, zeroArray);
 
-        // const bufferTexture2Dping: GPUTexture = device.createTexture({
-        //     size: [canvas.width, canvas.height],
-        //     usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.STORAGE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.COPY_SRC,
-        //     format: 'rgba32float',
-        // });
-        // const bufferTexture2Dpong: GPUTexture = device.createTexture({
-        //     size: [canvas.width, canvas.height],
-        //     usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
-        //     format: format,//'rgba32float',
-        // });
-
-        // const viewBufferTexture2Dping: GPUTextureView = bufferTexture2Dping.createView()
-        // const viewBufferTexture2Dpong: GPUTextureView = bufferTexture2Dpong.createView()
-
-
         // --
 
         render = () => {
@@ -108,6 +111,13 @@
             isPaused = true;
         }
 
+        reset = () => {
+            const zeroArray = new Float32Array(canvas.width * canvas.height * 4).fill(0)
+            device.queue.writeBuffer(pixelBuffer, 0, zeroArray)
+
+            frameCount = 1
+            requestAnimationFrame(frame)
+        }
 
         function frame() {
             const commandEncoder: GPUCommandEncoder = device.createCommandEncoder()
@@ -141,8 +151,6 @@
                 ...params
             })
 
-            console.log(params)
-
             device.queue.writeBuffer(uniformBuffer, 0, uniformValues.arrayBuffer); // copy the values from JavaScript to the GPU
 
             const renderPass: GPURenderPassEncoder = commandEncoder.beginRenderPass(renderPassDescriptor)
@@ -152,13 +160,11 @@
             renderPass.draw(3*2) // call vertex shader 3 times
             renderPass.end()
 
-            // commandEncoder.copyTextureToTexture({texture: bufferTexture2Dping}, {texture: currentTexture}, {width:canvas.width, height:canvas.height, depthOrArrayLayers:1})
+            // console.log(params.useSkybox)
+
 
             device.queue.submit([commandEncoder.finish()])
 
-            // setTimeout(() => {
-            //     requestAnimationFrame(frame);
-            // }, 1000 / 5);
             if (isPaused) return;
 
             requestAnimationFrame(frame)
@@ -169,15 +175,12 @@
             const devicePixelRatio = window.devicePixelRatio
             canvas.width = canvas.clientWidth * devicePixelRatio
             canvas.height = canvas.clientHeight * devicePixelRatio
-
-            // requestAnimationFrame(frame)
         }
 
         resize()
-        // window.addEventListener('resize', resize)
 
-        // To prevent resize() when still resizing window
         window.addEventListener('resize', () => {
+            // To prevent resize() when still resizing window
             clearTimeout(resizedFinished);
             resizedFinished = setTimeout(() => {
                 resize();
@@ -196,10 +199,10 @@
 
 <main>
     <div class="fixed z-10">
-        <div class="flex flex-col p-4 gap-4 bg-slate-300 rounded-br">
+        <div class="flex flex-col p-4 gap-4 bg-slate-300/80 rounded-br">
 
             <div class="flex justify-center gap-x-4">
-                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={null}>Reset</button>
+                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={reset}>Reset</button>
                 <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={render}>Render</button>
                 <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={pause}>Pause</button>
             </div>
@@ -208,19 +211,47 @@
             <span>frame: {frameCount}</span>
 
 
-            <!-- The bindValue is not working -->
             <div class="flex gap-2">
-                <NumberInput min=1 max=128 step=1 bindValue={params.numRaysPerPixel}/>
                 <span>Rays per pixel</span>
+                <NumberInput min=1 max=128 step=1 bind:bindValue={params.numRaysPerPixel}/>
             </div>
             <div class="flex gap-2">
-                <NumberInput min=0 max=128 step=1 bindValue={params.maxLightBounce}/>
                 <span>Max light bounce</span>
+                <NumberInput min=0 max=128 step=1 bind:bindValue={params.maxLightBounce}/>
             </div>
             <div class="flex gap-2">
-                <NumberInput min=0.0 max=200.0 step=0.1 bindValue={params.divergeStrength}/>
                 <span>Diverge strength</span>
+                <NumberInput min=0.0 max=200.0 step=0.1 bind:bindValue={params.divergeStrength}/>
             </div>
+            <div class="flex gap-2">
+                <span>Skybox</span>
+                <input type="checkbox" bind:checked={params.useSkybox}/>
+            </div>
+            <div class="flex gap-2">
+                <span>skyColorZenith</span>
+                <ColorInput bind:bindValue={params.skyColorZenith}/>
+            </div>
+            <div class="flex gap-2">
+                <span>skyColorHorizon</span>
+                <ColorInput bind:bindValue={params.skyColorHorizon}/>
+            </div>
+            <div class="flex gap-2">
+                <span>GroundColor</span>
+                <ColorInput bind:bindValue={params.groundColor}/>
+            </div>
+            <div class="flex gap-2">
+                <span>sunLightDirection</span>
+                <!-- <ColorInput bind:bindValue={params.sunLightDirection}/> -->
+            </div>
+            <div class="flex gap-2">
+                <span>sunFocus</span>
+                <!-- <NumberInput min=0 max=2000 step=50 bind:bindValue={params.sunFocus}/> -->
+            </div>
+            <div class="flex gap-2">
+                <span>sunIntensity</span>
+                <!-- <NumberInput min=0 max=1000 step=50 bind:bindValue={params.sunIntensity}/> -->
+            </div>
+
 
         </div>
     </div>
@@ -232,4 +263,23 @@
     bind:clientWidth={width}
     bind:clientHeight={height}
     {width} {height}
-/>
+></canvas>
+
+<!--
+const bufferTexture2Dping: GPUTexture = device.createTexture({
+    size: [canvas.width, canvas.height],
+    usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.STORAGE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.COPY_SRC,
+    format: 'rgba32float',
+});
+const bufferTexture2Dpong: GPUTexture = device.createTexture({
+    size: [canvas.width, canvas.height],
+    usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
+    format: format,//'rgba32float',
+});
+
+const viewBufferTexture2Dping: GPUTextureView = bufferTexture2Dping.createView()
+const viewBufferTexture2Dpong: GPUTextureView = bufferTexture2Dpong.createView()
+
+
+commandEncoder.copyTextureToTexture({texture: bufferTexture2Dping}, {texture: currentTexture}, {width:canvas.width, height:canvas.height, depthOrArrayLayers:1})
+-->
