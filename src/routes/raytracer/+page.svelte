@@ -17,11 +17,13 @@
     let resizedFinished = setTimeout(()=>{})
     let frameCount = 1
 
-    let render = null; // function
-    let pause = null; // function
-    let reset = null; // function
+    // functions
+    let render = null
+    let pause = null
+    let reset = null
 
     let isPaused = true
+    let updatedParams = true
 
     const params = {
         numRaysPerPixel: 1,
@@ -39,24 +41,24 @@
 
     let sunAngle = 0.0
     let sunPitch = 0.0
+    let sunRoll = 0.0
 
     const updateSunLightDirection = () => {
         let forward = vec3.fromValues(0, 0, 1)
 
         let mat = mat4.create()
+        mat4.rotateY(mat, mat, sunRoll)
+        mat4.rotateZ(mat, mat, sunPitch)
         mat4.rotateX(mat, mat, sunAngle)
-        mat4.rotateY(mat, mat, sunPitch)
 
         vec3.transformMat4(forward, forward, mat)
 
         params.sunLightDirection = [...forward]
-
-        reset && reset()
     }
 
-    $: (sunAngle, sunPitch), updateSunLightDirection()
+    $: (sunAngle, sunPitch, sunRoll), updateSunLightDirection()
     $: params.useSkybox, params.useSkybox = +params.useSkybox;
-    // $: params, reset && reset()
+    $: params, reset && reset()
 
     onMount(async () => {
         const adapter: GPUAdapter = await navigator.gpu.requestAdapter() as GPUAdapter
@@ -103,12 +105,10 @@
 
         // const zeroArray = new Float32Array(canvas.width * canvas.height * 4).fill(0);
         // device.queue.writeBuffer(pixelBuffer, 0, zeroArray);
-
         // --
 
         render = () => {
             isPaused = false;
-            requestAnimationFrame(frame)
         }
 
         pause = () => {
@@ -120,10 +120,16 @@
             device.queue.writeBuffer(pixelBuffer, 0, zeroArray)
 
             frameCount = 1
-            requestAnimationFrame(frame)
+            updatedParams = true
         }
 
         function frame() {
+            if (isPaused && updatedParams === false) {
+                requestAnimationFrame(frame)
+                return
+            };
+            updatedParams = false
+
             const commandEncoder: GPUCommandEncoder = device.createCommandEncoder()
             const textureView: GPUTextureView = context.getCurrentTexture().createView()
 
@@ -164,12 +170,8 @@
             renderPass.draw(3*2) // call vertex shader 3 times
             renderPass.end()
 
-            // console.log(params.useSkybox)
-
 
             device.queue.submit([commandEncoder.finish()])
-
-            if (isPaused) return;
 
             requestAnimationFrame(frame)
             frameCount += 1
@@ -192,7 +194,7 @@
             }, 100);
         })
 
-        requestAnimationFrame(frame)
+        frame()
     })
 </script>
 
@@ -211,9 +213,7 @@
                 <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={pause}>Pause</button>
             </div>
 
-
-            <span>frame: {frameCount}</span>
-
+            <span>frame: {frameCount-1}</span>
 
             <div class="flex gap-2">
                 <span>Rays per pixel</span>
@@ -253,14 +253,14 @@
                     <span>Pitch</span>
                     <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunPitch}/>
                 </div>
-                <!-- <div class="flex gap-2">
+                <div class="flex gap-2">
                     <span>Roll</span>
-                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunAngle}/>
-                </div> -->
+                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunRoll}/>
+                </div>
             </div>
             <div class="flex gap-2">
                 <span>sunFocus</span>
-                <NumberInput min={0} max={2000} step={50} bind:bindValue={params.sunFocus}/>
+                <NumberInput min={1} max={2000} step={50} bind:bindValue={params.sunFocus}/>
             </div>
             <div class="flex gap-2">
                 <span>sunIntensity</span>

@@ -16,13 +16,14 @@
     }
 
     function onChange() {
+        console.log(bindValue)
+        if (bindValue === null) bindValue = min
         clamp()
     }
 
     function clamp() {
         if (!Number.isInteger(bindValue)) {
             bindValue = parseFloat(bindValue.toFixed(2))
-            // bindValue = Math.round(bindValue * 100.0) / 100.0
         }
         bindValue = Math.max(Math.min(bindValue, Number(max)), Number(min))
     }
@@ -38,7 +39,7 @@
     step={step}
     bind:value={bindValue}
     on:wheel={onScroll}
-    on:change={onChange}
+    on:input={onChange}
 />
 
 <style>
