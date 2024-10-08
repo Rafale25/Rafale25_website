@@ -16,7 +16,6 @@
     }
 
     function onChange() {
-        console.log(bindValue)
         if (bindValue === null) bindValue = min
         clamp()
     }
