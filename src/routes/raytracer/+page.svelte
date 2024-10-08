@@ -3,7 +3,7 @@
     import ColorInput from '$lib/components/colorInput.svelte'
 
     import { onMount } from 'svelte'
-    import { mat4 } from "gl-matrix"
+    import { mat4, vec3 } from "gl-matrix"
     import {
         makeShaderDataDefinitions,
         makeStructuredView,
@@ -39,8 +39,22 @@
 
     let sunAngle = 0.0
     let sunPitch = 0.0
-    let sunRoll = 0.0
 
+    const updateSunLightDirection = () => {
+        let forward = vec3.fromValues(0, 0, 1)
+
+        let mat = mat4.create()
+        mat4.rotateX(mat, mat, sunAngle)
+        mat4.rotateY(mat, mat, sunPitch)
+
+        vec3.transformMat4(forward, forward, mat)
+
+        params.sunLightDirection = [...forward]
+
+        reset && reset()
+    }
+
+    $: (sunAngle, sunPitch), updateSunLightDirection()
     $: params.useSkybox, params.useSkybox = +params.useSkybox;
     // $: params, reset && reset()
 
@@ -229,9 +243,20 @@
                 <span>GroundColor</span>
                 <ColorInput bind:bindValue={params.groundColor}/>
             </div>
-            <div class="flex gap-2">
+            <div class="flex flex-col gap-2">
                 <span>sunLightDirection</span>
-                <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunAngle}/>
+                <div class="flex gap-2">
+                    <span>Angle</span>
+                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunAngle}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>Pitch</span>
+                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunPitch}/>
+                </div>
+                <!-- <div class="flex gap-2">
+                    <span>Roll</span>
+                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunAngle}/>
+                </div> -->
             </div>
             <div class="flex gap-2">
                 <span>sunFocus</span>

@@ -6,7 +6,6 @@
 
     function onScroll(e) {
         //NOTE: Just binding the event enables scrolling the value by its step when focused
-        console.log("scroll", step)
         e.target.focus()
 
         if (typeof Number(step) === 'number') {
