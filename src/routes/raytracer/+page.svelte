@@ -214,6 +214,7 @@
             </div>
 
             <span>frame: {frameCount-1}</span>
+            <span>samples: {frameCount*params.numRaysPerPixel}</span>
 
             <div class="flex gap-2">
                 <span>Rays per pixel</span>
