@@ -16,18 +16,19 @@
         'Arcade': 'https://github.com/pythonarcade/arcade',
         'GlobalGameJam': 'https://globalgamejam.org',
         'Ludum Dare': 'https://ldjam.com/',
+        'Unity': 'https://unity.com/',
     }
 </script>
 
-<a class="sm:flex sm:h-64 sm:w-4/5 group w-full rounded-xl overflow-hidden" href={link}>
+<div class="sm:flex sm:h-64 sm:w-4/5 group w-full rounded-xl overflow-hidden" >
     <div class="sm:min-w-[16rem] min-w-[12rem] sm:w-3/4 overflow-hidden">
-        <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110  ">
+        <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">
     </div>
 
     <div class="flex flex-col w-full min-h-full text-base">
-        <div class="font-bold text-xl px-4 py-2 bg-raflou-border group-hover:saturate-200">
+        <a href={link} class="font-bold text-xl px-4 py-2 bg-raflou-border group-hover:saturate-200">
             <span class="text-raflou-green-dark">{name}</span>
-        </div>
+        </a>
 
         <div class="h-full p-4 text-gray-100 bg-neutral-800">
             <span>{description}</span>
@@ -41,4 +42,4 @@
             {/each}
         </div>
     </div>
-</a>
+</div>

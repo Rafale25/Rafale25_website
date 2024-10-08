@@ -25,7 +25,7 @@
         </div>
     </div >
 
-    <div class="w-full h-2 backdrop-brightness-[70%]"/>
+    <div class="w-full h-2 backdrop-brightness-[70%]"></div>
 
     <div class="flex flex-col w-full items-center my-16 px-5 gap-8">
         <Project
