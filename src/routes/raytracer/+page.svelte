@@ -17,6 +17,8 @@
     let resizedFinished = setTimeout(()=>{})
     let frameCount = 1
 
+    let camera = new webgpuHelpers.Camera(60.0, width/height, vec3.fromValues(0,0,0), 0, 0)
+
     // functions
     let render = null
     let pause = null
@@ -41,13 +43,13 @@
 
     let sunAngle = 0.0
     let sunPitch = 0.0
-    let sunRoll = 0.0
+    // let sunRoll = 0.0
 
     const updateSunLightDirection = () => {
         let forward = vec3.fromValues(0, 0, 1)
 
         let mat = mat4.create()
-        mat4.rotateY(mat, mat, sunRoll)
+        // mat4.rotateY(mat, mat, sunRoll)
         mat4.rotateZ(mat, mat, sunPitch)
         mat4.rotateX(mat, mat, sunAngle)
 
@@ -56,9 +58,19 @@
         params.sunLightDirection = [...forward]
     }
 
-    $: (sunAngle, sunPitch, sunRoll), updateSunLightDirection()
+    $: (sunAngle, sunPitch), updateSunLightDirection()
     $: params.useSkybox, params.useSkybox = +params.useSkybox;
     $: params, reset && reset()
+
+    function onMouseMove(e) {
+		// const x = e.clientX
+		// const y = e.clientY
+
+        // const dx = e.movementX || e.mozMovementX || e.webkitMovementX || 0
+        // const dy = e.movementY || e.mozMovementY || e.webkitMovementY || 0
+
+        // console.log(dx, dy)
+    }
 
     onMount(async () => {
         const adapter: GPUAdapter = await navigator.gpu.requestAdapter() as GPUAdapter
@@ -124,6 +136,8 @@
         }
 
         function frame() {
+            camera.update()
+
             if (isPaused && updatedParams === false) {
                 requestAnimationFrame(frame)
                 return
@@ -254,10 +268,10 @@
                     <span>Pitch</span>
                     <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunPitch}/>
                 </div>
-                <div class="flex gap-2">
+                <!-- <div class="flex gap-2">
                     <span>Roll</span>
                     <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunRoll}/>
-                </div>
+                </div> -->
             </div>
             <div class="flex gap-2">
                 <span>sunFocus</span>
@@ -278,6 +292,7 @@
     bind:this={canvas}
     bind:clientWidth={width}
     bind:clientHeight={height}
+    on:mousemove={onMouseMove}
     {width} {height}
 ></canvas>
 
