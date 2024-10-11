@@ -39,6 +39,9 @@
         sunLightDirection: [0.53, 0.64, -0.53],
         sunFocus: 300.0,
         sunIntensity: 100.0,
+
+        // viewMatrix: mat4.create(),
+        // viewPosition: vec3.create()
     }
 
     let sunAngle = 0.0
@@ -63,13 +66,25 @@
     $: params, reset && reset()
 
     function onMouseMove(e) {
-		// const x = e.clientX
-		// const y = e.clientY
+        if (!document.pointerLockElement) return
 
-        // const dx = e.movementX || e.mozMovementX || e.webkitMovementX || 0
-        // const dy = e.movementY || e.mozMovementY || e.webkitMovementY || 0
+        const dx = e.movementX || e.mozMovementX || e.webkitMovementX || 0
+        const dy = e.movementY || e.mozMovementY || e.webkitMovementY || 0
 
-        // console.log(dx, dy)
+        camera.onMouseMotion(-dx, dy)
+        reset && reset()
+    }
+
+    function onKeyDown(e) {
+        // if (!document.pointerLockElement) return
+
+        console.log('e.keyCode', e.keyCode)
+        // if (e.keyCode === 37) // ArrowLeft
+        // if (e.keyCode === 38) // ArrowUp
+        // if (e.keyCode === 39) // ArrowRight
+        // if (e.keyCode === 40) // ArrowDown
+
+        reset && reset()
     }
 
     onMount(async () => {
@@ -128,9 +143,6 @@
         }
 
         reset = () => {
-            const zeroArray = new Float32Array(canvas.width * canvas.height * 4).fill(0)
-            device.queue.writeBuffer(pixelBuffer, 0, zeroArray)
-
             frameCount = 1
             updatedParams = true
         }
@@ -142,10 +154,14 @@
                 requestAnimationFrame(frame)
                 return
             };
-            updatedParams = false
 
             const commandEncoder: GPUCommandEncoder = device.createCommandEncoder()
             const textureView: GPUTextureView = context.getCurrentTexture().createView()
+
+            if (updatedParams) {
+                commandEncoder.clearBuffer(pixelBuffer, 0, pixelBuffer.size)
+            }
+            updatedParams = false
 
             // commandEncoder.clearBuffer(pixelBuffer, 0, pixelBuffer.size)
 
@@ -172,7 +188,9 @@
             uniformValues.set({
                 resolution: [canvas.width, canvas.height],
                 frameCount,
-                ...params
+                ...params,
+                viewPosition: vec3.fromValues(0,0,0),
+                viewMatrix: camera.getViewInverse(),
             })
 
             device.queue.writeBuffer(uniformBuffer, 0, uniformValues.arrayBuffer); // copy the values from JavaScript to the GPU
@@ -207,6 +225,17 @@
                 console.log('Resized finished.');
             }, 100);
         })
+
+        canvas.addEventListener("click", async () => {
+            if (!document.pointerLockElement) {
+                await canvas.requestPointerLock({
+                    unadjustedMovement: true,
+                });
+            }
+        });
+
+        document.onkeydown = onKeyDown
+        // document.addEventListener("onkeydown", onKeyDown)
 
         frame()
     })

@@ -1,4 +1,4 @@
-import { Mat4, Vec4, Vec3 } from "gl-matrix"
+import { Mat4, Vec4, Vec3, vec3, mat4 } from "gl-matrix"
 
 function clamp(number, min, max) {
     return Math.max(min, Math.min(number, max));
@@ -44,11 +44,18 @@ export class Camera {
     }
 
     getView() {
-        let mat: Mat4
-        let center: Vec3
+        let mat: Mat4 = mat4.create()
+        let center: Vec3 = vec3.create()
 
         Vec3.add(center, this.position, this.forward)
         Mat4.lookAt(mat, this.position, center, this.worldUp)
+
+        return mat
+    }
+
+    getViewInverse() {
+        let mat = this.getView()
+        mat4.invert(mat, mat)
         return mat
     }
 
@@ -84,7 +91,7 @@ export class Camera {
 
     onMouseMotion(dx: number, dy: number)
     {
-        const _mouseSensitivity = 1.0
+        const _mouseSensitivity = 0.002
 
         this.yaw += dx * _mouseSensitivity;
         this.pitch += -dy * _mouseSensitivity;

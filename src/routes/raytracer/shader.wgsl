@@ -43,6 +43,9 @@ struct ParamsUniforms {
     sunLightDirection: vec3f,
     sunFocus: f32,
     sunIntensity: f32,
+
+    viewPosition: vec3f,
+    viewMatrix: mat4x4<f32>,
 };
 
 const PI: f32 = 3.141592653;
@@ -205,14 +208,11 @@ fn vs_main(
 fn fs_main(
     @builtin(position) Position : vec4f,
 ) -> @location(0) vec4f {
-    // var u_resolution = u_resolution_frame.xy;
-    // var u_frame: f32 = u_resolution_frame.z;
-
     var uv01 = Position.xy / u_params.resolution;
     var uv: vec2f = (2.0 * Position.xy - u_params.resolution) / u_params.resolution.y;
 
     var viewPointLocal = vec3f(uv, 1.0); // * viewParams
-    var viewPoint = viewPointLocal;
+    var viewPoint = (u_params.viewMatrix * vec4f(viewPointLocal, 1.0)).xyz;
 
     var numPixels: vec2u = vec2u(u_params.resolution);
     var pixelCoord: vec2u = vec2u(uv01 * vec2f(numPixels));
@@ -223,9 +223,9 @@ fn fs_main(
 
     for (var rayIndex: u32 = 0; rayIndex < u_params.numRaysPerPixel; rayIndex++) {
         var ray: Ray;
-        ray.origin = vec3f(0.0);
+        ray.origin = u_params.viewPosition;// vec3f(0.0);
         var jitter: vec2f = randomPointInCircle(seed + rayIndex) * u_params.divergeStrength / f32(numPixels.x);
-        var jitteredViewPoint = viewPoint + vec3f(1.0, 0.0, 0.0) * jitter.x + vec3f(0.0, 1.0, 0.0) * jitter.y;
+        var jitteredViewPoint = (ray.origin + viewPoint) + vec3f(1.0, 0.0, 0.0) * jitter.x + vec3f(0.0, 1.0, 0.0) * jitter.y;
         ray.dir = normalize(jitteredViewPoint - ray.origin);
 
         var incomingLight = Trace(ray, seed+rayIndex);
