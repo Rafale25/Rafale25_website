@@ -12,6 +12,21 @@
     import * as webgpuHelpers from '$lib/webgpuHelpers'
     import triangle_shader from './shader.wgsl?raw'
 
+    const KEY_FORWARD = 87 // KeyW
+    const KEY_BACK = 83 // KeyS
+    const KEY_RIGHT = 68 // KeyD
+    const KEY_LEFT = 65 // KeyA
+    const KEY_DOWN = 81// KeyQ  //17 // ControlLeft
+    const KEY_UP = 69// KeyE 32 // Space
+    const keystate = {
+        [KEY_FORWARD]: 0,
+        [KEY_BACK]: 0,
+        [KEY_RIGHT]: 0,
+        [KEY_LEFT]: 0,
+        [KEY_DOWN]: 0,
+        [KEY_UP]: 0,
+    }
+
     let canvas: HTMLCanvasElement
     let width: number, height: number
     let resizedFinished = setTimeout(()=>{})
@@ -19,10 +34,9 @@
 
     let camera = new webgpuHelpers.Camera(60.0, width/height, vec3.fromValues(0,0,0), 0, 0)
 
-    // functions
-    let render = null
-    let pause = null
-    let reset = null
+    let render: Function = ()=>{}
+    let pause: Function = ()=>{}
+    let reset: Function = ()=>{}
 
     let isPaused = true
     let updatedParams = true
@@ -63,7 +77,7 @@
 
     $: (sunAngle, sunPitch), updateSunLightDirection()
     $: params.useSkybox, params.useSkybox = +params.useSkybox;
-    $: params, reset && reset()
+    $: params, reset()
 
     function onMouseMove(e) {
         if (!document.pointerLockElement) return
@@ -72,19 +86,33 @@
         const dy = e.movementY || e.mozMovementY || e.webkitMovementY || 0
 
         camera.onMouseMotion(-dx, dy)
-        reset && reset()
+
+        if (dx !== 0 || dy !== 0)
+            reset()
+    }
+
+    function updateCamera() {
+        if (!document.pointerLockElement) return
+
+        const delta = vec3.fromValues(
+            keystate[KEY_BACK] - keystate[KEY_FORWARD],
+            keystate[KEY_UP] - keystate[KEY_DOWN],
+            keystate[KEY_RIGHT] - keystate[KEY_LEFT],
+        )
+
+        camera.move(delta)
+
+        if (delta.mag > 0.01)
+            reset()
+    }
+
+    function onKeyUp(e) {
+        keystate[e.keyCode] = false
     }
 
     function onKeyDown(e) {
-        // if (!document.pointerLockElement) return
-
-        console.log('e.keyCode', e.keyCode)
-        // if (e.keyCode === 37) // ArrowLeft
-        // if (e.keyCode === 38) // ArrowUp
-        // if (e.keyCode === 39) // ArrowRight
-        // if (e.keyCode === 40) // ArrowDown
-
-        reset && reset()
+        if (!document.pointerLockElement) return
+        keystate[e.keyCode] = true
     }
 
     onMount(async () => {
@@ -148,6 +176,7 @@
         }
 
         function frame() {
+            updateCamera()
             camera.update()
 
             if (isPaused && updatedParams === false) {
@@ -189,7 +218,7 @@
                 resolution: [canvas.width, canvas.height],
                 frameCount,
                 ...params,
-                viewPosition: vec3.fromValues(0,0,0),
+                viewPosition: camera.position,
                 viewMatrix: camera.getViewInverse(),
             })
 
@@ -235,7 +264,12 @@
         });
 
         document.onkeydown = onKeyDown
-        // document.addEventListener("onkeydown", onKeyDown)
+        document.onkeyup = onKeyUp
+
+        window.onbeforeunload = (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+        }
 
         frame()
     })

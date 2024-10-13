@@ -225,8 +225,8 @@ fn fs_main(
         var ray: Ray;
         ray.origin = u_params.viewPosition;// vec3f(0.0);
         var jitter: vec2f = randomPointInCircle(seed + rayIndex) * u_params.divergeStrength / f32(numPixels.x);
-        var jitteredViewPoint = (ray.origin + viewPoint) + vec3f(1.0, 0.0, 0.0) * jitter.x + vec3f(0.0, 1.0, 0.0) * jitter.y;
-        ray.dir = normalize(jitteredViewPoint - ray.origin);
+        var jitteredViewPoint = (viewPoint) + vec3f(1.0, 0.0, 0.0) * jitter.x + vec3f(0.0, 1.0, 0.0) * jitter.y;
+        ray.dir = normalize(jitteredViewPoint);
 
         var incomingLight = Trace(ray, seed+rayIndex);
         totalIncomingLight += incomingLight;

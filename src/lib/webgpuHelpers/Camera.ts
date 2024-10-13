@@ -1,4 +1,4 @@
-import { Mat4, Vec4, Vec3, vec3, mat4 } from "gl-matrix"
+import { Mat4, Mat3, Vec4, Vec3, vec3, mat4 } from "gl-matrix"
 
 function clamp(number, min, max) {
     return Math.max(min, Math.min(number, max));
@@ -54,9 +54,14 @@ export class Camera {
     }
 
     getViewInverse() {
-        let mat = this.getView()
-        mat4.invert(mat, mat)
-        return mat
+        let viewMat = this.getView()
+
+        viewMat[12] = 0
+        viewMat[13] = 0
+        viewMat[14] = 0
+
+        mat4.invert(viewMat, viewMat)
+        return viewMat
     }
 
     getProjection() {
@@ -79,13 +84,14 @@ export class Camera {
         let rotateMat = Mat4.create()
         rotateMat.rotate(-this.yaw, Vec3.fromValues(0, 1, 0))
 
-        let dir: Vec4
+        let dir = Vec4.create()
         Vec4.transformMat4(dir,
             Vec4.fromValues(direction[0], direction[1], direction[2], 1.0),
             rotateMat
         )
         dir[1] = -dir[1];
 
+        dir.scale(0.01)
         this._movement.add(Vec3.fromValues(dir[0], dir[1], dir[2]))
     }
 
