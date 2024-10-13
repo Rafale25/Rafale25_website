@@ -24,5 +24,8 @@
 		"@webgpu/types": "^0.1.48",
 		"gl-matrix": "^4.0.0-beta.2",
 		"webgpu-utils": "^1.9.3"
+	},
+	"optionalDependencies": {
+		"@rollup/rollup-linux-x64-gnu": "^4.24.0"
 	}
 }
