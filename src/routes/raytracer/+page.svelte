@@ -12,12 +12,12 @@
     import * as webgpuHelpers from '$lib/webgpuHelpers'
     import triangle_shader from './shader.wgsl?raw'
 
-    const KEY_FORWARD = 87 // KeyW
-    const KEY_BACK = 83 // KeyS
-    const KEY_RIGHT = 68 // KeyD
-    const KEY_LEFT = 65 // KeyA
-    const KEY_DOWN = 81// KeyQ  //17 // ControlLeft
-    const KEY_UP = 69// KeyE 32 // Space
+    const KEY_FORWARD = 'KeyW'
+    const KEY_BACK = 'KeyS'
+    const KEY_RIGHT = 'KeyD'
+    const KEY_LEFT = 'KeyA'
+    const KEY_DOWN = 'KeyQ'
+    const KEY_UP = 'KeyE'
     const keystate = {
         [KEY_FORWARD]: 0,
         [KEY_BACK]: 0,
@@ -107,12 +107,12 @@
     }
 
     function onKeyUp(e) {
-        keystate[e.keyCode] = false
+        keystate[e.code] = false
     }
 
     function onKeyDown(e) {
         if (!document.pointerLockElement) return
-        keystate[e.keyCode] = true
+        keystate[e.code] = true
     }
 
     onMount(async () => {
