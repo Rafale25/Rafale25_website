@@ -50,7 +50,7 @@
         skyColorZenith: [0.0788, 0.364, 0.7264],
         skyColorHorizon: [1.0, 1.0, 1.0],
         groundColor: [0.35, 0.3, 0.35],
-        sunLightDirection: [0.53, 0.64, -0.53],
+        sunLightDirection: [0.0, 0.0, 0.0],
         sunFocus: 300.0,
         sunIntensity: 100.0,
 
@@ -58,8 +58,8 @@
         // viewPosition: vec3.create()
     }
 
-    let sunAngle = 0.0
-    let sunPitch = 0.0
+    let sunAngle = -2.1
+    let sunPitch = -0.6
     // let sunRoll = 0.0
 
     const updateSunLightDirection = () => {
