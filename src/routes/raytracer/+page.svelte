@@ -32,17 +32,17 @@
     let resizedFinished = setTimeout(()=>{})
     let frameCount = 1
 
-    let camera = new webgpuHelpers.Camera(60.0, width/height, vec3.fromValues(0,0,0), 0, 0)
+    let camera = new webgpuHelpers.Camera(60.0, width/height, vec3.fromValues(0,0,0), -Math.PI/2, 0)
 
     let render: Function = ()=>{}
     let pause: Function = ()=>{}
     let reset: Function = ()=>{}
 
-    let isPaused = true
+    let isPaused = false
     let updatedParams = true
 
     const params = {
-        numRaysPerPixel: 1,
+        numRaysPerPixel: 20,
         maxLightBounce: 16,
         divergeStrength: 1.5,
 
@@ -54,19 +54,20 @@
         sunFocus: 300.0,
         sunIntensity: 100.0,
 
+        focusDistance: 1.0,
+        unfocusStrength: 0.0,
+
         // viewMatrix: mat4.create(),
         // viewPosition: vec3.create()
     }
 
     let sunAngle = -2.1
     let sunPitch = -0.6
-    // let sunRoll = 0.0
 
     const updateSunLightDirection = () => {
         let forward = vec3.fromValues(0, 0, 1)
 
         let mat = mat4.create()
-        // mat4.rotateY(mat, mat, sunRoll)
         mat4.rotateZ(mat, mat, sunPitch)
         mat4.rotateX(mat, mat, sunAngle)
 
@@ -157,10 +158,6 @@
             size: canvas.width * canvas.height * 4 * 4,
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC | GPUBufferUsage.COPY_DST,
         })
-
-        // const zeroArray = new Float32Array(canvas.width * canvas.height * 4).fill(0);
-        // device.queue.writeBuffer(pixelBuffer, 0, zeroArray);
-        // --
 
         render = () => {
             isPaused = false;
@@ -331,10 +328,6 @@
                     <span>Pitch</span>
                     <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunPitch}/>
                 </div>
-                <!-- <div class="flex gap-2">
-                    <span>Roll</span>
-                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunRoll}/>
-                </div> -->
             </div>
             <div class="flex gap-2">
                 <span>sunFocus</span>
@@ -345,6 +338,14 @@
                 <NumberInput min={0} max={1000} step={10} bind:bindValue={params.sunIntensity}/>
             </div>
 
+            <div class="flex gap-2">
+                <span>focusDistance</span>
+                <NumberInput min={0} max={100} step={0.1} bind:bindValue={params.focusDistance}/>
+            </div>
+            <div class="flex gap-2">
+                <span>unfocusStrength</span>
+                <NumberInput min={0} max={300} step={5} bind:bindValue={params.unfocusStrength}/>
+            </div>
 
         </div>
     </div>
@@ -358,22 +359,3 @@
     on:mousemove={onMouseMove}
     {width} {height}
 ></canvas>
-
-<!--
-const bufferTexture2Dping: GPUTexture = device.createTexture({
-    size: [canvas.width, canvas.height],
-    usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.STORAGE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.COPY_SRC,
-    format: 'rgba32float',
-});
-const bufferTexture2Dpong: GPUTexture = device.createTexture({
-    size: [canvas.width, canvas.height],
-    usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
-    format: format,//'rgba32float',
-});
-
-const viewBufferTexture2Dping: GPUTextureView = bufferTexture2Dping.createView()
-const viewBufferTexture2Dpong: GPUTextureView = bufferTexture2Dpong.createView()
-
-
-commandEncoder.copyTextureToTexture({texture: bufferTexture2Dping}, {texture: currentTexture}, {width:canvas.width, height:canvas.height, depthOrArrayLayers:1})
--->

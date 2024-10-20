@@ -56,10 +56,6 @@ export class Camera {
     getViewInverse() {
         let viewMat = this.getView()
 
-        viewMat[12] = 0
-        viewMat[13] = 0
-        viewMat[14] = 0
-
         mat4.invert(viewMat, viewMat)
         return viewMat
     }

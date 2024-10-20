@@ -20,6 +20,8 @@ struct RayTracingMaterial {
     emissionColor: vec3f,
     emissionStrength: f32,
     smoothness: f32,
+    specularProbability: f32,
+    specularColor: vec3f,
 };
 
 struct Sphere {
@@ -44,6 +46,9 @@ struct ParamsUniforms {
     sunFocus: f32,
     sunIntensity: f32,
 
+    focusDistance: f32,
+    unfocusStrength: f32,
+
     viewPosition: vec3f,
     viewMatrix: mat4x4<f32>,
 };
@@ -51,15 +56,18 @@ struct ParamsUniforms {
 const PI: f32 = 3.141592653;
 
 const spheres = array(
-    Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 2.0, 0.0)),
-    Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0, 0.2, 1.0), 3.0, 0.0)),
+    Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 2.0, 0.0, 0, vec3f(1.0))),
+    Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0, 0.2, 1.0), 3.0, 0, 0, vec3f(1.0))),
 
-    Sphere(vec3f(0.0, 21.0, 5.0), 20.0, RayTracingMaterial(vec3f(0.4, 0.8, 0.9), vec3f(0.0), 0.0, 0.0)),
+    Sphere(vec3f(0.0, 21.0, 5.0), 20.0, RayTracingMaterial(vec3f(0.4, 0.8, 0.9), vec3f(0.0), 0.0, 0.0, 0, vec3f(1.0))),
 
-    Sphere(vec3f(0.0, 0.0, 5.0), 1.0, RayTracingMaterial(vec3f(0.1, 1.0, 0.2), vec3f(0.0), 0.0, 0.0)),
-    Sphere(vec3f(-1.7, 0.3, 5.0), 0.8, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(0.0), 0.0, 0.95)),
+    Sphere(vec3f(0.0, 0.0, 5.0), 1.0, RayTracingMaterial(vec3f(0.1, 1.0, 0.2), vec3f(0.0), 0.0, 0.0, 0, vec3f(1.0))),
+    Sphere(vec3f(-1.7, 0.3, 5.0), 0.8, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(0.0), 0.0, 0.95, 0, vec3f(1.0))),
+
+    Sphere(vec3f(1.5, 0.8, 4.0), 0.9, RayTracingMaterial(vec3f(1, 0, 0), vec3f(0), 0, 1, 0.1, vec3f(1))),
+    Sphere(vec3f(-0.8, 1.0, 2.3), 0.3, RayTracingMaterial(vec3f(0, 0.4, 1), vec3f(0), 0, 1, 0.1, vec3f(1))),
 );
-const sphereCount = 5;
+const sphereCount = 7;
 
 fn hash(_x: u32) -> u32 {
     var x = _x;
@@ -168,12 +176,12 @@ fn Trace(_ray: Ray, seed: u32) -> vec3f {
 
             var diffuseDir = normalize(hitInfo.normal + RandomDirection(seed+i));
             var specularDir = reflect(ray.dir, hitInfo.normal);
-            ray.dir = normalize(mix(diffuseDir, specularDir, material.smoothness));
+            var isSpecularBounce: f32 = f32(material.specularProbability >= random_uniform(seed+i+7268));
+            ray.dir = normalize(mix(diffuseDir, specularDir, material.smoothness * isSpecularBounce));
 
             var emittedLight: vec3f = material.emissionColor * material.emissionStrength;
-            var lightStrength = dot(hitInfo.normal, ray.dir);
             incomingLight += emittedLight * rayColor;
-            rayColor *= material.color;
+            rayColor *= mix(material.color, material.specularColor, isSpecularBounce);
         }
         else
         {
@@ -188,11 +196,7 @@ fn Trace(_ray: Ray, seed: u32) -> vec3f {
 }
 
 @group(0) @binding(0) var<uniform> u_params: ParamsUniforms;
-// @group(0) @binding(2) var<uniform> u_resolution_frame: vec3f;
-
-// @group(0) @binding(0) var<uniform> u_frame: u32;
 @group(0) @binding(1) var<storage, read_write> pixel_buffer: array<vec4f>;
-
 
 @vertex
 fn vs_main(
@@ -211,35 +215,42 @@ fn fs_main(
     var uv01 = Position.xy / u_params.resolution;
     var uv: vec2f = (2.0 * Position.xy - u_params.resolution) / u_params.resolution.y;
 
-    var viewPointLocal = vec3f(uv, 1.0); // * viewParams
-    var viewPoint = (u_params.viewMatrix * vec4f(viewPointLocal, 1.0)).xyz;
-
     var numPixels: vec2u = vec2u(u_params.resolution);
     var pixelCoord: vec2u = vec2u(uv01 * vec2f(numPixels));
     var pixelIndex: u32 = pixelCoord.y * numPixels.x + pixelCoord.x;
     var seed: u32 = (pixelIndex+u32(f32(u_params.frameCount)*2371)) + pixelCoord.y*467828 + pixelCoord.x*29738;
 
+    var viewPointLocal = vec3f(uv, 1.0) * u_params.focusDistance;
+    var viewPoint = (u_params.viewMatrix * vec4f(viewPointLocal, 1.0)).xyz;
+
+    var camRight = vec3f(u_params.viewMatrix[0][0], u_params.viewMatrix[0][1], u_params.viewMatrix[0][2]);
+    var camUp = vec3f(u_params.viewMatrix[1][0], u_params.viewMatrix[1][1], u_params.viewMatrix[1][2]);
+
     var totalIncomingLight: vec3f = vec3f(0.0);
 
     for (var rayIndex: u32 = 0; rayIndex < u_params.numRaysPerPixel; rayIndex++) {
         var ray: Ray;
-        ray.origin = u_params.viewPosition;// vec3f(0.0);
+
+        var defocusJitter: vec2f = randomPointInCircle(seed+rayIndex*7263) * u_params.unfocusStrength / f32(numPixels.x);
+
+        ray.origin = u_params.viewPosition + camRight*defocusJitter.x + camUp*defocusJitter.y;
+
         var jitter: vec2f = randomPointInCircle(seed + rayIndex) * u_params.divergeStrength / f32(numPixels.x);
-        var jitteredViewPoint = (viewPoint) + vec3f(1.0, 0.0, 0.0) * jitter.x + vec3f(0.0, 1.0, 0.0) * jitter.y;
-        ray.dir = normalize(jitteredViewPoint);
+        var jitteredViewPoint = viewPoint + camRight * jitter.x + camUp * jitter.y;
+        ray.dir = normalize(jitteredViewPoint - ray.origin);
 
         var incomingLight = Trace(ray, seed+rayIndex);
         totalIncomingLight += incomingLight;
     }
 
-    var pixelColor = totalIncomingLight;// / f32(numRaysPerPixel);
+    var pixelColor = totalIncomingLight;
 
     pixel_buffer[pixelIndex] += vec4f(pixelColor, 0.0);
     var pixelBufferColor: vec3f = pixel_buffer[pixelIndex].rgb;
 
     var finalColor = pixelBufferColor / f32(u32(u_params.frameCount)*u_params.numRaysPerPixel);
 
-    // return vec4f(pixelColor, 1.0);
+    // return vec4f(pixelColor / f32(u_params.numRaysPerPixel), 1.0);
     return vec4f(finalColor, 1.0);
 
     // return vec4f(vec3f(random_uniform(seed)), 1.0);
