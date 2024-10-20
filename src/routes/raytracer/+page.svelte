@@ -344,7 +344,7 @@
             </div>
             <div class="flex gap-2">
                 <span>unfocusStrength</span>
-                <NumberInput min={0} max={300} step={5} bind:bindValue={params.unfocusStrength}/>
+                <NumberInput min={0} max={1000} step={5} bind:bindValue={params.unfocusStrength}/>
             </div>
 
         </div>
