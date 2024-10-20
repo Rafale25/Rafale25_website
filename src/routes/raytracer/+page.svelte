@@ -38,11 +38,11 @@
     let pause: Function = ()=>{}
     let reset: Function = ()=>{}
 
-    let isPaused = false
+    let isPaused = true
     let updatedParams = true
 
     const params = {
-        numRaysPerPixel: 20,
+        numRaysPerPixel: 1,
         maxLightBounce: 16,
         divergeStrength: 1.5,
 
