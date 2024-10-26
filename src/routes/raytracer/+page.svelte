@@ -10,7 +10,8 @@
     } from 'webgpu-utils';
 
     import * as webgpuHelpers from '$lib/webgpuHelpers'
-    import triangle_shader from './shader.wgsl?raw'
+    // import triangle_shader from './shader.wgsl?raw'
+    import triangle_shader from './shader_raymarching.wgsl?raw'
 
     const KEY_FORWARD = 'KeyW'
     const KEY_BACK = 'KeyS'
@@ -56,6 +57,9 @@
 
         focusDistance: 1.0,
         unfocusStrength: 0.0,
+
+        // For raymarching //
+        mergeStrength: 0.0,
 
         // viewMatrix: mat4.create(),
         // viewPosition: vec3.create()
@@ -346,6 +350,12 @@
                 <span>unfocusStrength</span>
                 <NumberInput min={0} max={1000} step={5} bind:bindValue={params.unfocusStrength}/>
             </div>
+
+            <div class="flex gap-2">
+                <span>mergeStrength</span>
+                <NumberInput min={0} max={2.0} step={0.01} bind:bindValue={params.mergeStrength}/>
+            </div>
+
 
         </div>
     </div>
