@@ -91,10 +91,11 @@
         const dx = e.movementX || e.mozMovementX || e.webkitMovementX || 0
         const dy = e.movementY || e.mozMovementY || e.webkitMovementY || 0
 
-        camera.onMouseMotion(-dx, dy)
 
-        if (dx !== 0 || dy !== 0)
+        if (dx !== 0 || dy !== 0) {
+            camera.onMouseMotion(-dx, dy)
             reset()
+        }
     }
 
     function updateCamera() {
@@ -106,10 +107,10 @@
             keystate[KEY_RIGHT] - keystate[KEY_LEFT],
         )
 
-        camera.move(delta)
-
-        if (delta.mag > 0.01)
+        if (delta.mag > 0.01) {
+            camera.move(delta)
             reset()
+        }
     }
 
     function onKeyUp(e) {
@@ -165,11 +166,11 @@
         })
 
         render = () => {
-            isPaused = false;
+            isPaused = false
         }
 
         pause = () => {
-            isPaused = true;
+            isPaused = true
         }
 
         reset = () => {
@@ -191,10 +192,8 @@
 
             if (updatedParams) {
                 commandEncoder.clearBuffer(pixelBuffer, 0, pixelBuffer.size)
+                updatedParams = false
             }
-            updatedParams = false
-
-            // commandEncoder.clearBuffer(pixelBuffer, 0, pixelBuffer.size)
 
             const renderPassDescriptor: GPURenderPassDescriptor = {
                 colorAttachments: [
@@ -230,7 +229,7 @@
             renderPass.setPipeline(pipeline)
             renderPass.setBindGroup(0, bindGroup)
             renderPass.setVertexBuffer(0, mesh.buffer)
-            renderPass.draw(3*2) // call vertex shader 3 times
+            renderPass.draw(3*2)
             renderPass.end()
 
 
@@ -267,11 +266,6 @@
 
         document.onkeydown = onKeyDown
         document.onkeyup = onKeyUp
-
-        window.onbeforeunload = (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-        }
 
         frame()
     })
