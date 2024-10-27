@@ -39,6 +39,7 @@
     let pause: Function = ()=>{}
     let reset: Function = ()=>{}
 
+    let showOption = true
     let isPaused = true
     let updatedParams = true
 
@@ -283,80 +284,90 @@
 
 <main>
     <div class="fixed z-10">
-        <div class="flex flex-col p-4 gap-4 bg-slate-300/80 rounded-br">
+        <div class="flex transition duration-500 {showOption ? "-translate-x-full" : ""}">
+            <div class="flex flex-col p-4 gap-4 bg-slate-300/80 rounded-br">
 
-            <div class="flex justify-center gap-x-4">
-                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={reset}>Reset</button>
-                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={render}>Render</button>
-                <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={pause}>Pause</button>
-            </div>
+                <div class="flex justify-center gap-x-4">
+                    <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={reset}>Reset</button>
+                    <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={render}>Render</button>
+                    <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={pause}>Pause</button>
+                </div>
 
-            <span>frame: {frameCount-1}</span>
-            <span>samples: {frameCount*params.numRaysPerPixel}</span>
+                <span>frame: {frameCount-1}</span>
+                <span>samples: {frameCount*params.numRaysPerPixel}</span>
 
-            <div class="flex gap-2">
-                <span>Rays per pixel</span>
-                <NumberInput min={1} max={128} step={1} bind:bindValue={params.numRaysPerPixel}/>
-            </div>
-            <div class="flex gap-2">
-                <span>Max light bounce</span>
-                <NumberInput min={0} max={128} step={1} bind:bindValue={params.maxLightBounce}/>
-            </div>
-            <div class="flex gap-2">
-                <span>Diverge strength</span>
-                <NumberInput min={0.0} max={200.0} step={0.1} bind:bindValue={params.divergeStrength}/>
-            </div>
-            <div class="flex gap-2">
-                <span>Skybox</span>
-                <input type="checkbox" bind:checked={params.useSkybox}/>
-            </div>
-            <div class="flex gap-2">
-                <span>skyColorZenith</span>
-                <ColorInput bind:bindValue={params.skyColorZenith}/>
-            </div>
-            <div class="flex gap-2">
-                <span>skyColorHorizon</span>
-                <ColorInput bind:bindValue={params.skyColorHorizon}/>
-            </div>
-            <div class="flex gap-2">
-                <span>GroundColor</span>
-                <ColorInput bind:bindValue={params.groundColor}/>
-            </div>
-            <div class="flex flex-col gap-2">
-                <span>sunLightDirection</span>
                 <div class="flex gap-2">
-                    <span>Angle</span>
-                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunAngle}/>
+                    <span>Rays per pixel</span>
+                    <NumberInput min={1} max={128} step={1} bind:bindValue={params.numRaysPerPixel}/>
                 </div>
                 <div class="flex gap-2">
-                    <span>Pitch</span>
-                    <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunPitch}/>
+                    <span>Max light bounce</span>
+                    <NumberInput min={0} max={128} step={1} bind:bindValue={params.maxLightBounce}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>Diverge strength</span>
+                    <NumberInput min={0.0} max={200.0} step={0.1} bind:bindValue={params.divergeStrength}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>Skybox</span>
+                    <input type="checkbox" bind:checked={params.useSkybox}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>skyColorZenith</span>
+                    <ColorInput bind:bindValue={params.skyColorZenith}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>skyColorHorizon</span>
+                    <ColorInput bind:bindValue={params.skyColorHorizon}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>GroundColor</span>
+                    <ColorInput bind:bindValue={params.groundColor}/>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span>sunLightDirection</span>
+                    <div class="flex gap-2">
+                        <span>Angle</span>
+                        <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunAngle}/>
+                    </div>
+                    <div class="flex gap-2">
+                        <span>Pitch</span>
+                        <NumberInput min={-Math.PI} max={Math.PI} step={0.1} bind:bindValue={sunPitch}/>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <span>sunFocus</span>
+                    <NumberInput min={1} max={2000} step={50} bind:bindValue={params.sunFocus}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>sunIntensity</span>
+                    <NumberInput min={0} max={1000} step={10} bind:bindValue={params.sunIntensity}/>
+                </div>
+
+                <div class="flex gap-2">
+                    <span>focusDistance</span>
+                    <NumberInput min={0} max={100} step={0.1} bind:bindValue={params.focusDistance}/>
+                </div>
+                <div class="flex gap-2">
+                    <span>unfocusStrength</span>
+                    <NumberInput min={0} max={1000} step={5} bind:bindValue={params.unfocusStrength}/>
+                </div>
+
+                <div class="flex gap-2">
+                    <span>mergeStrength</span>
+                    <NumberInput min={0} max={2.0} step={0.01} bind:bindValue={params.mergeStrength}/>
                 </div>
             </div>
-            <div class="flex gap-2">
-                <span>sunFocus</span>
-                <NumberInput min={1} max={2000} step={50} bind:bindValue={params.sunFocus}/>
-            </div>
-            <div class="flex gap-2">
-                <span>sunIntensity</span>
-                <NumberInput min={0} max={1000} step={10} bind:bindValue={params.sunIntensity}/>
-            </div>
 
-            <div class="flex gap-2">
-                <span>focusDistance</span>
-                <NumberInput min={0} max={100} step={0.1} bind:bindValue={params.focusDistance}/>
+            <div class="relative">
+                <button class="absolute flex items-center justify-center h-12 w-8 p-1 bg-slate-200/80 rounded-br font-bold" on:click={() => {showOption=!showOption}}>
+                    {#if showOption}
+                        &gt
+                    {:else}
+                        &lt
+                    {/if}
+                </button>
             </div>
-            <div class="flex gap-2">
-                <span>unfocusStrength</span>
-                <NumberInput min={0} max={1000} step={5} bind:bindValue={params.unfocusStrength}/>
-            </div>
-
-            <div class="flex gap-2">
-                <span>mergeStrength</span>
-                <NumberInput min={0} max={2.0} step={0.01} bind:bindValue={params.mergeStrength}/>
-            </div>
-
-
         </div>
     </div>
 </main>
