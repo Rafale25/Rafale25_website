@@ -10,8 +10,8 @@
     } from 'webgpu-utils';
 
     import * as webgpuHelpers from '$lib/webgpuHelpers'
-    // import triangle_shader from './shader.wgsl?raw'
-    import triangle_shader from './shader_raymarching.wgsl?raw'
+    import shader_raytracing from './shader.wgsl?raw'
+    import shader_raymarching from './shader_raymarching.wgsl?raw'
 
     const KEY_FORWARD = 'KeyW'
     const KEY_BACK = 'KeyS'
@@ -32,6 +32,8 @@
     let width: number, height: number
     let resizedFinished = setTimeout(()=>{})
     let frameCount = 1
+
+    let pixelBuffer: GPUBuffer = null;
 
     let camera = new webgpuHelpers.Camera(60.0, width/height, vec3.fromValues(0,0,0), -Math.PI/2, 0)
 
@@ -149,9 +151,10 @@
             -1.0, 1.0, 0.0,
         ])
         const mesh = new webgpuHelpers.Mesh(device, vertices) // only xyzrgb
-        const pipeline = webgpuHelpers.makePipeline(device, triangle_shader, triangle_shader, [mesh.bufferLayout], "triangle-list")
+        const pipeline = webgpuHelpers.makePipeline(device, shader_raymarching, shader_raymarching, [mesh.bufferLayout], "triangle-list")
+        // const pipeline = webgpuHelpers.makePipeline(device, shader_raymarching, shader_raymarching, [mesh.bufferLayout], "triangle-list")
 
-        const defs = makeShaderDataDefinitions(triangle_shader);
+        const defs = makeShaderDataDefinitions(shader_raymarching);
         const uniformValues = makeStructuredView(defs.uniforms.u_params);
 
         const uniformBuffer: GPUBuffer = device.createBuffer({
@@ -159,11 +162,11 @@
             usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
         });
 
-        const pixelBuffer = device.createBuffer({
-            label: 'PixelBuffer',
-            size: canvas.width * canvas.height * 4 * 4,
-            usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC | GPUBufferUsage.COPY_DST,
-        })
+        // pixelBuffer = device.createBuffer({
+        //     label: 'PixelBuffer',
+        //     size: canvas.width * canvas.height * 4 * 4,
+        //     usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC | GPUBufferUsage.COPY_DST,
+        // })
 
         render = () => {
             isPaused = false
@@ -243,6 +246,14 @@
             const devicePixelRatio = window.devicePixelRatio
             canvas.width = canvas.clientWidth * devicePixelRatio
             canvas.height = canvas.clientHeight * devicePixelRatio
+
+            pixelBuffer = device.createBuffer({
+                label: 'PixelBuffer',
+                size: canvas.width * canvas.height * 4 * 4,
+                usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC | GPUBufferUsage.COPY_DST,
+            })
+
+            reset()
         }
 
         resize()
