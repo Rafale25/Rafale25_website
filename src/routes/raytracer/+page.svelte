@@ -151,10 +151,11 @@
             -1.0, 1.0, 0.0,
         ])
         const mesh = new webgpuHelpers.Mesh(device, vertices) // only xyzrgb
-        const pipeline = webgpuHelpers.makePipeline(device, shader_raymarching, shader_raymarching, [mesh.bufferLayout], "triangle-list")
+        const pipeline = webgpuHelpers.makePipeline(device, shader_raytracing, shader_raytracing, [mesh.bufferLayout], "triangle-list")
         // const pipeline = webgpuHelpers.makePipeline(device, shader_raymarching, shader_raymarching, [mesh.bufferLayout], "triangle-list")
 
-        const defs = makeShaderDataDefinitions(shader_raymarching);
+        const defs = makeShaderDataDefinitions(shader_raytracing);
+        // const defs = makeShaderDataDefinitions(shader_raymarching);
         const uniformValues = makeStructuredView(defs.uniforms.u_params);
 
         const uniformBuffer: GPUBuffer = device.createBuffer({

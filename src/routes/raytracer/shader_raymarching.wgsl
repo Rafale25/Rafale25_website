@@ -60,11 +60,31 @@ struct DistInfo {
     material: RayTracingMaterial,
 };
 
+fn fractal(_p: vec3f) -> f32 {
+    var CSize: vec3f = vec3f(1.0, 1.0, 1.3);
+
+	var p: vec3f = _p.xzy;
+	var scale: f32 = 1.;
+	for (var i: u32 = 0; i < 12; i++) {
+		p = 2.0*clamp(p, -CSize, CSize) - p;
+		var r2: f32 = dot(p,p);
+        //float r2 = dot(p,p+sin(p.z*.3)); //Alternate fractal
+		var k: f32 = max((2.)/(r2), .027);
+		p *= k;
+		scale *= k;
+	}
+	var l: f32 = length(p.xy);
+	var rxy: f32 = l - 4.0;
+	var n: f32 = l * p.z;
+	rxy = max(rxy, -(n) / 4.0);
+	return (rxy) / abs(scale);
+}
+
 const PI: f32 = 3.141592653;
 
 const spheres = array(
     Sphere(vec3f(20.0, -10.0, 20.0), 17.0, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 2.0, 0.0, 0, vec3f(1.0))),
-    Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0, 0.2, 1.0), 3.0, 0, 0, vec3f(1.0))),
+    Sphere(vec3f(-2.5, 1.0, 4.2), 0.5, RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(1.0), 7.0, 0, 0, vec3f(1.0))),
 
     Sphere(vec3f(0.0, 21.0, 5.0), 20.0, RayTracingMaterial(vec3f(0.4, 0.8, 0.9), vec3f(0.0), 0.0, 0.0, 0, vec3f(1.0))),
 
@@ -73,6 +93,9 @@ const spheres = array(
 
     Sphere(vec3f(1.5, 0.8, 4.0), 0.9, RayTracingMaterial(vec3f(1, 0, 0), vec3f(0), 0, 1, 0.1, vec3f(1))),
     Sphere(vec3f(-0.8, 1.0, 2.3), 0.3, RayTracingMaterial(vec3f(0, 0.4, 1), vec3f(0), 0, 1, 0.1, vec3f(1))),
+
+    // BIG WHITE BALL
+    // Sphere(vec3f(46.0, 0.0, 0.0), 40.0, RayTracingMaterial(vec3f(1.0), vec3f(1.0), 3, 1, 1, vec3f(1))),
 );
 const sphereCount = 7;
 
@@ -139,8 +162,8 @@ fn GetEnvironmentLight(ray: Ray) -> vec3f {
     return mix(u_params.groundColor, skyGradient, groundToSkyT) + sun * sunMask;
 }
 
-const MAX_DIST = 1000.0;
-const MAX_STEP = 300;
+const MAX_DIST = 200.0;
+const MAX_STEP = 150;
 const SURFACE_DIST = 0.001;
 
 fn opSmoothUnion(d1: f32, d2: f32, k: f32) -> f32 {
@@ -162,6 +185,8 @@ fn Map(p: vec3f) -> DistInfo {
     var dist: f32 = 1000000.0;
     var material: RayTracingMaterial;
 
+    var fractalMaterial: RayTracingMaterial = RayTracingMaterial(vec3f(1.0, 1.0, 1.0), vec3f(0.0), 0.0, 0.0, 0, vec3f(1.0));
+
     for (var i: u32 = 0; i < sphereCount; i++) {
         var sphere: Sphere = spheres[i];
 
@@ -177,6 +202,20 @@ fn Map(p: vec3f) -> DistInfo {
             dist = d;
         }
     }
+
+    var d1 = dist;
+    var d2 = fractal(p - vec3f(0.0, 7.0, 0.0));
+    var k = u_params.mergeStrength;
+    var d = opSmoothUnion(d1, d2, k);
+    var h: f32 = clamp(0.5 + 0.5*(d2-d1)/k, 0.0, 1.0);
+
+    if (d < dist) {
+        dist = d;
+        material = mixMaterial(fractalMaterial, material, h);
+    }
+
+    // dist = min(dist, fractal(p));
+    // dist = fractal(p);
 
     // var dCameraSphere: f32 = sdSphere(p - camera_position, 2.0);
     // dist = opSubtraction(dCameraSphere, dist);
