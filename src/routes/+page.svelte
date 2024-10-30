@@ -13,7 +13,7 @@
     <div class="flex flex-col w-full h-auto bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
         <Navbar/>
 
-        <div class="flex flex-col w-full h-full items-center justify-center p-16 gap-6 backdrop-brightness-[50%]">
+        <div class="flex flex-col w-full h-full items-center justify-center p-16 backdrop-brightness-[50%]">
             <div class="font-bold text-lg text-center text-neutral-100">
                 <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Hey! I'm Rafale25, I like game-design, computer graphics, simulation and optimisation.</span>
             </div>
@@ -89,7 +89,14 @@
             description='Modular interface for sending custom inputs to the game ScrapMechanic through the Injection Mod'
             tags={['ScrapMechanic', 'Python', 'DearPygui', 'Pygame']}
         />
+
+        <div class="flex justify-center items-center relative">
+            <a class="absolute text-lg text-opacity-0 text-green-500" href="boids">
+                Boids2D
+            </a>
+        </div>
     </div>
+
 
     <Footer/>
 </main>
