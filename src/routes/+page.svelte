@@ -2,8 +2,6 @@
     import Navbar from '$lib/components/navbar.svelte'
     import Project from '$lib/components/project.svelte'
     import Footer from '$lib/components/footer.svelte'
-
-
 </script>
 
 <!--
@@ -20,7 +18,7 @@
                 <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Hey! I'm Rafale25, I like game-design, computer graphics, simulation and optimisation.</span>
             </div>
             <!-- <div class="font-bold text-center text-xl text-yellow-400">
-                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Currently looking for a 6 months internship!</span>
+                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Yellow text</span>
             </div> -->
         </div>
     </div >
@@ -28,6 +26,20 @@
     <div class="w-full h-2 backdrop-brightness-[70%]"></div>
 
     <div class="flex flex-col w-full items-center my-16 px-5 gap-8">
+        <Project
+            name={'Pathtracer'}
+            link={'raytracer'}
+            img={'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/pathtraced_raymarching_4.png'}
+            description={'Pathtracer in browser with raytracing and raymarching implementation.'}
+            tags={['js', 'WebGPU', 'wgsl']}
+        />
+        <Project
+            name={'Minecraft clone'}
+            link={'https://github.com/Rafale25/minecraft-clone'}
+            img={'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/Screenshot%20from%202024-06-02%2005-42-20.png'}
+            description={'Minecraft clone using modern OpenGL with multiplayer support.'}
+            tags={['C++', 'OpenGL']}
+        />
         <Project
             name={'Knossos'}
             link={'https://primarter.itch.io/knossos'}
