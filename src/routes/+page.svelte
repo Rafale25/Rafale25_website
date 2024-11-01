@@ -13,9 +13,11 @@
     <div class="flex flex-col w-full h-auto bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
         <Navbar/>
 
-        <div class="flex flex-col w-full h-full items-center justify-center p-16 backdrop-brightness-[50%]">
-            <div class="font-bold text-lg text-center text-neutral-100">
-                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Hey! I'm Rafale25, I like game-design, computer graphics, simulation and optimisation.</span>
+        <div class="flex flex-col w-full h-full items-center justify-center px-8 py-16 backdrop-brightness-[50%]">
+            <div class="font-bold text-lg text-center text-neutral-100 sm:w-[60ch]">
+                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">
+                    Hey! I'm Rafale25, I like game-design, computer graphics, simulation and optimisation.
+                </span>
             </div>
             <!-- <div class="font-bold text-center text-xl text-yellow-400">
                 <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Yellow text</span>
@@ -25,7 +27,8 @@
 
     <div class="w-full h-2 backdrop-brightness-[70%]"></div>
 
-    <div class="flex flex-col w-full items-center my-16 px-5 gap-8">
+    <div class="flex flex-wrap w-full justify-center my-16 px-5 gap-8">
+    <!-- <div class="grid grid-cols-2 w-full items-center my-16 px-5 gap-8"> -->
         <Project
             name={'Pathtracer'}
             link={'raytracer'}

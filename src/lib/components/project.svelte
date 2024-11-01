@@ -20,14 +20,14 @@
     }
 </script>
 
-<div class="sm:flex sm:h-64 sm:w-4/5 group w-full rounded-xl overflow-hidden" >
-    <div class="sm:min-w-[16rem] min-w-[12rem] sm:w-3/4 overflow-hidden">
-        <a href={link}>
+<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 2xl:w-[450px] group rounded-xl overflow-hidden">
+    <div class="w-full overflow-hidden">
+        <a href={link} class="w-full">
             <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">
         </a>
     </div>
 
-    <div class="flex flex-col w-full min-h-full text-base">
+    <div class="flex flex-col w-full text-base">
         <a href={link} class="font-bold text-xl px-4 py-2 bg-raflou-border group-hover:saturate-200">
             <span class="text-raflou-green-dark">{name}</span>
         </a>
