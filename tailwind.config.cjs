@@ -10,6 +10,9 @@ module.exports = {
                 'raflou-shadow': '#191919',
                 'raflou-background-primary': '#252830',
                 'raflou-background-secondary': '#202020'
+            },
+            screens: {
+                '3xl': '3000px'
             }
         },
     },

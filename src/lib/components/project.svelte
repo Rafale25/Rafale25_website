@@ -20,7 +20,7 @@
     }
 </script>
 
-<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 2xl:w-[450px] group rounded-xl overflow-hidden">
+<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden">
     <div class="w-full overflow-hidden">
         <a href={link} class="w-full">
             <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">
