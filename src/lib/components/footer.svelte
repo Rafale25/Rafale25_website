@@ -7,7 +7,7 @@
 </script>
 
 
-<footer class="flex justify-center items-center gap-x-6 p-10 bg-raflou-background-secondary">
+<footer class="mt-auto flex justify-center items-center gap-x-6 p-10 bg-raflou-background-secondary">
     <a href="https://github.com/Rafale25">
         <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
     </a>

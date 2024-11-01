@@ -9,8 +9,8 @@
     - page for each project
 -->
 
-<main class="overflow-hidden">
-    <div class="flex flex-col w-full h-auto bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
+<main class="flex flex-col overflow-hidden min-h-screen">
+    <div class="flex flex-col w-full h-full bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
         <Navbar/>
 
         <div class="flex flex-col w-full h-full items-center justify-center px-8 py-16 backdrop-brightness-[50%]">
@@ -28,7 +28,6 @@
     <div class="w-full h-2 backdrop-brightness-[70%]"></div>
 
     <div class="flex flex-wrap w-full justify-center my-16 px-5 gap-8">
-    <!-- <div class="grid grid-cols-2 w-full items-center my-16 px-5 gap-8"> -->
         <Project
             name={'Pathtracer'}
             link={'raytracer'}
@@ -99,7 +98,6 @@
             </a>
         </div>
     </div>
-
 
     <Footer/>
 </main>
