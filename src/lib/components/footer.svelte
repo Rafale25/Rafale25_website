@@ -6,8 +6,7 @@
     }
 </script>
 
-
-<footer class="mt-auto flex justify-center items-center gap-x-6 p-10 bg-raflou-background-secondary">
+<footer class="mt-auto flex justify-center items-center gap-x-6 p-10 bg-primary3">
     <a href="https://github.com/Rafale25">
         <img src="github-icon.svg" alt="Github Icon" class="w-12"/>
     </a>
@@ -15,10 +14,9 @@
         <img src="youtube-icon.svg" alt="Youtube Icon" class="w-12"/>
     </a>
 
-    <!-- svelte-ignore a11y-invalid-attribute -->
-    <a href="" on:click={clipboard}>
+    <button on:click={clipboard}>
         <img src="discord-icon.svg" alt="Discord Icon" class="w-12"/>
-    </a>
+    </button>
 
     <a href="mailto:rafale25.dev@gmail.com" aria-label="email">
         <img src="mail.svg" alt="Youtube Icon" class="w-12"/>

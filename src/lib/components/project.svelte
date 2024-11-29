@@ -20,26 +20,26 @@
     }
 </script>
 
-<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden">
+<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden bg-primary3">
     <div class="w-full overflow-hidden">
         <a href={link} class="w-full">
             <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">
         </a>
     </div>
 
-    <div class="flex flex-col w-full text-base">
-        <a href={link} class="font-bold text-xl px-4 py-2 bg-raflou-border group-hover:saturate-200">
-            <span class="text-raflou-green-dark">{name}</span>
+    <div class="flex flex-col w-full p-4">
+        <a href={link} class="font-bold text-xl group-hover:saturate-200">
+            <span class="text-primary1">{name}</span>
         </a>
 
-        <div class="h-full p-4 text-gray-100 bg-neutral-800">
+        <div class="h-full py-3 text-primary2 text-base leading-5">
             <span>{description}</span>
         </div>
 
-        <div class="flex flex-wrap gap-x-2 px-4 py-1 bg-raflou-border">
+        <div class="flex flex-wrap gap-x-2 pt-4">
             {#each tags as tag}
                 <a href={allTags[tag]}>
-                    <span class="px-2 italic rounded hover:bg-green-500 bg-raflou-green-light text-black font-bold">{tag}</span>
+                    <span class="py-1 px-3 italic text-base rounded-lg text-primary1 border border-primaryBorder bg-primary3 {allTags[tag] ? 'hover:invert' : ''}">{tag}</span>
                 </a>
             {/each}
         </div>

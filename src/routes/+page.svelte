@@ -2,6 +2,8 @@
     import Navbar from '$lib/components/navbar.svelte'
     import Project from '$lib/components/project.svelte'
     import Footer from '$lib/components/footer.svelte'
+
+    let customHue = 234
 </script>
 
 <!--
@@ -9,7 +11,10 @@
     - page for each project
 -->
 
-<main class="flex flex-col overflow-hidden min-h-screen">
+<main class="flex flex-col overflow-hidden min-h-screen" style="--customHue: {customHue}">
+    <!-- <input type="range" bind:value={customHue} min="0" max="360">
+    <span class="text-white">{customHue}</span> -->
+
     <div class="flex flex-col w-full h-full bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
         <Navbar/>
 
@@ -105,8 +110,10 @@
 <style>
     main {
         font-family: monospace;
-        background-repeat: repeat;
-        background: center no-repeat center;
-        background-image: url("/tri.png");
+        background-color: hsl(var(--customHue), 76%, 3%);
+
+        /* background-repeat: repeat; */
+        /* background: center no-repeat center; */
+        /* background-image: url("/tri.png"); */
     }
 </style>
