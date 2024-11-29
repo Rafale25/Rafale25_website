@@ -106,14 +106,3 @@
 
     <Footer/>
 </main>
-
-<style>
-    main {
-        font-family: monospace;
-        background-color: hsl(var(--customHue), 76%, 3%);
-
-        /* background-repeat: repeat; */
-        /* background: center no-repeat center; */
-        /* background-image: url("/tri.png"); */
-    }
-</style>

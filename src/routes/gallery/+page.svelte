@@ -118,12 +118,3 @@
 
     <Footer/>
 </main>
-
-<style>
-    main {
-        font-family: monospace;
-        background-repeat: repeat;
-        background: center no-repeat center;
-        background-image: url("/tri.png");
-    }
-</style>
