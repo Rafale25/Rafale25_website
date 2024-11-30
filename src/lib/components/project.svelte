@@ -20,20 +20,20 @@
     }
 </script>
 
-<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden bg-primary3">
+<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden">
     <div class="w-full overflow-hidden">
         <a href={link} class="w-full">
             <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">
         </a>
     </div>
 
-    <div class="flex flex-col w-full p-4">
+    <div class="flex flex-col w-full p-4 bg-gradient-to-br from-primary3light to-primary3dark">
         <a href={link} class="font-bold text-xl group-hover:saturate-200">
             <span class="text-primary1">{name}</span>
         </a>
 
-        <div class="h-full py-3 text-primary2 text-base leading-5">
-            <span>{description}</span>
+        <div class="h-full py-3 text-primary2 text-base leading-5 drop-shadow-lg">
+            <span class="">{description}</span>
         </div>
 
         <div class="flex flex-wrap gap-x-2 pt-4">
