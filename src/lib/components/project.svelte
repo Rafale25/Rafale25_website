@@ -20,8 +20,8 @@
     }
 </script>
 
-<div class="flex flex-col h-min md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden">
-    <div class="w-full overflow-hidden">
+<div class="flex flex-col h-full md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden">
+    <div class="w-full aspect-[10/6] overflow-hidden">
         <a href={link} class="w-full">
             <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">
         </a>
@@ -36,7 +36,7 @@
             <span class="">{description}</span>
         </div>
 
-        <div class="flex flex-wrap gap-x-2 pt-4">
+        <div class="flex flex-wrap gap-2 pt-4">
             {#each tags as tag}
                 <a href={allTags[tag]}>
                     <span class="py-1 px-3 italic text-base rounded-lg text-primary1 border border-primaryBorder bg-primary3 duration-150 {allTags[tag] ? 'hover:invert' : ''}">{tag}</span>

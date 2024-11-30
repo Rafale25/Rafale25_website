@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+*::-webkit-scrollbar {
+    width: 8px;
+}
+*::-webkit-scrollbar-thumb {
+    background: hsl(0, 0%, 10%);
+    border-radius: 100vh;
+}
+*::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: transparent;
+}
+
 main {
     font-family: monospace;
     background-color: hsl(0, 0%, 2%);
