@@ -34,66 +34,66 @@
 
     <div class="flex flex-wrap w-full justify-center my-16 px-5 gap-8">
         <Project
-            name={'Pathtracer'}
-            link={'raytracer'}
-            img={'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/pathtraced_raymarching_4.png'}
-            description={'Pathtracer in browser with raytracing and raymarching implementation.'}
+            name='Pathtracer'
+            link='raytracer'
+            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/pathtraced_raymarching_4.png'
+            description='Pathtracer in browser with raytracing and raymarching implementation.'
             tags={['js', 'WebGPU', 'wgsl']}
         />
         <Project
-            name={'Minecraft clone'}
-            link={'https://github.com/Rafale25/minecraft-clone'}
-            img={'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/Screenshot%20from%202024-06-02%2005-42-20.png'}
-            description={'Minecraft clone using modern OpenGL with multiplayer support.'}
+            name='Minecraft clone'
+            link='https://github.com/Rafale25/minecraft-clone'
+            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/Screenshot%20from%202024-06-02%2005-42-20.png'
+            description='Minecraft clone using modern OpenGL with multiplayer support.'
             tags={['C++', 'OpenGL']}
         />
         <Project
-            name={'Knossos'}
-            link={'https://primarter.itch.io/knossos'}
-            img={'https://github.com/Primarter/Knossos/raw/dev/img/ScreenshotStartingZone.png'}
-            description={'Game Design master\'s game that was made in duo over a period of 3 months in Unity'}
+            name='Knossos'
+            link='https://primarter.itch.io/knossos'
+            img='https://github.com/Primarter/Knossos/raw/dev/img/ScreenshotStartingZone.png'
+            description={'Game Design master\'s game that was made in duo over a period of 3 months in Unity.'}
             tags={['Unity']}
         />
         <Project
-            name={'Run Hunt Repeat'}
-            link={'https://rafale25.itch.io/run-hunt-repeat'}
-            img={'https://img.itch.zone/aW1hZ2UvMTczMTQ2OC8xMDE5MzU2NC5wbmc=/original/Uwgfw9.png'}
-            description={'Game I made for the Ludum Dare 51'}
+            name='Run Hunt Repeat'
+            link='https://rafale25.itch.io/run-hunt-repeat'
+            img='https://img.itch.zone/aW1hZ2UvMTczMTQ2OC8xMDE5MzU2NC5wbmc=/original/Uwgfw9.png'
+            description='Game I made for the Ludum Dare 51.'
             tags={['Python', 'Arcade', 'Ludum Dare']}
         />
         <Project
-            name={'Light Is Death'}
-            link={'https://rafale25.itch.io/light-is-death'}
-            img={'./light-is-death.png'}
-            description={'Game I made for the Global Game Jam 2022'}
+            name='Light Is Death'
+            link='https://rafale25.itch.io/light-is-death'
+            img='./light-is-death.png'
+            description='Game I made for the Global Game Jam 2022.'
             tags={['Python', 'Arcade', 'GlobalGameJam']}
         />
         <Project
             name='Vine mesh generation'
             link='https://github.com/Rafale25/Vine_mesh_generation'
             img='./vine.png'
-            description='Vine mesh generation using geometry shader'
+            description='Vine mesh generation using geometry shader.'
             tags={['OpenGL', 'GLSL', 'Geometry Shaders']}
         />
         <Project
             name='Slime'
             link='https://github.com/Rafale25/Slime_simulation'
             img='./slime.png'
-            description='Blob simulation using compute shaders'
+            description='Blob simulation using compute shaders.'
             tags={['OpenGL', 'GLSL', 'Compute Shaders']}
         />
         <Project
             name='Boids'
             link='https://github.com/Rafale25/Boids'
             img='./boids.png'
-            description='Large flocking simulation using compute shaders'
+            description='Large flocking simulation using compute shaders.'
             tags={['OpenGL', 'GLSL', 'Compute Shaders']}
         />
         <Project
             name='ScrapMechanic injection interface'
             link='https://github.com/Rafale25/python_injection_interface_SM'
             img='./sm_interface.png'
-            description='Modular interface for sending custom inputs to the game ScrapMechanic through the Injection Mod'
+            description='Modular interface for sending custom inputs to the game ScrapMechanic through the Injection Mod.'
             tags={['ScrapMechanic', 'Python', 'DearPygui', 'Pygame']}
         />
 
