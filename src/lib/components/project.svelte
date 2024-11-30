@@ -32,14 +32,14 @@
             <span class="text-primary1">{name}</span>
         </a>
 
-        <div class="h-full py-3 text-primary2 text-base leading-5 drop-shadow-lg">
+        <div class="h-full py-3 text-primary2 text-base leading-5">
             <span class="">{description}</span>
         </div>
 
         <div class="flex flex-wrap gap-x-2 pt-4">
             {#each tags as tag}
                 <a href={allTags[tag]}>
-                    <span class="py-1 px-3 italic text-base rounded-lg text-primary1 border border-primaryBorder bg-primary3 {allTags[tag] ? 'hover:invert' : ''}">{tag}</span>
+                    <span class="py-1 px-3 italic text-base rounded-lg text-primary1 border border-primaryBorder bg-primary3 duration-150 {allTags[tag] ? 'hover:invert' : ''}">{tag}</span>
                 </a>
             {/each}
         </div>
