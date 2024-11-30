@@ -20,5 +20,10 @@
 
     <a href="mailto:rafale25.dev@gmail.com" aria-label="email">
         <img src="mail.svg" alt="Youtube Icon" class="w-12"/>
+
+    </a>
+
+    <a class="max-sm:hidden absolute left-10 text-lg text-transparent" href="boids">
+        Boids2D
     </a>
 </footer>

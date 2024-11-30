@@ -97,11 +97,6 @@
             tags={['ScrapMechanic', 'Python', 'DearPygui', 'Pygame']}
         />
 
-        <div class="flex justify-center items-center relative">
-            <a class="absolute text-lg text-opacity-0 text-green-500" href="boids">
-                Boids2D
-            </a>
-        </div>
     </div>
 
     <Footer/>
