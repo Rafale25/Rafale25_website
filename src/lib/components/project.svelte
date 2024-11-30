@@ -27,8 +27,8 @@
         </a>
     </div>
 
-    <div class="flex flex-col w-full p-4 bg-gradient-to-br from-primary3light to-primary3dark">
-        <a href={link} class="font-bold text-xl group-hover:saturate-200">
+    <div class="flex flex-col w-full p-4 bg-gradient-to-br from-primary3light to-primary3dark group-hover:brightness-125 transition-all">
+        <a href={link} class="font-bold text-xl">
             <span class="text-primary1">{name}</span>
         </a>
 
