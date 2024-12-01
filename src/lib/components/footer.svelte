@@ -23,7 +23,8 @@
 
     </a>
 
-    <a class="max-sm:hidden absolute left-10 text-lg text-transparent" href="boids">
-        Boids2D
-    </a>
+    <div class="max-lg:hidden absolute left-10 text-lg text-transparent flex gap-8">
+        <a href="boids">Boids2D</a>
+        <a href="physic_input_field">FunnyInputField</a>
+    </div>
 </footer>
