@@ -20,7 +20,6 @@
 
     <a href="mailto:rafale25.dev@gmail.com" aria-label="email">
         <img src="mail.svg" alt="Youtube Icon" class="w-12"/>
-
     </a>
 
     <div class="max-lg:hidden absolute left-10 text-lg text-transparent flex gap-8">
