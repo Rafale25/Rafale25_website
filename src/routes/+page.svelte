@@ -15,7 +15,7 @@
     <!-- <input type="range" bind:value={customHue} min="0" max="360">
     <span class="text-white">{customHue}</span> -->
 
-    <div class="flex flex-col w-full h-full bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
+    <div class="flex flex-col w-full h-full bg-no-repeat bg-cover bg-center bg-[url('boids-blurred.png')]">
         <Navbar/>
 
         <div class="flex flex-col w-full h-full items-center justify-center px-8 py-16 backdrop-brightness-[50%]">
@@ -36,21 +36,21 @@
         <Project
             name='Pathtracer'
             link='raytracer'
-            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/pathtraced_raymarching_4.png'
+            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/pathtraced_raymarching_4.webp'
             description='Pathtracer in browser with raytracing and raymarching implementation.'
             tags={['js', 'WebGPU', 'wgsl']}
         />
         <Project
             name='Minecraft clone'
             link='https://github.com/Rafale25/minecraft-clone'
-            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/Screenshot%20from%202024-06-02%2005-42-20.png'
+            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraft_01.webp'
             description='Minecraft clone using modern OpenGL with multiplayer support.'
             tags={['C++', 'OpenGL']}
         />
         <Project
             name='Knossos'
             link='https://primarter.itch.io/knossos'
-            img='https://github.com/Primarter/Knossos/raw/dev/img/ScreenshotStartingZone.png'
+            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/knossos.webp'
             description={'Game Design master\'s game that was made in duo over a period of 3 months in Unity.'}
             tags={['Unity']}
         />
