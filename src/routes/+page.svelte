@@ -15,7 +15,7 @@
     <!-- <input type="range" bind:value={customHue} min="0" max="360">
     <span class="text-white">{customHue}</span> -->
 
-    <div class="flex flex-col w-full h-full bg-no-repeat bg-cover bg-center bg-[url('./boids-blurred.png')]">
+    <div class="flex flex-col w-full h-full bg-no-repeat bg-cover bg-center bg-[url('/boids-blurred.png')]">
         <Navbar/>
 
         <div class="flex flex-col w-full h-full items-center justify-center px-8 py-16 backdrop-brightness-[50%]">
