@@ -6,7 +6,7 @@
 
 <nav class="flex w-full justify-between items-center py-4 backdrop-brightness-[10%]">
     <div class="flex items-center gap-x-4 px-6">
-        <img class="min-w-12 max-w-12 rounded-lg" src="logo.jpg" alt="ProfilePicture"/>
+        <img class="min-w-12 max-w-12 rounded-lg aspect-square" src="logo.jpg" alt="ProfilePicture"/>
         <div class="sm:block hidden text-xl">
             <span class="text-white">Rafale25</span>
         </div>
