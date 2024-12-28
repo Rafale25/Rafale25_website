@@ -15,7 +15,7 @@
     let vertexBuffer, instanceBuffer
 
     // Config //
-    let scale = 0.5
+    let scale = 1.0
     let resolution = 4
     let seed = 0;
     let voxelWidth = 512, voxelHeight = 256
@@ -58,8 +58,8 @@
         );
 
         void main() {
-            // outColor = vec4(materials[int(f_material)], 1.0);
-            outColor = vec4(vec3(f_material * 0.5 + 0.5), 1.0);
+            outColor = vec4(materials[int(f_material)], 1.0);
+            //outColor = vec4(vec3(f_material * 0.5 + 0.5), 1.0);
         }
     `;
 
@@ -303,5 +303,9 @@
     input[type='number']::-webkit-inner-spin-button,
     input[type='number']::-webkit-outer-spin-button {
         opacity: 1;
+    }
+
+    canvas {
+        image-rendering: pixelated;
     }
 </style>

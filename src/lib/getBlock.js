@@ -108,13 +108,6 @@ export function getBlock(x, y, z) {
 */
 
 export function getBlock(x, y, z) {
-
-    const density = octaveSimplex3((x+2345) * 0.001, y * 0.0015, z * 0.001, 2, 1.7)
-    const value = octavePerlin3(x * 0.01, y * 0.01, z * 0.01, 3, 1.7)
-    const threshold = density * 0.5
-    if (value > -threshold && value < threshold) return 1.0
-    return 0.0
-
     const baseHeight = 0
     const dirtDepth = 3
 
