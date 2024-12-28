@@ -24,6 +24,6 @@
 
     <div class="max-lg:hidden absolute left-10 text-lg text-transparent flex gap-8">
         <a href="boids">Boids2D</a>
-        <a href="physic_input_field">FunnyInputField</a>
+        <a href="physic-input-field">FunnyInputField</a>
     </div>
 </footer>
