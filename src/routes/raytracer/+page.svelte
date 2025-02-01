@@ -35,7 +35,7 @@
 
     let pixelBuffer: GPUBuffer = null;
 
-    let camera = new webgpuHelpers.Camera(60.0, width/height, vec3.fromValues(0,0,0), -Math.PI/2, 0)
+    let camera = new webgpuHelpers.Camera(60.0, width/height, vec3.fromValues(0,0,0.5), -Math.PI/2, 0)
 
     let render: Function = ()=>{}
     let pause: Function = ()=>{}
@@ -44,6 +44,8 @@
     let showOption = true
     let isPaused = true
     let updatedParams = true
+
+    let selectedRenderingMode = "0"
 
     const params = {
         numRaysPerPixel: 1,
@@ -84,7 +86,7 @@
     }
 
     $: (sunAngle, sunPitch), updateSunLightDirection()
-    $: params.useSkybox, params.useSkybox = +params.useSkybox;
+    $: selectedRenderingMode, params.useSkybox, params.useSkybox = +params.useSkybox;
     $: params, reset()
 
     function onMouseMove(e) {
@@ -151,15 +153,20 @@
             -1.0, 1.0, 0.0,
         ])
         const mesh = new webgpuHelpers.Mesh(device, vertices) // only xyzrgb
-        const pipeline = webgpuHelpers.makePipeline(device, shader_raytracing, shader_raytracing, [mesh.bufferLayout], "triangle-list")
-        // const pipeline = webgpuHelpers.makePipeline(device, shader_raymarching, shader_raymarching, [mesh.bufferLayout], "triangle-list")
+        const pipeline1 = webgpuHelpers.makePipeline(device, shader_raytracing, shader_raytracing, [mesh.bufferLayout], "triangle-list")
+        const pipeline2 = webgpuHelpers.makePipeline(device, shader_raymarching, shader_raymarching, [mesh.bufferLayout], "triangle-list")
 
-        const defs = makeShaderDataDefinitions(shader_raytracing);
-        // const defs = makeShaderDataDefinitions(shader_raymarching);
-        const uniformValues = makeStructuredView(defs.uniforms.u_params);
+        const defs1 = makeShaderDataDefinitions(shader_raytracing);
+        const defs2 = makeShaderDataDefinitions(shader_raymarching);
+        const uniformValues1 = makeStructuredView(defs1.uniforms.u_params);
+        const uniformValues2 = makeStructuredView(defs2.uniforms.u_params);
 
-        const uniformBuffer: GPUBuffer = device.createBuffer({
-            size: uniformValues.arrayBuffer.byteLength,
+        const uniformBuffer1: GPUBuffer = device.createBuffer({
+            size: uniformValues1.arrayBuffer.byteLength,
+            usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+        });
+        const uniformBuffer2: GPUBuffer = device.createBuffer({
+            size: uniformValues2.arrayBuffer.byteLength,
             usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
         });
 
@@ -190,6 +197,10 @@
                 requestAnimationFrame(frame)
                 return
             };
+
+            const pipeline = selectedRenderingMode === "0" ? pipeline1 : pipeline2
+            const uniformValues = selectedRenderingMode === "0" ? uniformValues1 : uniformValues2
+            const uniformBuffer = selectedRenderingMode === "0" ? uniformBuffer1 : uniformBuffer2
 
             const commandEncoder: GPUCommandEncoder = device.createCommandEncoder()
             const textureView: GPUTextureView = context.getCurrentTexture().createView()
@@ -298,6 +309,17 @@
                     <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={render}>Render</button>
                     <button class="px-2 border-2 hover:bg-blue-300 active:bg-blue-400" on:click={pause}>Pause</button>
                 </div>
+
+                <fieldset>
+                    <div>
+                        <input type="radio" name="mode" id="mode1" value="0" bind:group={selectedRenderingMode} checked/>
+                        <label for="mode1">Raytracer</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="mode" id="mode2" value="1" bind:group={selectedRenderingMode} />
+                      <label for="mode2">Raymarcher</label>
+                    </div>
+                </fieldset>
 
                 <span>frame: {frameCount-1}</span>
                 <span>samples: {frameCount*params.numRaysPerPixel}</span>
