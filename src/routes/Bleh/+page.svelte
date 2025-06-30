@@ -66,4 +66,9 @@
     height: 480px;
   }
 
+
+:global(body) {
+    background-color: hsl(0, 0%, 2%);
+}
+
 </style>
