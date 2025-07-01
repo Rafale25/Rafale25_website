@@ -64,6 +64,7 @@
   canvas {
     width: 960px;
     height: 480px;
+    user-select: none;
   }
 
 
