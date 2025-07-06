@@ -59,6 +59,7 @@
   #unity-container {
     background: #000;
     position: relative;
+    user-select: none;
   }
 
   canvas {
