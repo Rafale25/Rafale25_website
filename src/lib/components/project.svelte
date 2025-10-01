@@ -17,10 +17,13 @@
         'GlobalGameJam': 'https://globalgamejam.org',
         'Ludum Dare': 'https://ldjam.com/',
         'Unity': 'https://unity.com/',
+        'MicroJam': 'https://itch.io/jam/micro-jam-042'
     }
+
 </script>
 
-<div class="flex flex-col h-full md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden">
+<!-- <div class="flex flex-col h-full md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden"> -->
+<div class="flex flex-col h-full group rounded-xl overflow-hidden">
     <div class="w-full aspect-[10/6] overflow-hidden">
         <a href={link} class="w-full">
             <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">

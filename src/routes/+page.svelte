@@ -4,6 +4,103 @@
     import Footer from '$lib/components/footer.svelte'
 
     let customHue = 234
+
+    const Type = {
+        All: 0,
+        Graphic: 1,
+        Game: 2
+    }
+
+    const projects = [
+        {
+            name:'Bleh',
+            link:'https://rafale25.itch.io/bleh',
+            img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/thumbnail-Bleh.webp',
+            description:'Game made in 48h for the Micro Jam #042 : Frogs',
+            tags:['Unity', 'C#', 'MicroJam'],
+            type: Type.Game,
+        },
+        {
+            name:'Pathtracer',
+            link:'raytracer',
+            img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/pathtraced_raymarching_4.webp',
+            description:'Pathtracer in browser with raytracing and raymarching implementation.',
+            tags:['js', 'WebGPU', 'wgsl'],
+            type: Type.Graphic,
+        },
+        {
+            name:'Minecraft clone',
+            link:'https://github.com/Rafale25/minecraft-clone',
+            img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraft_01.webp',
+            description:'Minecraft clone using modern OpenGL with multiplayer support.',
+            tags:['C++', 'OpenGL'],
+            type: Type.Graphic,
+        },
+        {
+            name:'Knossos',
+            link:'https://primarter.itch.io/knossos',
+            img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/knossos.webp',
+            description:'Game Design master\'s game that was made in duo over a period of 3 months in Unity.',
+            tags:['Unity'],
+            type: Type.Game,
+        },
+        {
+            name:'Run Hunt Repeat',
+            link:'https://rafale25.itch.io/run-hunt-repeat',
+            img:'https://img.itch.zone/aW1hZ2UvMTczMTQ2OC8xMDE5MzU2NC5wbmc=/original/Uwgfw9.png',
+            description:'Game I made for the Ludum Dare 51.',
+            tags:['Python', 'Arcade', 'Ludum Dare'],
+            type: Type.Game,
+        },
+        {
+            name:'Light Is Death',
+            link:'https://rafale25.itch.io/light-is-death',
+            img:'./light-is-death.png',
+            description:'Game I made for the Global Game Jam 2022.',
+            tags:['Python', 'Arcade', 'GlobalGameJam'],
+            type: Type.Game,
+        },
+        {
+            name:'Vine mesh generation',
+            link:'https://github.com/Rafale25/Vine_mesh_generation',
+            img:'./vine.png',
+            description:'Vine mesh generation using geometry shader.',
+            tags:['OpenGL', 'GLSL', 'Geometry Shaders'],
+            type: Type.Graphic,
+        },
+        {
+            name:'Slime',
+            link:'https://github.com/Rafale25/Slime_simulation',
+            img:'./slime.png',
+            description:'Blob simulation using compute shaders.',
+            tags:['OpenGL', 'GLSL', 'Compute Shaders'],
+            type: Type.Graphic,
+        },
+        {
+            name:'Boids',
+            link:'https://github.com/Rafale25/Boids',
+            img:'./boids.png',
+            description:'Large flocking simulation using compute shaders.',
+            tags:['OpenGL', 'GLSL', 'Compute Shaders'],
+            type: Type.Graphic,
+        },
+        {
+            name:'ScrapMechanic injection interface',
+            link:'https://github.com/Rafale25/python_injection_interface_SM',
+            img:'./sm_interface.png',
+            description:'Modular interface for sending custom inputs to the game ScrapMechanic through the Injection Mod.',
+            tags:['ScrapMechanic', 'Python', 'DearPygui', 'Pygame'],
+            type: Type.Graphic,
+        }
+    ]
+
+    let filterType = $state(Type.All)
+
+    let filteredProjects = $derived.by(() => {
+        if (filterType == Type.All) return projects
+        return projects.filter((project) => project.type == filterType)
+    })
+
 </script>
 
 <!--
@@ -30,73 +127,40 @@
         </div>
     </div >
 
-    <div class="w-full h-2 backdrop-brightness-[70%]"></div>
+    <!-- <div class="w-full h-2 backdrop-brightness-[70%]"></div> -->
 
-    <div class="flex flex-wrap w-full justify-center my-16 px-5 gap-8">
-        <Project
-            name='Pathtracer'
-            link='raytracer'
-            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/pathtraced_raymarching_4.webp'
-            description='Pathtracer in browser with raytracing and raymarching implementation.'
-            tags={['js', 'WebGPU', 'wgsl']}
-        />
-        <Project
-            name='Minecraft clone'
-            link='https://github.com/Rafale25/minecraft-clone'
-            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraft_01.webp'
-            description='Minecraft clone using modern OpenGL with multiplayer support.'
-            tags={['C++', 'OpenGL']}
-        />
-        <Project
-            name='Knossos'
-            link='https://primarter.itch.io/knossos'
-            img='https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/knossos.webp'
-            description={'Game Design master\'s game that was made in duo over a period of 3 months in Unity.'}
-            tags={['Unity']}
-        />
-        <Project
-            name='Run Hunt Repeat'
-            link='https://rafale25.itch.io/run-hunt-repeat'
-            img='https://img.itch.zone/aW1hZ2UvMTczMTQ2OC8xMDE5MzU2NC5wbmc=/original/Uwgfw9.png'
-            description='Game I made for the Ludum Dare 51.'
-            tags={['Python', 'Arcade', 'Ludum Dare']}
-        />
-        <Project
-            name='Light Is Death'
-            link='https://rafale25.itch.io/light-is-death'
-            img='./light-is-death.png'
-            description='Game I made for the Global Game Jam 2022.'
-            tags={['Python', 'Arcade', 'GlobalGameJam']}
-        />
-        <Project
-            name='Vine mesh generation'
-            link='https://github.com/Rafale25/Vine_mesh_generation'
-            img='./vine.png'
-            description='Vine mesh generation using geometry shader.'
-            tags={['OpenGL', 'GLSL', 'Geometry Shaders']}
-        />
-        <Project
-            name='Slime'
-            link='https://github.com/Rafale25/Slime_simulation'
-            img='./slime.png'
-            description='Blob simulation using compute shaders.'
-            tags={['OpenGL', 'GLSL', 'Compute Shaders']}
-        />
-        <Project
-            name='Boids'
-            link='https://github.com/Rafale25/Boids'
-            img='./boids.png'
-            description='Large flocking simulation using compute shaders.'
-            tags={['OpenGL', 'GLSL', 'Compute Shaders']}
-        />
-        <Project
-            name='ScrapMechanic injection interface'
-            link='https://github.com/Rafale25/python_injection_interface_SM'
-            img='./sm_interface.png'
-            description='Modular interface for sending custom inputs to the game ScrapMechanic through the Injection Mod.'
-            tags={['ScrapMechanic', 'Python', 'DearPygui', 'Pygame']}
-        />
+    <div class="flex justify-center">
+        <div class="flex flex-row justify-center font-bold gap-1 rounded-lg px-4 py-2 my-6 bg-primary3dark">
+            <div class="flex">
+                <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.All && "hover:bg-primary3lighter"} {filterType==Type.All && "bg-primary3light"}" onclick={() => filterType=Type.All}>
+                    All
+                </button>
+            </div>
+            <div class="flex">
+                <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.Graphic && "hover:bg-primary3lighter"} {filterType==Type.Graphic && "bg-primary3light"}" onclick={() => filterType=Type.Graphic}>
+                    Graphics
+                </button>
+            </div>
+            <div class="flex">
+                <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.Game && "hover:bg-primary3lighter"} {filterType==Type.Game && "bg-primary3light"}" onclick={() => filterType=Type.Game}>
+                    Games
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <div class="flex flex-col w-full items-center">
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-8 w-11/12 sm:w-10/12 mb-6">
+            {#each filteredProjects as {name, link, img, description, tags}}
+                <Project
+                    name={name}
+                    link={link}
+                    img={img}
+                    description={description}
+                    tags={tags}
+                />
+            {/each}
+        </div>
     </div>
 
     <Footer/>

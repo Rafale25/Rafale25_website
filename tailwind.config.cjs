@@ -7,6 +7,7 @@ module.exports = {
                 'primary1': 'hsl(var(--customHue), 20%, 85%)',
                 'primary2': 'hsl(var(--customHue), 20%, 70%)',
                 'primary3': 'hsl(var(--customHue), 20%, 10%)',
+                'primary3lighter': 'hsl(var(--customHue), 20%, 20%)',
                 'primary3light': 'hsl(var(--customHue), 20%, 14%)',
                 'primary3dark': 'hsl(var(--customHue), 20%, 5%)',
                 'primaryBorder': 'hsl(var(--customHue), 20%, 25%)',
