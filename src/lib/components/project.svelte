@@ -24,18 +24,18 @@
 
 <!-- <div class="flex flex-col h-full md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden"> -->
 <div class="flex flex-col h-full group rounded-xl overflow-hidden">
-    <div class="w-full aspect-[10/6] overflow-hidden">
+    <div class="w-full aspect-[10/6] overflow-hidden shrink-0">
         <a href={link} class="w-full">
             <img src={img} alt={name} class="w-full h-full object-cover transition-scale duration-300 group-hover:scale-110">
         </a>
     </div>
 
-    <div class="flex flex-col w-full p-4 bg-gradient-to-br from-primary3light to-primary3dark group-hover:brightness-125 transition-all">
+    <div class="flex flex-col h-full w-full p-4 bg-gradient-to-br from-primary3light to-primary3dark group-hover:brightness-125 transition-all">
         <a href={link} class="font-bold text-xl">
             <span class="text-primary1">{name}</span>
         </a>
 
-        <div class="h-full py-3 text-primary2 text-base leading-5">
+        <div class="flex h-full py-3 text-primary2 text-base leading-5">
             <span class="">{description}</span>
         </div>
 
