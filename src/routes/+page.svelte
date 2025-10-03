@@ -118,7 +118,7 @@
         <div class="flex flex-col w-full h-full items-center justify-center px-8 py-16 backdrop-brightness-[50%]">
             <div class="font-bold text-lg text-center text-neutral-100 sm:w-[60ch]">
                 <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">
-                    Hey! I'm Rafale25, I like game-design, computer graphics, simulation and optimisation.
+                    Hey! I'm Rafale25, I like graphic programming, game dev, simulation and optimization.
                 </span>
             </div>
             <!-- <div class="font-bold text-center text-xl text-yellow-400">
