@@ -6,7 +6,7 @@
     const tabs = [
         {href: '/',         title: 'Projects'},
         {href: '/gallery',  title: 'Gallery'},
-        // {href: '/about',    title: 'About'},
+        {href: '/about',    title: 'About'},
     ]
 
 </script>
