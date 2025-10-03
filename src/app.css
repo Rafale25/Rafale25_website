@@ -16,6 +16,7 @@
 
 :root {
   --customHue: 234; /* default hue, e.g. blue */
+  --customSaturation: 20%; /* default hue, e.g. blue */
 }
 
 main {
