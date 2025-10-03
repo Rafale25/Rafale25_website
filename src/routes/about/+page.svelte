@@ -16,7 +16,7 @@
 
             <div class="flew sm:w-[41rem] text-primary1 text-justify">
 
-                I post my personal projects here. I program a lot during my spare time.<br>
+                I program a lot during my spare time and post my personal projects here.<br>
 
                 <br>
 
@@ -180,11 +180,6 @@
             </div>
         </div>
 -->
-
-    <!--
-        French native
-        English B2
-    -->
     </div>
 
     <Footer/>
@@ -205,4 +200,5 @@
         border-color: rgba(255, 255, 255, 0.4);
         border-radius: 3px;
     }
+
 </style>
