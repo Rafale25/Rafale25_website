@@ -80,11 +80,12 @@
                                 <span class="m-2 px-1 rounded-sm text-sm backdrop-brightness-50">{videoDurations[i]}</span>
                             </div>
                             {#if browser}
+                                <!-- svelte-ignore a11y_media_has_caption -->
                                 <video on:loadedmetadata={e => setVideoLength(e, i)} class="w-full h-auto" width="320" height="240" preload="metadata">
                                     <source src="{screenshot.url}" type=video/mp4/>
                                 </video>
                             {:else}
-                                <div class="w-full h-36 bg-black"/>
+                                <div class="w-full h-36 bg-black"></div>
                             {/if}
                         </button>
                     {:else}
@@ -103,13 +104,14 @@
         <!-- <div class="absolute right-0 top-0 px-8 py-6 ">
             <button on:click={closeImageViewer} class="bg-white rounded px-4 py-2 font-bold text-lg">x</button>
         </div> -->
-        <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black opacity-80"/>
+        <div class="absolute top-0 left-0 w-screen h-screen -z-10 bg-black opacity-80"></div>
 
         <div bind:this={viewerImageContainer} class="hidden flex w-auto h-full justify-center items-center">
             <img class="flex w-full h-full object-contain" src={imageSrc} alt="">
         </div>
 
         <div bind:this={viewerVideoContainer} class="hidden flex w-full h-full justify-center items-center">
+            <!-- svelte-ignore a11y_media_has_caption -->
             <video bind:this={viewerVideo} class="flex w-full h-auto max-h-full" controls preload="metadata" on:click|stopPropagation>
                 <source src={videoSrc} type=video/mp4/>
             </video>
