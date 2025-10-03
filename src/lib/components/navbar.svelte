@@ -2,19 +2,27 @@
     import Collapsable from '$lib/components/collapsable.svelte'
 
     let visible = false;
+
+    const tabs = [
+        {href: '/',         title: 'Projects'},
+        {href: '/gallery',  title: 'Gallery'},
+        // {href: '/about',    title: 'About'},
+    ]
+
 </script>
 
 <nav class="flex w-full justify-between items-center py-4 backdrop-brightness-[10%]">
     <div class="flex items-center gap-x-4 px-6">
-        <img class="min-w-12 max-w-12 rounded-lg aspect-square" src="logo.jpg" alt="ProfilePicture"/>
+        <img class="min-w-12 max-w-12 rounded-lg aspect-square transition-all duration-300 hover:[transform:rotateZ(25deg)]" src="logo.jpg" alt="ProfilePicture"/>
         <div class="sm:block hidden text-xl">
             <span class="text-white">Rafale25</span>
         </div>
     </div>
 
     <ul class="sm:flex hidden font-bold gap-x-8 px-9 text-lg text-neutral-300">
-        <li><a class="btn hover:underline" href="/">Projects</a></li>
-        <li><a class="btn hover:underline" href="/gallery">Gallery</a></li>
+        {#each tabs as {href, title}}
+            <li><a class="btn hover:underline" href={href}>{title}</a></li>
+        {/each}
     </ul>
 
     <div class="sm:hidden flex px-6">
@@ -28,8 +36,9 @@
 <div class="sm:hidden block backdrop-brightness-[10%] p-0.5">
     <Collapsable collapsed={!visible}>
         <div class="flex flex-col w-full items-end gap-y-2 px-9 pb-4 font-bold text-lg text-neutral-300">
-            <a class="btn hover:underline" href="/">Projects</a>
-            <a class="btn hover:underline" href="/gallery">Gallery</a>
+            {#each tabs as {href, title}}
+                <a class="btn hover:underline" href={href}>{title}</a>
+            {/each}
         </div>
     </Collapsable>
 </div>
