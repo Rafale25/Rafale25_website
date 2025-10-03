@@ -201,4 +201,8 @@
         border-radius: 3px;
     }
 
+    a {
+        color: #41a6ff;
+    }
+
 </style>
