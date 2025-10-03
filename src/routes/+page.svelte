@@ -41,7 +41,7 @@
             link:'https://primarter.itch.io/knossos',
             img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/knossos.webp',
             description:'Game Design master\'s game that was made in duo over a period of 3 months in Unity.',
-            tags:['Unity'],
+            tags:['Unity', 'C#'],
             type: Type.Game,
         },
         {
