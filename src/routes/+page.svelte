@@ -131,21 +131,15 @@
 
     <div class="flex justify-center">
         <div class="flex flex-row justify-center font-bold gap-1 rounded-lg px-4 py-2 my-6 bg-primary3dark">
-            <div class="flex">
-                <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.All && "hover:bg-primary3lighter"} {filterType==Type.All && "bg-primary3light"}" onclick={() => filterType=Type.All}>
-                    All
-                </button>
-            </div>
-            <div class="flex">
-                <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.Graphic && "hover:bg-primary3lighter"} {filterType==Type.Graphic && "bg-primary3light"}" onclick={() => filterType=Type.Graphic}>
-                    Graphics
-                </button>
-            </div>
-            <div class="flex">
-                <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.Game && "hover:bg-primary3lighter"} {filterType==Type.Game && "bg-primary3light"}" onclick={() => filterType=Type.Game}>
-                    Games
-                </button>
-            </div>
+            <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.All && "hover:bg-primary3lighter"} {filterType==Type.All && "bg-primary3light"}" onclick={() => filterType=Type.All}>
+                All
+            </button>
+            <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.Graphic && "hover:bg-primary3lighter"} {filterType==Type.Graphic && "bg-primary3light"}" onclick={() => filterType=Type.Graphic}>
+                Graphics
+            </button>
+            <button class="text-primary1 rounded py-1 px-4 transition-all duration-200 {filterType!=Type.Game && "hover:bg-primary3lighter"} {filterType==Type.Game && "bg-primary3light"}" onclick={() => filterType=Type.Game}>
+                Games
+            </button>
         </div>
     </div>
 
