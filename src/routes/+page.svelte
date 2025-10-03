@@ -108,7 +108,7 @@
     - page for each project
 -->
 
-<main class="flex flex-col overflow-hidden min-h-screen" style="--customHue: {customHue}">
+<main class="flex flex-col overflow-hidden min-h-screen">
     <!-- <input type="range" bind:value={customHue} min="0" max="360">
     <span class="text-white">{customHue}</span> -->
 
