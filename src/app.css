@@ -19,7 +19,7 @@
 }
 
 main {
-    font-family: monospace;
+    font-family: monospace, sans-serif;
     background-color: hsl(0, 0%, 2%);
 
     /* background-repeat: repeat;
