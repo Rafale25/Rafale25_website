@@ -2,6 +2,7 @@
     import Navbar from '$lib/components/navbar.svelte'
     import Project from '$lib/components/project.svelte'
     import Footer from '$lib/components/footer.svelte'
+    import GPwebring from '$lib/components/GP_webring.svelte'
 
     let customHue = 234
 
@@ -121,13 +122,8 @@
                     Hey! I'm Rafale25, I like graphic programming, game dev, simulation and optimization.
                 </span>
             </div>
-            <!-- <div class="font-bold text-center text-xl text-yellow-400">
-                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">Yellow text</span>
-            </div> -->
         </div>
     </div >
-
-    <!-- <div class="w-full h-2 backdrop-brightness-[70%]"></div> -->
 
     <div class="flex justify-center">
         <div class="flex flex-row justify-center font-bold gap-1 rounded-lg px-4 py-2 my-6 bg-primary3dark">
@@ -155,6 +151,10 @@
                 />
             {/each}
         </div>
+    </div>
+
+    <div class="mb-6">
+        <GPwebring fontSize={22}/>
     </div>
 
     <Footer/>
