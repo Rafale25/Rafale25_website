@@ -10,6 +10,7 @@
             class="object-contain h-[2.5ex]"
             src="https://graphics-programming.org/img/froge.webp"
             alt="a friendly froge"
+            title="Graphics Programming Webring"
         />
     </a>
     <a target="_self" href="https://graphics-programming.org/webring/frogs/{name}/next">➡️</a>
