@@ -117,10 +117,13 @@
         <Navbar/>
 
         <div class="flex flex-col w-full h-full items-center justify-center px-8 py-16 backdrop-brightness-[50%]">
-            <div class="font-bold text-lg text-center text-neutral-100 sm:w-[60ch]">
-                <span class="drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">
+            <div class="flex flex-col gap-4 font-bold text-lg text-center text-neutral-100 sm:w-[60ch] drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">
+                <p class="">
                     Hey! I'm Rafale25, I like graphic programming, game dev, simulation and optimization.
-                </span>
+                </p>
+                <p class="text-xl text-yellow-400 bounce-text">
+                    Currently looking for a job!
+                </p>
             </div>
         </div>
     </div >
