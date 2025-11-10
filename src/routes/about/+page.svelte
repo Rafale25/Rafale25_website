@@ -59,7 +59,7 @@
                     <li>
                         <p>Graphic Programming:</p>
                         <p class="text-primary2">
-                            GLFW, OpenGL, WebGL, WebGPU, GLSL/HLSL, GLM, DearImgui
+                            OpenGL, WebGL, WebGPU, Vulkan, GLSL/HLSL, GLM, GLFW, DearImgui
                         </p>
                     </li>
 
