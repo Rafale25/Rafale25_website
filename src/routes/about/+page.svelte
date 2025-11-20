@@ -59,7 +59,8 @@
                     <li>
                         <p>Graphic Programming:</p>
                         <p class="text-primary2">
-                            OpenGL, WebGL, WebGPU, Vulkan, GLSL/HLSL, GLM, GLFW, DearImgui
+                            OpenGL, WebGL, WebGPU, Vulkan, RenderDoc, GLSL/HLSL,<br>
+                            GLM, GLFW, DearImgui
                         </p>
                     </li>
 
