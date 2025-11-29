@@ -1,9 +1,5 @@
 <script>
-    export let name
-    export let link
-    export let img
-    export let description
-    export let tags
+    const { name, link, img, description, date, tags } = $props();
 
     const allTags = {
         'Python': 'https://www.python.org',
@@ -19,7 +15,6 @@
         'Unity': 'https://unity.com/',
         'MicroJam': 'https://itch.io/jam/micro-jam-042'
     }
-
 </script>
 
 <!-- <div class="flex flex-col h-full md:w-2/5 xl:w-1/4 3xl:w-[450px] group rounded-xl overflow-hidden"> -->
@@ -31,11 +26,15 @@
     </div>
 
     <div class="flex flex-col h-full w-full p-4 bg-gradient-to-br from-primary3light to-primary3dark group-hover:brightness-125 transition-all">
-        <a href={link} class="font-bold text-xl">
+        <a href={link} class="font-bold text-xl flex items-center gap-2">
             <span class="text-primary1">{name}</span>
         </a>
 
-        <div class="flex h-full py-3 text-primary2 text-base leading-5">
+        <div class="flex">
+            <span class="text-sm text-primary-muted">{date}</span>
+        </div>
+
+        <div class="flex flex-col gap-2 h-full py-3 text-primary2 text-base leading-5">
             <span class="">{description}</span>
         </div>
 

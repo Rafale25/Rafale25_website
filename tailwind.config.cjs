@@ -11,6 +11,7 @@ module.exports = {
                 'primary3light':    'hsl(var(--customHue), var(--customSaturation), 14%)',
                 'primary3dark':     'hsl(var(--customHue), var(--customSaturation),  5%)',
                 'primaryBorder':    'hsl(var(--customHue), var(--customSaturation), 25%)',
+                'primary-muted':     'hsl(var(--customHue), var(--customSaturation), 45%)',
             },
             screens: {
                 '3xl': '3000px'
