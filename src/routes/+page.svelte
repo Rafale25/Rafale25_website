@@ -72,7 +72,7 @@
             link:'https://github.com/Rafale25/L-System-Explorer',
             img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/image18.png',
             description:'Visualizer for fractal patterns generated using L-systems.',
-            date: 'Jan 2022',
+            date: 'Jan 2022 (updated Apr 2024)',
             tags:['Python', 'OpenGL', 'L-System'],
             type: Type.Graphic,
         },
