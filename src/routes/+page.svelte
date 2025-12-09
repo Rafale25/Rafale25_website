@@ -41,6 +41,15 @@
             type: Type.Graphic,
         },
         {
+            name:'Camera controlled hand - ScrapMechanic',
+            link:'https://github.com/Rafale25/Camera-controlled-hand-ScrapMechanic',
+            img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/sm-hand-detection-thumbnail.png',
+            description:'Mechanical hand in the game ScrapMechanic controlled by camera recognition.',
+            date: 'Apr 2024',
+            tags:['Python', 'OpenCV', 'Mediapipe'],
+            type: Type.Graphic,
+        },
+        {
             name:'Knossos',
             link:'https://primarter.itch.io/knossos',
             img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/knossos.webp',

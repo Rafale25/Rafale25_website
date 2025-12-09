@@ -14,7 +14,9 @@
         'Ludum Dare': 'https://ldjam.com/',
         'Unity': 'https://unity.com/',
         'MicroJam': 'https://itch.io/jam/micro-jam-042',
-        'L-System': 'https://en.wikipedia.org/wiki/L-system'
+        'L-System': 'https://en.wikipedia.org/wiki/L-system',
+        'OpenCV': 'https://opencv.org/',
+        'Mediapipe': 'https://github.com/google-ai-edge/mediapipe'
     }
 </script>
 
