@@ -27,8 +27,7 @@
         if (started) return
         started = true
 
-        const buildUrl = `${url}/Build`
-        // const buildUrl = "/unity/Build"
+        const buildUrl = url
         const loaderUrl = `${buildUrl}/Build.loader.js`
 
         const config = {
