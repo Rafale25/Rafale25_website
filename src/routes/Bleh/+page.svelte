@@ -52,7 +52,7 @@
 
 <div id="unity-container" class="flex flex-row justify-center">
   <canvas id="unity-canvas" class="flex bg-white w-full" bind:this={canvas}></canvas>
-  <button title="Fullscreen" aria-label="Fullscreen" class="flex self-end min-w-8 min-h-8 w-8 h-8" on:click={goFullscreen}><img src="https://itch.io/static/images/enlarge.svg?1751209071"></button>
+  <button title="Fullscreen" aria-label="Fullscreen" class="flex self-end min-w-8 min-h-8 w-8 h-8" on:click={goFullscreen}><img src="enlarge.svg"></button>
 </div>
 
 <style>
