@@ -10,15 +10,16 @@
     let started = $state(false)
 
     function goFullscreen() {
-        if (canvas.requestFullscreen) {
-            canvas.requestFullscreen()
-        } else if (canvas.webkitRequestFullscreen) {
-            canvas.webkitRequestFullscreen() // Safari
-        }
+        if (!canvas || !unityInstance) return
 
-        // Optional: notify Unity
         if (unityInstance?.SetFullscreen) {
             unityInstance.SetFullscreen(1)
+        } else {
+            if (canvas.requestFullscreen) {
+                canvas.requestFullscreen().catch(err => {
+                    console.error("Failed to canvas.requestFullscreen()")
+                })
+            }
         }
     }
 
