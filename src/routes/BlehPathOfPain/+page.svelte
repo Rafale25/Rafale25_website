@@ -3,4 +3,4 @@
     export let data
 </script>
 
-<UnityWebGame url={data.publicUrl + "/Bleh"} name="Bleh"/>
+<UnityWebGame url={data.publicUrl + "/BlehBlood"} name="BlehBlood"/>
