@@ -144,9 +144,9 @@
                 <p class="">
                     Hey! I'm Rafale25, I like graphic programming, game dev, simulation and optimization.
                 </p>
-                <p class="text-2xl text-yellow-400 bounce-text">
+                <!-- <p class="text-2xl text-yellow-400 bounce-text">
                     Currently looking for a job!
-                </p>
+                </p> -->
             </div>
         </div>
     </div >
