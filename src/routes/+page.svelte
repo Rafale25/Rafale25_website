@@ -36,7 +36,7 @@
             link:'https://github.com/Rafale25/minecraft-clone',
             img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraft_01.webp',
             description:'Minecraft clone focused on graphic programming techniques using modern OpenGL with multiplayer support.',
-            date: 'May 2024 (updated Nov 2025)',
+            date: 'May 2024 (updated Feb 2026)',
             tags:['C++', 'OpenGL'],
             type: Type.Graphic,
         },
