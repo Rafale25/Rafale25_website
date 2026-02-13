@@ -16,15 +16,13 @@
 
             <div class="flew sm:w-[41rem] text-primary1 text-justify">
 
-                I program a lot during my spare time and post my personal projects here.<br>
+                I program a lot in my spare time and post my personal projects here.<br>
 
-                <br>
-
-                My greatest interests are graphic programming, game development and optimization.<br>
+                <!-- <br> -->
+                <!-- My greatest interests are graphic programming, game development and optimization.<br>
                 I enjoy working close to the hardware and optimizing performance through low-level
-                programming in C/C++ or by offloading the workload to the GPU.<br>
-
-                <br>
+                programming in C/C++ or by offloading the workload to the GPU.<br> -->
+                <!-- <br> -->
 
                 Most of my graphic programming projects uses the OpenGL API.<br>
 
