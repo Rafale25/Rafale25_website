@@ -3,7 +3,7 @@
 	import Navbar from '$lib/components/navbar.svelte'
     import Footer from '$lib/components/footer.svelte'
 	import { onMount } from 'svelte'
-    import { PUBLIC_VPS_IP, PUBLIC_VPS_LIVECHAT_PORT } from '$env/static/public'
+    import { PUBLIC_LIVECHAT_URL } from '$env/static/public'
 
     let messages = $state([])
     let inputField
@@ -11,18 +11,19 @@
     let ws = null
 
 	onMount(() => {
-        const wsUri = `ws://${PUBLIC_VPS_IP}:${PUBLIC_VPS_LIVECHAT_PORT}`
+        const wsUri = PUBLIC_LIVECHAT_URL
+
         ws = new WebSocket(wsUri)
 
-        ws.addEventListener("open", () => {
-            console.log("CONNECTED")
+        ws.addEventListener('open', () => {
+            console.log('CONNECTED')
         })
 
-        ws.addEventListener("error", (e) => {
-            console.log(`ERROR`)
+        ws.addEventListener('error', (e) => {
+            console.log('ERROR')
         })
 
-        ws.addEventListener("message", (e) => {
+        ws.addEventListener('message', (e) => {
             messages.push(e.data)
         })
 
