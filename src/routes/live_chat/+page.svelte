@@ -34,6 +34,7 @@
 	})
 
     function sendMessage() {
+        console.log('sendMessage')
         if (ws === null)
             return
 
@@ -46,14 +47,22 @@
 <main>
     <Navbar/>
 
-    <div class="border border-white p-4">
+    <div class="border border-white p-4 overflow-scroll h-96">
+        <!-- {#each { length: 12 }, rank} -->
         {#each messages as msg}
             <p class="text-white">{msg}</p>
         {/each}
+        <!-- {/each} -->
     </div>
 
-    <textarea bind:this={inputField}></textarea>
-    <button title='send message' class="bg-white w-8 h-6" onclick={sendMessage}></button>
+    <div class="m-2">
+        <!-- <textarea bind:this={inputField}></textarea> -->
+        <input type='text' class="min-w-64" bind:this={inputField} onkeydown={(e) => { if (e.key === 'Enter') sendMessage() } }/>
+
+        <button class="bg-white px-2 py-0 bg-gray-500 rounded-sm" onclick={sendMessage} title='send message' >
+            send
+        </button>
+    </div>
 </main>
 
 <style>
