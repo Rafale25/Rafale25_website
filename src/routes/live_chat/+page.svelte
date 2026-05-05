@@ -1,8 +1,8 @@
 
 <script>
-	import Navbar from '$lib/components/navbar.svelte'
+    import Navbar from '$lib/components/navbar.svelte'
     import Footer from '$lib/components/footer.svelte'
-	import { onMount } from 'svelte'
+    import { onMount } from 'svelte'
     import { PUBLIC_LIVECHAT_URL } from '$env/static/public'
 
     let messages = $state([])
@@ -10,7 +10,7 @@
 
     let ws = null
 
-	onMount(() => {
+    onMount(() => {
         const wsUri = PUBLIC_LIVECHAT_URL
 
         ws = new WebSocket(wsUri)
@@ -24,15 +24,12 @@
         })
 
         ws.addEventListener('message', (e) => {
-            messages.push(e.data)
+            const msg = JSON.parse(e.data)
+            messages.push(msg)
         })
 
-        // const message = {
-        //     iteration: counter,
-        //     content: "ping",
-        // };
         // websocket.send(JSON.stringify(message));
-	})
+    })
 
     function sendMessage() {
         console.log('sendMessage')
@@ -43,6 +40,15 @@
         inputField.value = ''
     }
 
+    function formatDate(date_str) {
+        const date = new Date(date_str)
+        const language = 'fr-FR' // navigator.language
+        return date.toLocaleTimeString(language, {
+            hour: '2-digit',
+            minute:'2-digit'
+        });
+    }
+
 </script>
 
 <main>
@@ -51,7 +57,7 @@
     <div class="border border-white p-4 overflow-scroll h-96">
         <!-- {#each { length: 12 }, rank} -->
         {#each messages as msg}
-            <p class="text-white">{msg}</p>
+            <p class="text-white">({formatDate(msg.date)}) {msg.author}: {msg.text}</p>
         {/each}
         <!-- {/each} -->
     </div>
