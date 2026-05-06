@@ -103,7 +103,7 @@
     </div>
 
     {#each Object.entries(userMouses) as [author, mouse]}
-        <div class="fixed h-4 top-0 left-0 bg-white transition-transform duration-100 ease-linear" style:transform="translate({mouse.x}px, {mouse.y}px)">{author}</div>
+        <div class="fixed text-white top-0 left-0 transition-transform duration-100 ease-linear" style:transform="translate({mouse.x}px, {mouse.y}px)">{author}</div>
     {/each}
 </main>
 
