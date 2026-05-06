@@ -2,6 +2,7 @@
 <script>
     import Navbar from '$lib/components/navbar.svelte'
     import Footer from '$lib/components/footer.svelte'
+    import { mousePosition } from '$lib/stores/mousePosition.svelte.js';
     import { onMount } from 'svelte'
     import { PUBLIC_LIVECHAT_URL } from '$env/static/public'
 
@@ -9,6 +10,10 @@
     let inputField
 
     let ws = null
+
+    const mousePos = mousePosition()
+    let userMouses = $state({})
+
 
     onMount(() => {
         const wsUri = PUBLIC_LIVECHAT_URL
@@ -25,19 +30,45 @@
 
         ws.addEventListener('message', (e) => {
             const msg = JSON.parse(e.data)
-            messages.push(msg)
+
+            if (msg.type === 'message') {
+                messages.push(msg)
+            } else if (msg.type === 'mouse') {
+                userMouses[msg.author] = {'x': msg.x, 'y': msg.y}
+                // console.log(userMouses)
+                console.log(msg.x, msg.y)
+            }
         })
 
-        // websocket.send(JSON.stringify(message));
+        const interval = setInterval(() => sendMousePosition(), 100)
+
+        return () => clearInterval(interval) // Svelte call this callback function on unMount
     })
 
     function sendMessage() {
-        console.log('sendMessage')
-        if (ws === null)
+        if (ws?.readyState !== WebSocket.OPEN)
             return
 
-        ws.send(inputField.value)
+        const obj = {
+            'type': 'message',
+            'text': inputField.value
+        }
+
+        ws.send(JSON.stringify(obj))
         inputField.value = ''
+    }
+
+    function sendMousePosition() {
+        if (ws?.readyState !== WebSocket.OPEN)
+            return
+
+        const obj = {
+            'type': 'mouse',
+            'x': mousePos.x,
+            'y': mousePos.y
+        }
+
+        ws.send(JSON.stringify(obj))
     }
 
     function formatDate(date_str) {
@@ -70,6 +101,10 @@
             send
         </button>
     </div>
+
+    {#each Object.entries(userMouses) as [author, mouse]}
+        <div class="fixed h-4 top-0 left-0 bg-white transition-transform duration-100 ease-linear" style:transform="translate({mouse.x}px, {mouse.y}px)">{author}</div>
+    {/each}
 </main>
 
 <style>
