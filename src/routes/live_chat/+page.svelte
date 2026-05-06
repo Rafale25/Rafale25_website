@@ -99,38 +99,41 @@
             return
         inputField.style.height = 'auto'
         inputField.style.height = inputField.scrollHeight + 'px'
+        chatwindowEl.scrollTop = chatwindowEl.scrollHeight
     }
 
 </script>
 
 <main>
-    <Navbar/>
+    <div class="flex flex-col max-h-screen">
+        <Navbar/>
 
-    <div bind:this={chatwindowEl} class="border border-white p-4 overflow-y-auto h-96">
-        <!-- {#each { length: 12 }, rank} -->
-        {#each messages as msg}
-            <p class="text-white whitespace-pre-wrap">({formatDate(msg.date)}) {msg.author}: {msg.text}</p>
-        {/each}
-        <!-- {/each} -->
-    </div>
+        <div bind:this={chatwindowEl} class="border border-white p-4 overflow-y-auto h-full">
+            <!-- {#each { length: 12 }, rank} -->
+            {#each messages as msg}
+                <p class="text-white whitespace-pre-wrap">({formatDate(msg.date)}) {msg.author}: {msg.text}</p>
+            {/each}
+            <!-- {/each} -->
+        </div>
 
-    <div class="flex flew-row gap-4 m-2 content-center">
-        <textarea
-            class="resize-none w-64 p-1"
-            rows="1"
-            maxlength="1024"
-            bind:this={inputField}
-            oninput={autoResize}
-            onkeydown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                    sendMessage()
-                }
-            }}></textarea>
+        <div class="flex flew-row gap-4 px-2 py-4 content-center">
+            <textarea
+                class="resize-none w-64 p-1"
+                rows="1"
+                maxlength="1024"
+                bind:this={inputField}
+                oninput={autoResize}
+                onkeydown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault()
+                        sendMessage()
+                    }
+                }}></textarea>
 
-        <button class="bg-white px-2 py-0 h-8 bg-gray-500 rounded-sm" onclick={sendMessage} title='send message' >
-            send
-        </button>
+            <button class="bg-white px-2 py-0 h-8 bg-gray-500 rounded-sm" onclick={sendMessage} title='send message' >
+                send
+            </button>
+        </div>
     </div>
 
     {#each Object.entries(userMouses) as [author, mouse]}
