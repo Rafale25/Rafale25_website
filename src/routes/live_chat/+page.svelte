@@ -5,9 +5,11 @@
     import { mousePosition } from '$lib/stores/mousePosition.svelte.js';
     import { onMount } from 'svelte'
     import { PUBLIC_LIVECHAT_URL } from '$env/static/public'
+    import { tick } from 'svelte';
 
     let messages = $state([])
     let inputField
+    let chatwindowEl
 
     let ws = null
 
@@ -33,10 +35,9 @@
 
             if (msg.type === 'message') {
                 messages.push(msg)
+                waitTickAndScroll()
             } else if (msg.type === 'mouse') {
                 userMouses[msg.author] = {'x': msg.x, 'y': msg.y}
-                // console.log(userMouses)
-                console.log(msg.x, msg.y)
             }
         })
 
@@ -44,6 +45,11 @@
 
         return () => clearInterval(interval) // Svelte call this callback function on unMount
     })
+
+    async function waitTickAndScroll() {
+        await tick()
+        chatwindowEl.scrollTop = chatwindowEl.scrollHeight
+    }
 
     function sendMessage() {
         if (ws?.readyState !== WebSocket.OPEN)
@@ -55,7 +61,15 @@
         }
 
         ws.send(JSON.stringify(obj))
+        clearAndReset()
+    }
+
+    async function clearAndReset() {
         inputField.value = ''
+        await tick()
+        inputField.focus()
+        inputField.setSelectionRange(0, 0)
+        autoResize()
     }
 
     function sendMousePosition() {
@@ -80,24 +94,41 @@
         });
     }
 
+    function autoResize() {
+        if (!inputField)
+            return
+        inputField.style.height = 'auto'
+        inputField.style.height = inputField.scrollHeight + 'px'
+    }
+
 </script>
 
 <main>
     <Navbar/>
 
-    <div class="border border-white p-4 overflow-scroll h-96">
+    <div bind:this={chatwindowEl} class="border border-white p-4 overflow-y-auto h-96">
         <!-- {#each { length: 12 }, rank} -->
         {#each messages as msg}
-            <p class="text-white">({formatDate(msg.date)}) {msg.author}: {msg.text}</p>
+            <p class="text-white whitespace-pre-wrap">({formatDate(msg.date)}) {msg.author}: {msg.text}</p>
         {/each}
         <!-- {/each} -->
     </div>
 
-    <div class="m-2">
-        <!-- <textarea bind:this={inputField}></textarea> -->
-        <input type='text' class="min-w-64" bind:this={inputField} onkeydown={(e) => { if (e.key === 'Enter') sendMessage() } }/>
+    <div class="flex flew-row gap-4 m-2 content-center">
+        <textarea
+            class="resize-none w-64 p-1"
+            rows="1"
+            maxlength="1024"
+            bind:this={inputField}
+            oninput={autoResize}
+            onkeydown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    sendMessage()
+                }
+            }}></textarea>
 
-        <button class="bg-white px-2 py-0 bg-gray-500 rounded-sm" onclick={sendMessage} title='send message' >
+        <button class="bg-white px-2 py-0 h-8 bg-gray-500 rounded-sm" onclick={sendMessage} title='send message' >
             send
         </button>
     </div>
