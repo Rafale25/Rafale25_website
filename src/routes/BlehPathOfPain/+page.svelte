@@ -1,5 +1,5 @@
 <script>
-    import UnityWebGame from '$lib/components/unityWebGame.svelte'
+    import UnityWebGame from '#lib/components/unityWebGame.svelte'
     export let data
 </script>
 

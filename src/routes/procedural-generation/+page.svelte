@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte'
-    import { noise } from '$lib/noise.js'
-    import { BlockType, getBlock } from '$lib/getBlock.js'
+    import { noise } from '#lib/noise.js'
+    import { BlockType, getBlock } from '#lib/getBlock.js'
 
     // Window, webgl2 //
     let gl, canvas

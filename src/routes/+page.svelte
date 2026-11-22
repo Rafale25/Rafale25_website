@@ -1,8 +1,8 @@
 <script>
-    import Navbar from '$lib/components/navbar.svelte'
-    import Project from '$lib/components/project.svelte'
-    import Footer from '$lib/components/footer.svelte'
-    import GPwebring from '$lib/components/GP_webring.svelte'
+    import Navbar from '#lib/components/navbar.svelte'
+    import Project from '#lib/components/project.svelte'
+    import Footer from '#lib/components/footer.svelte'
+    import GPwebring from '#lib/components/GP_webring.svelte'
 
     let customHue = 234
 

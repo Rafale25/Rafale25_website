@@ -1,5 +1,5 @@
 <script>
-    import Collapsable from '$lib/components/collapsable.svelte'
+    import Collapsable from '#lib/components/collapsable.svelte'
 
     let visible = false;
 

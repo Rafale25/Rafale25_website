@@ -1,7 +1,7 @@
 <script>
-	import Navbar from '$lib/components/navbar.svelte'
-    import Footer from '$lib/components/footer.svelte'
-    import { browser } from '$app/environment'
+	import Navbar from '#lib/components/navbar.svelte'
+    import Footer from '#lib/components/footer.svelte'
+    import { browser } from '$app/env'
 
     export let data;
 

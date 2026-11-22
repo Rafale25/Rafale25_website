@@ -1,4 +1,4 @@
-import { noise } from '$lib/noise.js'
+import { noise } from '#lib/noise.js'
 
 export const BlockType = {
     AIR: 0,

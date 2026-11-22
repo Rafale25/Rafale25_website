@@ -1,6 +1,6 @@
 <script lang='ts'>
-    import NumberInput from '$lib/components/numberInput.svelte'
-    import ColorInput from '$lib/components/colorInput.svelte'
+    import NumberInput from '#lib/components/numberInput.svelte'
+    import ColorInput from '#lib/components/colorInput.svelte'
 
     import { onMount } from 'svelte'
     import { mat4, vec3 } from "gl-matrix"
@@ -9,7 +9,7 @@
         makeStructuredView,
     } from 'webgpu-utils';
 
-    import * as webgpuHelpers from '$lib/webgpuHelpers'
+    import * as webgpuHelpers from '#lib/webgpuHelpers'
     import shader_raytracing from './shader.wgsl?raw'
     import shader_raymarching from './shader_raymarching.wgsl?raw'
 

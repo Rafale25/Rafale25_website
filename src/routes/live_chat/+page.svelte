@@ -1,8 +1,8 @@
 
 <script>
-    import Navbar from '$lib/components/navbar.svelte'
-    import Footer from '$lib/components/footer.svelte'
-    import { mousePosition } from '$lib/stores/mousePosition.svelte.js';
+    import Navbar from '#lib/components/navbar.svelte'
+    import Footer from '#lib/components/footer.svelte'
+    import { mousePosition } from '#lib/stores/mousePosition.svelte.js';
     import { onMount } from 'svelte'
     import { PUBLIC_LIVECHAT_URL } from '$env/static/public'
     import { tick } from 'svelte';
