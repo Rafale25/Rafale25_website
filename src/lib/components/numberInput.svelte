@@ -43,6 +43,13 @@
 
 <style>
     .notSpinButton {
-        @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+        appearance: textfield;
+        -moz-appearance: textfield;
+    }
+
+    .notSpinButton::-webkit-outer-spin-button,
+    .notSpinButton::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 </style>
