@@ -4,8 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "npm run sync && vite build",
-		"sync": "svelte-kit sync",
+		"build": "vite build",
 		"preview": "vite preview"
 	},
 	"devDependencies": {
