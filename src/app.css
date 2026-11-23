@@ -1,6 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --color-primary1:         hsl(var(--customHue), var(--customSaturation), 85%);
+    --color-primary2:         hsl(var(--customHue), var(--customSaturation), 70%);
+    --color-primary3:         hsl(var(--customHue), var(--customSaturation), 10%);
+    --color-primary3lighter:  hsl(var(--customHue), var(--customSaturation), 20%);
+    --color-primary3light:    hsl(var(--customHue), var(--customSaturation), 14%);
+    --color-primary3dark:     hsl(var(--customHue), var(--customSaturation),  5%);
+    --color-primaryBorder:    hsl(var(--customHue), var(--customSaturation), 25%);
+    --color-primary-muted:    hsl(var(--customHue), var(--customSaturation), 45%);
+
+    --breakpoint-3xl: 3000px;
+}
 
 *::-webkit-scrollbar {
     width: 8px;

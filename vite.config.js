@@ -2,6 +2,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import adapter from '@sveltejs/adapter-vercel';
 import { mdsvex } from 'mdsvex';
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
 	plugins: [
@@ -11,5 +12,6 @@ export default defineConfig({
 		sveltekit({
 			adapter: adapter()
 		}),
+		tailwindcss()
 	]
 });

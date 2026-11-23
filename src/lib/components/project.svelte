@@ -28,7 +28,7 @@
         </a>
     </div>
 
-    <div class="flex flex-col h-full w-full p-4 bg-gradient-to-br from-primary3light to-primary3dark group-hover:brightness-125 transition-all">
+    <div class="flex flex-col h-full w-full p-4 bg-linear-to-br from-primary3light to-primary3dark group-hover:brightness-125 transition-all">
         <a href={link} class="font-bold text-xl flex items-center gap-2">
             <span class="text-primary1">{name}</span>
         </a>

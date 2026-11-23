@@ -3,7 +3,6 @@
     import Footer from '#lib/components/footer.svelte'
 
     let { params } = $props();
-    const project = params.project
 
     // Import all Markdown files as compiled Svelte components
     const blogs = import.meta.glob(
@@ -12,7 +11,7 @@
     );
 
     const Blog = $derived(
-        blogs[`/src/content/${project}.md`]?.default
+        blogs[`/src/content/${params.project}.md`]?.default
     );
 
 </script>
