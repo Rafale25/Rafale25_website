@@ -1,0 +1,38 @@
+<script>
+	import Navbar from '#lib/components/navbar.svelte'
+    import Footer from '#lib/components/footer.svelte'
+
+    let { params } = $props();
+    const project = params.project
+
+    // Import all Markdown files as compiled Svelte components
+    const blogs = import.meta.glob(
+        '/src/content/*.md',
+        { eager: true }
+    );
+
+    const Blog = $derived(
+        blogs[`/src/content/${project}.md`]?.default
+    );
+
+</script>
+
+<main style="--customSaturation: 0%">
+    <Navbar/>
+
+    <div class="min-h-screen w-full text-white bg-neutral-900 overflow-hidden">
+        <div class="w-full p-8">
+
+            <article class="markdown">
+                {#if Blog}
+                    <Blog />
+                {:else}
+                    <p>Project not found.</p>
+                {/if}
+            </article>
+
+        </div>
+    </div>
+
+    <Footer/>
+</main>

@@ -13,7 +13,7 @@
 
 <nav class="flex w-full justify-between items-center py-4 backdrop-brightness-[10%]">
     <a class="flex items-center gap-x-4 px-6" href='/'>
-        <img class="min-w-12 max-w-12 rounded-lg aspect-square transition-all duration-300 hover:[transform:rotateZ(25deg)]" src="logo.jpg" alt="ProfilePicture"/>
+        <img class="min-w-12 max-w-12 rounded-lg aspect-square transition-all duration-300 hover:[transform:rotateZ(25deg)]" src="/logo.jpg" alt="ProfilePicture"/>
         <div class="sm:block hidden text-xl">
             <span class="text-white">Rafale25</span>
         </div>
