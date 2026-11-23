@@ -27,7 +27,7 @@
 
     <div class="sm:hidden flex px-6">
         <button class="w-10" on:click={() => visible = !visible}>
-            <img src="burger-menu.svg" alt="Burger Menu"  class="w-12"/>
+            <img src="/burger-menu.svg" alt="Burger Menu"  class="w-12"/>
         </button>
     </div>
 </nav>
