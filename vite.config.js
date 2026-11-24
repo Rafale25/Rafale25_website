@@ -6,12 +6,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
 	plugins: [
-		mdsvex({
-			extensions: ['.svx', '.md']
-		}),
+		tailwindcss(),
 		sveltekit({
 			adapter: adapter()
 		}),
-		tailwindcss()
+		mdsvex({
+			extensions: ['.svx', '.md']
+		})
 	]
 });

@@ -72,7 +72,7 @@ main {
     }
 
     .markdown strong {
-        @apply font-bold;
+        @apply font-bold text-yellow-100;
     }
 
     .markdown em {
