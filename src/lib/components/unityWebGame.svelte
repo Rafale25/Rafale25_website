@@ -90,7 +90,7 @@
         title="Fullscreen"
         aria-label="Fullscreen"
         class="absolute right-0 flex self-end min-w-8 min-h-8 w-8 h-8 {!loaded && "hidden"}"
-        onclick={goFullscreen}><img alt="fullscreen icon" src="enlarge.svg"/>
+        onclick={goFullscreen}><img alt="fullscreen icon" src="/enlarge.svg"/>
     </button>
 </div>
 

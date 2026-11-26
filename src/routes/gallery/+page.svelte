@@ -74,7 +74,7 @@
                     {#if screenshot.url.slice(-4) === '.mp4'}
                         <button on:click={() => setVideo(screenshot.url)} class="relative cursor-default w-full h-auto">
                             <div class="absolute flex w-full h-full justify-center items-center">
-                                <img src="play-button.svg" alt="Play Icon" class="w-14 opacity-50"/>
+                                <img src="/play-button.svg" alt="Play Icon" class="w-14 opacity-50"/>
                             </div>
                             <div bind:this={videoDurationElement[i]} class="hidden absolute flex w-full h-full justify-end items-end">
                                 <span class="m-2 px-1 rounded-sm text-sm backdrop-brightness-50">{videoDurations[i]}</span>
