@@ -1,3 +1,7 @@
+<script>
+    let volume = $state(0.1);
+</script>
+
 # Minecraft Wish
 
 [Github](https://github.com/Rafale25/minecraft-clone)
@@ -32,6 +36,7 @@ Some screenshots at different point of time during development.
 ![](https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraft_04.webp)
 ![](https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraft_05.webp)
 ![](https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraft_06.webp)
+<video src="https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/mc_badapple.mp4" controls style="border-radius: 8px;" bind:volume></video>
 
 ---
 
