@@ -185,8 +185,14 @@
 
 </script>
 
-<main class="m-0 w-screen h-screen bg-neutral-400 overflow-hidden">
-    <div class="absolute left-[10%] top-[15%]">
+<main class="m-0 w-screen h-screen bg-neutral-400  overflow-hidden">
+    <div class="absolute left-[10%] top-[15%] border border-black">
         <input class="text-xl" bind:this={inputField} type="text" maxlength="128">
     </div>
 </main>
+
+<style>
+    main {
+        background-color: hsl(0, 5%, 70%);
+    }
+</style>
