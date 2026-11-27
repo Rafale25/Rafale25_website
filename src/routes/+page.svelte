@@ -105,7 +105,7 @@
         },
         {
             name:'Boids',
-            link:'https://github.com/Rafale25/Boids',
+            link:'/projects/boids',
             img:'./boids.png',
             description:'Large flocking simulation using compute shaders.',
             date: 'Mar 2021 (updated Oct 2022)',

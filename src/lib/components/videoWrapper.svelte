@@ -3,7 +3,8 @@
 </script>
 
 <iframe
-    width="auto"
+    class="aspect-video"
+    width="100%"
     height="auto"
     src={src}
     title={title}
