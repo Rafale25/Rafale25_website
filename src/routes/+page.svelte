@@ -143,11 +143,15 @@
             <div class="flex flex-col gap-4 font-bold text-xl text-center text-neutral-100 sm:w-[60ch] drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">
                 <p class="">
                     Hey! I'm Rafale25, I like graphic programming, game dev, simulation and optimization.
+                    <span class="text-sm text-yellow-300 bounce-text" title="No AI is used in any of the projects showcased here. This website included.">
+                        (NO AI)
+                    </span>
                 </p>
                 <!-- <p class="text-2xl text-yellow-400 bounce-text">
                     Currently looking for a job!
                 </p> -->
             </div>
+
         </div>
     </div >
 

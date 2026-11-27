@@ -1,10 +1,10 @@
 <script>
-	export let collapsed = false;
+    const { collapsed = false, children } = $props();
 </script>
 
 <div class="collapsable {collapsed ? "" : "grid-template-rows-1fr"} duration-500">
     <div>
-        <slot/>
+        {@render children?.()}
     </div>
 </div>
 
@@ -21,5 +21,4 @@
     .grid-template-rows-1fr {
         grid-template-rows: 1fr;
     }
-
 </style>
