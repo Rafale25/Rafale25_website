@@ -15,8 +15,6 @@
         path.split('/').pop().replace(/\.[^/.]+$/, '')
     );
 
-    console.log(filenames);
-
 </script>
 
 <main style="--customSaturation: 0%">
