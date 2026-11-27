@@ -15,7 +15,7 @@
     const projects = [
         {
             name:'Bleh',
-            link:'https://rafale25.itch.io/bleh',
+            link:'/projects/bleh',
             img:'https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/thumbnail-Bleh.webp',
             description:'Game made in 48h for the Micro Jam #042 : Frogs',
             date: 'Jun 2025',
