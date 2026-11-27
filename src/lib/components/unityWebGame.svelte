@@ -68,16 +68,16 @@
     }
 </script>
 
-<div id="unity-container" class="flex flex-row justify-center">
-    <canvas id="unity-canvas" class="flex bg-white w-full {!loaded && "hidden"}" bind:this={canvas}></canvas>
+<div id="unity-container" class="flex w-full min-w-fit flex-row justify-center">
+    <canvas id="unity-canvas" class="relative flex bg-white w-full {!loaded && "hidden"}" bind:this={canvas}></canvas>
 
-    <div class="flex items-center justify-center  bg-neutral-800 w-full w-[960px] h-[480px] {loaded && "hidden"}">
+    <div class="flex items-center justify-center bg-neutral-800 w-full w-[960px] h-[480px] {loaded && "hidden"}">
         <button
             title="Play"
             aria-label="Play"
-            class="flex text-xl text-white font-bold bg-blue-700 rounded-sm py-4 px-6 {started && 'hidden'}"
+            class="flex text-xl text-white font-bold bg-blue-700 rounded-sm py-4 px-8 {started && 'hidden'}"
             onclick={start}>
-            Run game
+            Play
         </button>
 
         <div class="flex flex-row gap-2 items-center justify-center {!is_loading && "hidden"}">
@@ -89,8 +89,9 @@
     <button
         title="Fullscreen"
         aria-label="Fullscreen"
-        class="absolute right-0 flex self-end min-w-8 min-h-8 w-8 h-8 {!loaded && "hidden"}"
-        onclick={goFullscreen}><img alt="fullscreen icon" src="/enlarge.svg"/>
+        class="absolute flex right-0 w-8 h-auto self-end {!loaded && "hidden"}"
+        onclick={goFullscreen}>
+        <img class="m-0" alt="fullscreen icon" src="/enlarge.svg"/>
     </button>
 </div>
 
