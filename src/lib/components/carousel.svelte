@@ -2,7 +2,7 @@
     let { images } = $props()
 
     let i = $state(0)
-    let imageViewerEnabled = $state(true);
+    let imageViewerEnabled = $state(false);
 
     function increment(v) {
         i += v
