@@ -1,5 +1,5 @@
 <script>
-    // import Carousel from '#lib/components/carousel.svelte'
+    import Carousel from '#lib/components/carousel.svelte'
 
     let volume = $state(0.1);
 </script>
@@ -40,13 +40,13 @@ Some screenshots at different point of time during development.
 ![](https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraf_clone/minecraft_06.webp)
 <video src="https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraf_clone/mc_badapple.mp4" controls style="border-radius: 8px;" bind:volume></video>
 
-<!-- <Carousel images={[
+<Carousel images={[
     "https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraf_clone/minecraft_01.webp",
     "https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraf_clone/minecraft_02.webp",
     "https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraf_clone/minecraft_03.webp",
     "https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraf_clone/minecraft_04.webp",
     "https://uwjsmorezfnlutlzzebh.supabase.co/storage/v1/object/public/public_storage/minecraf_clone/minecraft_06.webp",
-]}/> -->
+]}/>
 
 
 ---
